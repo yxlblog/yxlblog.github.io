@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="Tomcat本身不能直接在计算机上运行，需要依赖于硬件基础之上的操作系统和一个Java虚拟机。Tomcat的内存溢出本质就是JVM内存溢出，所以在本文开始时，应该先对Java JVM有关内存方面的知识进行详细介绍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat中JVM内存溢出及合理配置">
+<meta property="og:url" content="http://yoursite.com/2016/08/30/java-jvm-1/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="Tomcat本身不能直接在计算机上运行，需要依赖于硬件基础之上的操作系统和一个Java虚拟机。Tomcat的内存溢出本质就是JVM内存溢出，所以在本文开始时，应该先对Java JVM有关内存方面的知识进行详细介绍。">
+<meta property="og:updated_time" content="2016-09-25T02:01:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat中JVM内存溢出及合理配置">
+<meta name="twitter:description" content="Tomcat本身不能直接在计算机上运行，需要依赖于硬件基础之上的操作系统和一个Java虚拟机。Tomcat的内存溢出本质就是JVM内存溢出，所以在本文开始时，应该先对Java JVM有关内存方面的知识进行详细介绍。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Tomcat中JVM内存溢出及合理配置 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-java-jvm-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/30/java-jvm-1/" class="article-date">
+      <time datetime="2016-08-30T14:57:46.000Z" itemprop="datePublished">2016-08-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Tomcat中JVM内存溢出及合理配置
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Tomcat本身不能直接在计算机上运行，需要依赖于硬件基础之上的操作系统和一个Java虚拟机。Tomcat的内存溢出本质就是JVM内存溢出，所以在本文开始时，应该先对Java JVM有关内存方面的知识进行详细介绍。<br><a id="more"></a></p>
+<h3 id="一、Java-JVM内存介绍"><a href="#一、Java-JVM内存介绍" class="headerlink" title="一、Java JVM内存介绍"></a>一、Java JVM内存介绍</h3><p>JVM管理两种类型的内存，堆和非堆。按照官方的说法：<br>“Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配，堆是在 Java 虚拟机启动时创建的。”<br>“在JVM中堆之外的内存称为非堆内存(Non-heap memory)”。<br>简单来说堆就是Java代码可及的内存，是留给开发人员使用的；<br>非堆就是JVM留给自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法的代码都在非堆内存中，它和堆不同，运行期内GC不会释放其空间。<br><strong>(1). 堆内存分配</strong><br>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；<br>JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。<br>默认空余堆内存小于 40%时，JVM就会增大堆直到-Xmx的最大限制；<br>空余堆内存大于70%时，JVM会减少堆直到-Xms的最小限制。因此服务器一般设置-Xms、 -Xmx相等以避免在每次GC 后调整堆的大小。<br>可以利用JVM提供的-Xmn -Xms -Xmx等选项可进行堆内存设置，一般的要将-Xms和-Xmx选项设置为相同，而-Xmn为1/4的-Xmx值，建议堆的最大值设置为可用内存的最大值的80%。<br>初始化堆的大小是JVM在启动时向系统申请的内存的大小。<br>一般而言，这个参数不重要。<br>但是有的应用程序在大负载的情况下会急剧地占用更多的内存，此时这个参数就是显得非常重要，如果JVM启动时设置使用的内存比较小而在这种情况下有许多对象进行初始化，JVM就必须重复地增加内存来满足使用。<br>由于这种原因，我们一般把-Xms和-Xmx设为一样大，而堆的最大值受限于系统使用的物理内存。<br>一般使用数据量较大的应用程序会使用持久对象，内存使用有可能迅速地增长。<br>当应用程序需要的内存超出堆的最大值时JVM就会提示内存溢出，并且导致应用服务崩溃。<br>所以，如果Xms超过了Xmx值，或者堆最大值和非堆最大值的总和超过了物理内存或者操作系统的最大限制都会引起服务器启动不起来。<br><strong>(2). 非堆内存分配</strong><br>也叫永久保存的区域，用于存放Class和Meta信息,Class在被Load的时候被放入该区域。<br>它和存放类实例(Instance)的Heap区域不同,GC(Garbage Collection)不会在主程序运行期对PermGen space进行清理。<br>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；<br>由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。<br>GC不会对PermGen space进行清理，所以如果你的APP会LOAD很多CLASS的话,就很可能出现PermGen space错误。<br><strong>(3). JVM内存限制(最大值)</strong><br>首先JVM内存限制于实际的最大物理内存（废话！，呵呵），假设物理内存无限大的话，JVM内存的最大值跟操作系统有很大的关系。<br>简单的说就32位处理器虽然可控内存空间有4GB,但是具体的操作系统会给一个限制，这个限制一般是2GB-3GB（一般来说Windows系统下为1.5G-2G，Linux系统 下为2G-3G），而64bit以上的处理器就不会有限制了。</p>
+<h3 id="二、三种内存溢出异常介绍"><a href="#二、三种内存溢出异常介绍" class="headerlink" title="二、三种内存溢出异常介绍"></a>二、三种内存溢出异常介绍</h3><p><strong>1. OutOfMemoryError： Java heap space 堆溢出</strong><br>内存溢出主要存在问题就是出现在这个情况中。<br>当在JVM中如果98％的时间是用于GC且可用的 Heap size 不足2％的时候将抛出此异常信息。<br><strong>2. OutOfMemoryError： PermGen space 非堆溢出（永久保存区域溢出）</strong><br>这种错误常见在web服务器对JSP进行pre compile的时候。<br>如果你的WEB APP下都用了大量的第三方jar, 其大小超过了jvm默认的大小(4M)那么就会产生此错误信息了。<br>如果web app用了大量的第三方jar或者应用有太多的class文件而恰好MaxPermSize设置较小，超出了也会导致这块内存的占用过多造成溢出，或者tomcat热部署时侯不会清理前面加载的环境，只会将context更改为新部署的，非堆存的内容就会越来越多。<br><strong>3. OutOfMemoryError： unable to create new native thread. 无法创建新的线程</strong><br>这种现象比较少见，也比较奇怪，主要是和jvm与系统内存的比例有关。这种怪事是因为JVM已经被系统分配了大量的内存（比如1.5G），并且它至少要占用可用内存的一半。</p>
+<h3 id="三、Java-JVM内存配置"><a href="#三、Java-JVM内存配置" class="headerlink" title="三、Java JVM内存配置"></a>三、Java JVM内存配置</h3><p><strong>1. JVM内存分配设置的参数有四个</strong><br>-Xmx Java Heap最大值，默认值为物理内存的1/4；<br>-Xms Java Heap初始值，Server端JVM最好将-Xms和-Xmx设为相同值，开发测试机JVM可以保留默认值；<br>-Xmn Java Heap Young区大小，不熟悉最好保留默认值；<br>-Xss 每个线程的Stack大小，不熟悉最好保留默认值；<br>-XX:PermSize：设定内存的永久保存区域；<br>-XX:MaxPermSize：设定最大内存的永久保存区域；<br>-XX:PermSize：设定内存的永久保存区域；<br>-XX:NewSize：设置JVM堆的‘新生代’的默认大小；<br>-XX:MaxNewSize：设置JVM堆的‘新生代’的最大大小；<br><strong>2. 如何设置JVM的内存分配</strong><br>（1）当在命令提示符下启动并使用JVM时（只对当前运行的类Test生效）：</p>
+<p>java -Xmx128m -Xms64m -Xmn32m -Xss16m Test<br>（2）当在集成开发环境下（如eclipse）启动并使用JVM时：</p>
+<p>a. 在eclipse根目录下打开eclipse.ini，默认内容为（这里设置的是运行当前开发工具的JVM内存分配）：<br>-vmargs -Xms40m -Xmx256m -vmargs<br>表示以下为虚拟机设置参数，可修改其中的参数值，也可添加-Xmn，-Xss。<br>另外，eclipse.ini内还可以设置非 堆内存，如：<br>-XX:PermSize=56m，-XX:MaxPermSize=128m。<br>b. 打开eclipse－窗口－首选项－Java－已安装的JRE（对在当前开发环境中运行的java程序皆生效） 编辑当前使用的JRE，在缺省VM参数中输入：<br>-Xmx128m -Xms64m -Xmn32m –Xss16m。<br>c. 打开eclipse－运行－运行－Java应用程序（只对所设置的java类生效） 选定需设置内存分配的类－自变量，在VM自变量中输入：<br>-Xmx128m -Xms64m -Xmn32m -Xss16m<br>注：如果在同一开发环境中同时进行了b和c设置，则b设置生效，c设置无效，如：<br>开发环境的设置为：-Xmx256m，而类Test的设置为：-Xmx128m -Xms64m，则运行Test时生效的设置为： -Xmx256m -Xms64m。<br>（3）当在服务器环境下（如Tomcat）启动并使用JVM时（对当前服务器环境下所以Java程序生效）：</p>
+<p>a. 设置环境变量： 变量名：CATALINA_OPTS 变量值：<br>-Xmx128m -Xms64m -Xmn32m -Xss16m。<br>b. 打开Tomcat根目录下的bin文件夹，编辑catalina.bat，将其中的%CATALINA_OPTS%（共有四处）替换为：<br>-Xmx128m -Xms64m -Xmn32m -Xss16m。<br>c. 若没有catalina.bat，只有tomcat.exe,tomcat6w.exe;<br>则可以在启动tomcat6w.exe 后 右键配置–Java–java option 下面输入：<br>-Xmx256m –Xms64m<br>也可以找到注册表<br>HKEY_LOCAL_MACHINE\SOFTWARE\Apache Software Foundation\TomcatService Manager\Tomcat6\Parameters\JavaOptions<br>原值为 -Dcatalina.home=”C:\ApacheGroup\Tomcat 6.0” -Djava.endorsed.dirs=”C:\ApacheGroup\Tomcat 6.0\common\endorsed” -Xrs 加入 -Xms300m -Xmx350m<br>（我的是加入-Xmx350m，tomcat才能启动，加入-Xms300m -Xmx350m反而tomcat都不能启动）<br>重起tomcat服务,设置生效。</p>
+<p><strong>3. 查看JVM内存信息</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Runtime.getRuntime().maxMemory(); <span class="comment">//最大可用内存，对应-Xmx</span></div><div class="line">Runtime.getRuntime().freeMemory(); <span class="comment">//当前JVM空闲内存</span></div><div class="line">Runtime.getRuntime().totalMemory(); <span class="comment">//当前JVM占用的内存总数，其值相当于当前JVM已使用的内存及freeMemory()的总和</span></div></pre></td></tr></table></figure></p>
+<p>关于maxMemory()，freeMemory()和totalMemory()：<br>maxMemory()为JVM的最大可用内存，可通过-Xmx设置，默认值为物理内存的1/4，设置不能高于计算机物理内存；<br>totalMemory()为当前JVM占用的内存总数，其值相当于当前JVM已使用的内存及freeMemory()的总和，会随着JVM使用内存的增加而增加；<br>freeMemory()为当前JVM空闲内存，因为JVM只有在需要内存时才占用物理内存使用，<br>所以freeMemory()的值一般情况下都很小，而JVM实际可用内存并不等于freeMemory()，而应该等于<br>maxMemory()-totalMemory()+freeMemory()。</p>
+<p><strong>4. 实例，以下给出1G内存环境下java jvm 的参数设置参考</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Xmx800m -XX:PermSize=<span class="number">64</span>M -XX:MaxNewSize=<span class="number">256</span>m -XX:MaxPermSize=<span class="number">128</span>m -Djava.awt.headless=<span class="literal">true</span> <span class="string">"</span></div></pre></td></tr></table></figure></p>
+<p>大型的web工程，用tomcat默认分配的内存空间无法启动，如果不是在myeclipse中启动tomcat可以对tomcat这样设置：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">TOMCAT_HOME\bin\catalina.bat 中添加这样一句话：</div><div class="line">set JAVA_OPTS= -Xmx1024M -Xms512M -XX:MaxPermSize=<span class="number">256</span>m</div></pre></td></tr></table></figure></p>
+<p>如果要在myeclipse中启动，上述的修改就不起作用了，可如下设置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Myeclipse-&gt;preferences-&gt;myeclipse-&gt;servers-&gt;tomcat-&gt;tomcat×.×-&gt;JDK面板中的</div><div class="line">Optional Java VM <span class="built_in">arguments</span>中添加：-Xmx1024M -Xms512M -XX:MaxPermSize=<span class="number">256</span>m</div></pre></td></tr></table></figure>
+<p>对于单独的.class，可以用下面的方法对Test运行时的jvm内存进行设置。<br>java -Xms64m -Xmx256m Test<br>-Xms是设置内存初始化的大小<br>-Xmx是设置最大能够使用内存的大小。</p>
+<h3 id="四、JVM内存配置与GC"><a href="#四、JVM内存配置与GC" class="headerlink" title="四、JVM内存配置与GC"></a>四、JVM内存配置与GC</h3><p><strong>需要考虑的是Java提供的垃圾回收机制。</strong><br>JVM的堆大小决定了JVM花费在收集垃圾上的时间和频度。<br>收集垃圾可以接受的速度与应用有关，应该通过分析实际的垃圾收集的时间和频率来调整。<br>如果堆的大小很大，那么完全垃圾收集就会很慢，但是频度会降低。<br>如果你把堆的大小和内存的需要一致，完全收集就很快，但是会更加频繁。<br>调整堆大小的的目的是最小化垃圾收集的时间，以在特定的时间内最大化处理客户的请求。<br>在基准测试的时候，为保证最好的性能，要把堆的大小设大，保证垃圾收集不在整个基准测试的过程中出现。<br>如果系统花费很多的时间收集垃圾，请减小堆大小。<br>一次完全的垃圾收集应该不超过 3-5 秒。<br>如果垃圾收集成为瓶颈，那么需要指定堆的大小，检查垃圾收集的详细输出，研究垃圾收集参数对性能的影响。<br>一般说来，你应该使用物理内存的 80% 作为堆大小。<br>当增加处理器时，记得增加内存，因为分配可以并行进行，而垃圾收集不是并行的。</p>
+<p><strong>Java Heap分为3个区：</strong><br><strong>1.Young </strong><br><strong>2.Old </strong><br><strong>3.Permanent。</strong><br>Young保存刚实例化的对象。当该区被填满时，GC会将对象移到Old区。<br>Permanent区则负责保存反射对象，本文不讨论该区。</p>
+<p><strong>JVM有2个GC线程：</strong><br>第一个线程负责回收Heap的Young区；<br>第二个线程在Heap不足时，遍历Heap，将Young 区升级为Older区，Older区的大小等于-Xmx减去-Xmn，不能将-Xms的值设的过大，因为第二个线程被迫运行会降低JVM的性能。</p>
+<p><strong>为什么一些程序频繁发生GC？有如下原因：</strong></p>
+<ol>
+<li>程序内调用了System.gc()或Runtime.gc()。</li>
+<li>一些中间件软件调用自己的GC方法，此时需要设置参数禁止这些GC。</li>
+<li>Java的Heap太小，一般默认的Heap值都很小。</li>
+<li>频繁实例化对象，Release对象 此时尽量保存并重用对象，例如使用StringBuffer()和String()。<br>如果你发现每次GC后，Heap的剩余空间会是总空间的50%，这表示你的Heap处于健康状态许多Server端的Java程序每次GC后最好能有65%的剩余空间。</li>
+</ol>
+<p><strong>经验之谈：</strong><br>1．Server端JVM最好将-Xms和-Xmx设为相同值。为了优化GC，最好让-Xmn值约等于-Xmx的1/3。<br>2．一个GUI程序最好是每10到20秒间运行一次GC，每次在半秒之内完成。</p>
+<p><font color="red">注意：</font><br>1．增加Heap的大小虽然会降低GC的频率，但也增加了每次GC的时间。并且GC运行时，所有的用户线程将暂停，也就是GC期间，Java应用程序不做任何工作。<br>2．Heap大小并不决定进程的内存使用量。<br>进程的内存使用量要大于-Xmx定义的值，因为Java为其他任务分配内存，例如每个线程的Stack等。</p>
+<p>文／马哥_（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/cf3aa48aaa4f" target="_blank" rel="external">http://www.jianshu.com/p/cf3aa48aaa4f</a><br>著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2016-08-30, 22:57:46</p>
+        <p><span>最后更新:</span>2016-09-25, 10:01:22</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/08/30/java-jvm-1/" title="Tomcat中JVM内存溢出及合理配置">http://yoursite.com/2016/08/30/java-jvm-1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/08/30/java-jvm-1/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/09/03/springyou/">
+                    Spring常用工具类
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/08/22/gaishandaima/">
+                    重构-改善既有代码的设计.pdf
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、Java-JVM内存介绍"><span class="toc-number">1.</span> <span class="toc-text">一、Java JVM内存介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、三种内存溢出异常介绍"><span class="toc-number">2.</span> <span class="toc-text">二、三种内存溢出异常介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、Java-JVM内存配置"><span class="toc-number">3.</span> <span class="toc-text">三、Java JVM内存配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、JVM内存配置与GC"><span class="toc-number">4.</span> <span class="toc-text">四、JVM内存配置与GC</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Tomcat中JVM内存溢出及合理配置　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/08/30/java-jvm-1/" data-title="Tomcat中JVM内存溢出及合理配置" data-url="http://yoursite.com/2016/08/30/java-jvm-1/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/09/03/springyou/" title="上一篇: Spring常用工具类">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/08/22/gaishandaima/" title="下一篇: 重构-改善既有代码的设计.pdf">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

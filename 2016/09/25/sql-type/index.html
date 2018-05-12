@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="各种数据库的分页查询SQL语句总结
+1.oracle数据库分页1select * from (select a.*,rownum rc from 表名 where rownum&amp;lt;=endrow) a where a.rc&amp;gt;=startrow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="各种数据库的分页查询SQL语句总结">
+<meta property="og:url" content="http://yoursite.com/2016/09/25/sql-type/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="各种数据库的分页查询SQL语句总结
+1.oracle数据库分页1select * from (select a.*,rownum rc from 表名 where rownum&amp;lt;=endrow) a where a.rc&amp;gt;=startrow">
+<meta property="og:updated_time" content="2016-09-25T02:06:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="各种数据库的分页查询SQL语句总结">
+<meta name="twitter:description" content="各种数据库的分页查询SQL语句总结
+1.oracle数据库分页1select * from (select a.*,rownum rc from 表名 where rownum&amp;lt;=endrow) a where a.rc&amp;gt;=startrow">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>各种数据库的分页查询SQL语句总结 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-sql-type" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/25/sql-type/" class="article-date">
+      <time datetime="2016-09-25T01:36:20.000Z" itemprop="datePublished">2016-09-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      各种数据库的分页查询SQL语句总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/sql/">sql</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="各种数据库的分页查询SQL语句总结"><a href="#各种数据库的分页查询SQL语句总结" class="headerlink" title="各种数据库的分页查询SQL语句总结"></a>各种数据库的分页查询SQL语句总结</h3><ul>
+<li>1.oracle数据库分页<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from (select a.*,rownum rc from 表名 where rownum&lt;=endrow) a where a.rc&gt;=startrow</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>2.DB2数据库分页</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Select * from (<span class="function">select <span class="title">rownumber</span><span class="params">()</span> <span class="title">over</span><span class="params">()</span> as rc,a.* <span class="title">from</span> </span></div><div class="line"></div><div class="line">	<span class="params">(select * from 表名 order by 列名)</span> as a) where rc between startrow and endrow</div></pre></td></tr></table></figure>
+</li>
+<li><p>3.SQL Server 2000数据库分页</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Select top pagesize * from 表名 where </div><div class="line"></div><div class="line">	列名 <span class="function">not  <span class="title">in</span><span class="params">(select top pagesize*page 列名 from  表名 order by 列名)</span> order by 列名</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>4.SQL Server 2005数据库分页</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Select * from (select 列名,row_搜索number() over(order by  列名<span class="number">1</span>) as 别名from 表名) as t </div><div class="line"></div><div class="line">	where t.列名<span class="number">1</span>&gt;=startrow and t.列名<span class="number">1</span>&lt;=endrow</div></pre></td></tr></table></figure>
+</li>
+<li><p>5.MySQL数据库分页</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Select * from 表名 limit startrow,pagesize       (Pagesize为每页显示的记录条数)</div></pre></td></tr></table></figure>
+</li>
+<li><p>6.PostgreSQL数据库分页</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Select * from 表名 limit pagesize,<span class="function">offset <span class="title">startrow</span>     <span class="params">(Pagesize为每页显示的记录条数.)</span></span></div></pre></td></tr></table></figure>
+</li>
+<li><p>7.通用模式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">select * from (</div><div class="line"></div><div class="line">		select * <span class="function">from tb_student where sid not <span class="title">in</span><span class="params">(</span></span></div><div class="line"></div><div class="line">    		select sid from tb_student where rownum&lt;=(currentPage<span class="number">-1</span>)*pageSize)</div><div class="line"></div><div class="line">) where rownum &lt;=pageSize;</div></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2016-09-25, 09:36:20</p>
+        <p><span>最后更新:</span>2016-09-25, 10:06:14</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/25/sql-type/" title="各种数据库的分页查询SQL语句总结">http://yoursite.com/2016/09/25/sql-type/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/25/sql-type/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/10/08/mysql-search/">
+                    MySQL 慢查询的特征表现及优化方式
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/09/24/sql-seo/">
+                    在一个千万级的数据库查寻中，如何提高查询效率？
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#各种数据库的分页查询SQL语句总结"><span class="toc-number">1.</span> <span class="toc-text">各种数据库的分页查询SQL语句总结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"各种数据库的分页查询SQL语句总结　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/25/sql-type/" data-title="各种数据库的分页查询SQL语句总结" data-url="http://yoursite.com/2016/09/25/sql-type/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/10/08/mysql-search/" title="上一篇: MySQL 慢查询的特征表现及优化方式">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/09/24/sql-seo/" title="下一篇: 在一个千万级的数据库查寻中，如何提高查询效率？">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

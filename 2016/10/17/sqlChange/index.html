@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="经典SQL——行转列，列转行行转列，列转行是我们在开发过程中经常碰到的问题。行转列一般通过CASE WHEN 语句来实现，也可以通过 SQL SERVER 2005 新增的运算符PIVOT来实现。用传统的方法，比较好理解。层次清晰，而且比较习惯。 但是PIVOT 、UNPIVOT提供的语法比一系列复杂的SELECT…CASE 语句中所指定的语法更简单、更具可读性。下面我们通过几个简单的例子来介绍一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典SQL——行转列，列转行">
+<meta property="og:url" content="http://yoursite.com/2016/10/17/sqlChange/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="经典SQL——行转列，列转行行转列，列转行是我们在开发过程中经常碰到的问题。行转列一般通过CASE WHEN 语句来实现，也可以通过 SQL SERVER 2005 新增的运算符PIVOT来实现。用传统的方法，比较好理解。层次清晰，而且比较习惯。 但是PIVOT 、UNPIVOT提供的语法比一系列复杂的SELECT…CASE 语句中所指定的语法更简单、更具可读性。下面我们通过几个简单的例子来介绍一">
+<meta property="og:image" content="http://images.cnblogs.com/cnblogs_com/kerrycode/2010072801.gif">
+<meta property="og:image" content="http://images.cnblogs.com/cnblogs_com/kerrycode/2010072802.gif">
+<meta property="og:image" content="http://images.cnblogs.com/cnblogs_com/kerrycode/2010072803.gif">
+<meta property="og:updated_time" content="2016-11-13T03:17:14.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典SQL——行转列，列转行">
+<meta name="twitter:description" content="经典SQL——行转列，列转行行转列，列转行是我们在开发过程中经常碰到的问题。行转列一般通过CASE WHEN 语句来实现，也可以通过 SQL SERVER 2005 新增的运算符PIVOT来实现。用传统的方法，比较好理解。层次清晰，而且比较习惯。 但是PIVOT 、UNPIVOT提供的语法比一系列复杂的SELECT…CASE 语句中所指定的语法更简单、更具可读性。下面我们通过几个简单的例子来介绍一">
+<meta name="twitter:image" content="http://images.cnblogs.com/cnblogs_com/kerrycode/2010072801.gif">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>经典SQL——行转列，列转行 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-sqlChange" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/17/sqlChange/" class="article-date">
+      <time datetime="2016-10-17T01:35:13.000Z" itemprop="datePublished">2016-10-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      经典SQL——行转列，列转行
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/sql/">sql</a><a class="article-category-link" href="/categories/sql/java/">java</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="经典SQL——行转列，列转行"><a href="#经典SQL——行转列，列转行" class="headerlink" title="经典SQL——行转列，列转行"></a>经典SQL——行转列，列转行</h3><p>行转列，列转行是我们在开发过程中经常碰到的问题。行转列一般通过CASE WHEN 语句来实现，也可以通过 SQL SERVER 2005 新增的运算符PIVOT来实现。用传统的方法，比较好理解。层次清晰，而且比较习惯。 但是PIVOT 、UNPIVOT提供的语法比一系列复杂的SELECT…CASE 语句中所指定的语法更简单、更具可读性。下面我们通过几个简单的例子来介绍一下列转行、行转列问题。<br> 我们首先先通过一个老生常谈的例子，学生成绩表(下面简化了些)来形象了解下行转列<br><a id="more"></a></p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> CREATE  TABLE [StudentScores]</div><div class="line">(</div><div class="line">   [UserName]         NVARCHAR(<span class="number">20</span>),        --学生姓名</div><div class="line">    [Subject]          NVARCHAR(<span class="number">30</span>),        --科目</div><div class="line">    [Score]            FLOAT,               --成绩</div><div class="line">)</div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Nick'</span>, <span class="string">'语文'</span>, <span class="number">80</span></div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Nick'</span>, <span class="string">'数学'</span>, <span class="number">90</span></div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Nick'</span>, <span class="string">'英语'</span>, <span class="number">70</span></div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Nick'</span>, <span class="string">'生物'</span>, <span class="number">85</span></div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Kent'</span>, <span class="string">'语文'</span>, <span class="number">80</span></div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Kent'</span>, <span class="string">'数学'</span>, <span class="number">90</span></div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Kent'</span>, <span class="string">'英语'</span>, <span class="number">70</span></div><div class="line"> </div><div class="line">INSERT INTO [StudentScores] SELECT <span class="string">'Kent'</span>, <span class="string">'生物'</span>, <span class="number">85</span></div></pre></td></tr></table></figure>
+<p>如果我想知道每位学生的每科成绩，而且每个学生的全部成绩排成一行，这样方便我查看、统计，导出数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SELECT </div><div class="line">      UserName, </div><div class="line">      MAX(CASE Subject WHEN <span class="string">'语文'</span> THEN Score ELSE <span class="number">0</span> END) AS <span class="string">'语文'</span>,</div><div class="line">      MAX(CASE Subject WHEN <span class="string">'数学'</span> THEN Score ELSE <span class="number">0</span> END) AS <span class="string">'数学'</span>,</div><div class="line">      MAX(CASE Subject WHEN <span class="string">'英语'</span> THEN Score ELSE <span class="number">0</span> END) AS <span class="string">'英语'</span>,</div><div class="line">      MAX(CASE Subject WHEN <span class="string">'生物'</span> THEN Score ELSE <span class="number">0</span> END) AS <span class="string">'生物'</span></div><div class="line">FROM dbo.[StudentScores]</div><div class="line">GROUP BY UserName</div></pre></td></tr></table></figure>
+<p>查询结果如图所示，这样我们就能很清楚的了解每位学生所有的成绩了</p>
+<p><img src="http://images.cnblogs.com/cnblogs_com/kerrycode/2010072801.gif" alt=" "></p>
+<p>接下来我们来看看第二个小列子。有一个游戏玩家充值表（仅仅为了说明，举的一个小例子），</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE [Inpours]</div><div class="line">(</div><div class="line">   [ID]                INT IDENTITY(<span class="number">1</span>,<span class="number">1</span>), </div><div class="line">   [UserName]          NVARCHAR(<span class="number">20</span>),  --游戏玩家</div><div class="line">    [CreateTime]        DATETIME,      --充值时间    </div><div class="line">    [PayType]           NVARCHAR(<span class="number">20</span>),  --充值类型    </div><div class="line">    [Money]             DECIMAL,       --充值金额</div><div class="line">    [IsSuccess]         BIT,           --是否成功 <span class="number">1</span>表示成功， <span class="number">0</span>表示失败</div><div class="line">    CONSTRAINT [PK_Inpours_ID] PRIMARY KEY(ID)</div><div class="line">)</div><div class="line"> </div><div class="line">INSERT INTO Inpours SELECT <span class="string">'张三'</span>, <span class="string">'2010-05-01'</span>, <span class="string">'支付宝'</span>, <span class="number">50</span>, <span class="number">1</span></div><div class="line"> </div><div class="line">INSERT INTO Inpours SELECT <span class="string">'张三'</span>, <span class="string">'2010-06-14'</span>, <span class="string">'支付宝'</span>, <span class="number">50</span>, <span class="number">1</span></div><div class="line"> </div><div class="line">INSERT INTO Inpours SELECT <span class="string">'张三'</span>, <span class="string">'2010-06-14'</span>, <span class="string">'手机短信'</span>, <span class="number">100</span>, <span class="number">1</span></div><div class="line"> </div><div class="line">INSERT INTO Inpours SELECT <span class="string">'李四'</span>, <span class="string">'2010-06-14'</span>, <span class="string">'手机短信'</span>, <span class="number">100</span>, <span class="number">1</span></div><div class="line"> </div><div class="line">INSERT INTO Inpours SELECT <span class="string">'李四'</span>, <span class="string">'2010-07-14'</span>, <span class="string">'支付宝'</span>, <span class="number">100</span>, <span class="number">1</span></div><div class="line"> </div><div class="line">INSERT INTO Inpours SELECT <span class="string">'王五'</span>, <span class="string">'2010-07-14'</span>, <span class="string">'工商银行卡'</span>, <span class="number">100</span>, <span class="number">1</span></div><div class="line"> </div><div class="line">INSERT INTO Inpours SELECT <span class="string">'赵六'</span>, <span class="string">'2010-07-14'</span>, <span class="string">'建设银行卡'</span>, <span class="number">100</span>, <span class="number">1</span></div><div class="line"><span class="string">``</span><span class="string">` </span></div><div class="line"></div><div class="line">下面来了一个统计数据的需求，要求按日期、支付方式来统计充值金额信息。这也是一个典型的行转列的例子。我们可以通过下面的脚本来达到目的</div><div class="line"></div><div class="line">`<span class="string">``</span>javascript</div><div class="line">SELECT CONVERT(VARCHAR(<span class="number">10</span>), CreateTime, <span class="number">120</span>) AS CreateTime, </div><div class="line">       CASE PayType WHEN <span class="string">'支付宝'</span>     THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'支付宝'</span>, </div><div class="line">       CASE PayType WHEN <span class="string">'手机短信'</span>    THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'手机短信'</span>, </div><div class="line">       CASE PayType WHEN <span class="string">'工商银行卡'</span>  THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'工商银行卡'</span>, </div><div class="line">       CASE PayType WHEN <span class="string">'建设银行卡'</span>  THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'建设银行卡'</span> </div><div class="line">FROM Inpours </div><div class="line">GROUP BY CreateTime, PayType</div></pre></td></tr></table></figure>
+<p>如图所示，我们这样只是得到了这样的输出结果，还需进一步处理，才能得到想要的结果</p>
+<p><img src="http://images.cnblogs.com/cnblogs_com/kerrycode/2010072802.gif" alt=""></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">SELECT </div><div class="line">       CreateTime, </div><div class="line">       ISNULL(SUM([支付宝])    , <span class="number">0</span>)  AS [支付宝]    , </div><div class="line">       ISNULL(SUM([手机短信])  , <span class="number">0</span>)  AS [手机短信]   , </div><div class="line">       ISNULL(SUM([工商银行卡]), <span class="number">0</span>)  AS [工商银行卡] ,  </div><div class="line">       ISNULL(SUM([建设银行卡]), <span class="number">0</span>)  AS [建设银行卡]</div><div class="line">FROM</div><div class="line">(</div><div class="line">    SELECT CONVERT(VARCHAR(<span class="number">10</span>), CreateTime, <span class="number">120</span>) AS CreateTime,</div><div class="line">           CASE PayType WHEN <span class="string">'支付宝'</span>     THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'支付宝'</span> ,</div><div class="line">           CASE PayType WHEN <span class="string">'手机短信'</span>   THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'手机短信'</span>,</div><div class="line">           CASE PayType WHEN <span class="string">'工商银行卡'</span> THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'工商银行卡'</span>,</div><div class="line">           CASE PayType WHEN <span class="string">'建设银行卡'</span> THEN SUM(Money) ELSE <span class="number">0</span> END AS <span class="string">'建设银行卡'</span></div><div class="line">    FROM Inpours</div><div class="line">    GROUP BY CreateTime, PayType</div><div class="line">) T</div><div class="line">GROUP BY CreateTime</div></pre></td></tr></table></figure>
+<p>其实行转列，关键是要理清逻辑，而且对分组（Group by）概念比较清晰。上面两个列子基本上就是行转列的类型了。但是有个问题来了，上面是我为了说明弄的一个简单列子。实际中，可能支付方式特别多，而且逻辑也复杂很多，可能涉及汇率、手续费等等(曾经做个这样一个)，如果支付方式特别多，我们的CASE WHEN 会弄出一大堆，确实比较恼火，而且新增一种支付方式，我们还得修改脚本如果把上面的脚本用动态SQL改写一下，我们就能轻松解决这个问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">DECLARE @cmdText    VARCHAR(<span class="number">8000</span>); </div><div class="line">DECLARE @tmpSql        VARCHAR(<span class="number">8000</span>); </div><div class="line"></div><div class="line">SET @cmdText = <span class="string">'SELECT CONVERT(VARCHAR(10), CreateTime, 120) AS CreateTime,'</span> + CHAR(<span class="number">10</span>); </div><div class="line">SELECT @cmdText = @cmdText + <span class="string">' CASE PayType WHEN '</span><span class="string">''</span> + PayType + <span class="string">''</span><span class="string">' THEN SUM(Money) ELSE 0 END AS '</span><span class="string">''</span> + PayType  </div><div class="line">                + <span class="string">''</span><span class="string">','</span> + CHAR(<span class="number">10</span>)  FROM (SELECT DISTINCT PayType FROM Inpours ) T </div><div class="line"></div><div class="line">SET @cmdText = LEFT(@cmdText, LEN(@cmdText) <span class="number">-2</span>) --注意这里，如果没有加CHAR(<span class="number">10</span>) 则用LEFT(@cmdText, LEN(@cmdText) <span class="number">-1</span>) </div><div class="line"></div><div class="line">SET @cmdText = @cmdText + <span class="string">' FROM Inpours     GROUP BY CreateTime, PayType '</span>; </div><div class="line"></div><div class="line">SET @tmpSql =<span class="string">'SELECT CreateTime,'</span> + CHAR(<span class="number">10</span>); </div><div class="line">SELECT @tmpSql = @tmpSql + <span class="string">' ISNULL(SUM('</span> + PayType  + <span class="string">'), 0) AS '</span><span class="string">''</span> + PayType  + <span class="string">''</span><span class="string">','</span>  + CHAR(<span class="number">10</span>) </div><div class="line">                    FROM  (SELECT DISTINCT PayType FROM Inpours ) T </div><div class="line"></div><div class="line">SET @tmpSql = LEFT(@tmpSql, LEN(@tmpSql) <span class="number">-2</span>) + <span class="string">' FROM ('</span> + CHAR(<span class="number">10</span>); </div><div class="line"></div><div class="line">SET @cmdText = @tmpSql + @cmdText + <span class="string">') T GROUP BY CreateTime '</span>; </div><div class="line">PRINT @cmdText </div><div class="line">EXECUTE (@cmdText);</div></pre></td></tr></table></figure>
+<p>下面是通过PIVOT来进行行转列的用法，大家可以对比一下，确实要简单、更具可读性（呵呵，习惯的前提下）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">SELECT  </div><div class="line">        CreateTime, [支付宝] , [手机短信], </div><div class="line">        [工商银行卡] , [建设银行卡] </div><div class="line">FROM </div><div class="line">( </div><div class="line">    SELECT CONVERT(VARCHAR(<span class="number">10</span>), CreateTime, <span class="number">120</span>) AS CreateTime,PayType, Money </div><div class="line">    FROM Inpours </div><div class="line">) P </div><div class="line">PIVOT ( </div><div class="line">            SUM(Money) </div><div class="line">            FOR PayType IN </div><div class="line">            ([支付宝], [手机短信], [工商银行卡], [建设银行卡]) </div><div class="line">      ) AS T </div><div class="line">ORDER BY CreateTime</div></pre></td></tr></table></figure>
+<p>有时可能会出现这样的错误：</p>
+<p>消息 325，级别 15，状态 1，第 9 行</p>
+<p>‘PIVOT’ 附近有语法错误。您可能需要将当前数据库的兼容级别设置为更高的值，以启用此功能。有关存储过程 sp_dbcmptlevel 的信息，请参见帮助。</p>
+<p>这个是因为：对升级到 SQL Server 2005 或更高版本的数据库使用 PIVOT 和 UNPIVOT 时，必须将数据库的兼容级别设置为 90 或更高。有关如何设置数据库兼容级别的信息，请参阅 sp_dbcmptlevel (Transact-SQL)。 例如，只需在执行上面脚本前加上 EXEC sp_dbcmptlevel Test, 90; 就OK了， Test 是所在数据库的名称。</p>
+<p>下面我们来看看列转行，主要是通过UNION ALL ,MAX来实现。假如有下面这么一个表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE ProgrectDetail </div><div class="line">( </div><div class="line">    ProgrectName         NVARCHAR(20), --工程名称 </div><div class="line">    OverseaSupply        INT,          --海外供应商供给数量 </div><div class="line">    NativeSupply         INT,          --国内供应商供给数量 </div><div class="line">    SouthSupply          INT,          --南方供应商供给数量 </div><div class="line">    NorthSupply          INT           --北方供应商供给数量 </div><div class="line">) </div><div class="line"></div><div class="line">INSERT INTO ProgrectDetail </div><div class="line">SELECT &apos;A&apos;, 100, 200, 50, 50 </div><div class="line">UNION ALL </div><div class="line">SELECT &apos;B&apos;, 200, 300, 150, 150 </div><div class="line">UNION ALL </div><div class="line">SELECT &apos;C&apos;, 159, 400, 20, 320 </div><div class="line">UNION ALL </div><div class="line">SELECT &apos;D&apos;, 250, 30, 15, 15</div></pre></td></tr></table></figure>
+<p>我们可以通过下面的脚本来实现，查询结果如下图所示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SELECT ProgrectName, <span class="string">'OverseaSupply'</span> AS Supplier, </div><div class="line">        MAX(OverseaSupply) AS <span class="string">'SupplyNum'</span> </div><div class="line">FROM ProgrectDetail </div><div class="line">GROUP BY ProgrectName </div><div class="line">UNION ALL </div><div class="line">SELECT ProgrectName, <span class="string">'NativeSupply'</span> AS Supplier, </div><div class="line">        MAX(NativeSupply) AS <span class="string">'SupplyNum'</span> </div><div class="line">FROM ProgrectDetail </div><div class="line">GROUP BY ProgrectName </div><div class="line">UNION ALL </div><div class="line">SELECT ProgrectName, <span class="string">'SouthSupply'</span> AS Supplier, </div><div class="line">        MAX(SouthSupply) AS <span class="string">'SupplyNum'</span> </div><div class="line">FROM ProgrectDetail </div><div class="line">GROUP BY ProgrectName </div><div class="line">UNION ALL </div><div class="line">SELECT ProgrectName, <span class="string">'NorthSupply'</span> AS Supplier, </div><div class="line">        MAX(NorthSupply) AS <span class="string">'SupplyNum'</span> </div><div class="line">FROM ProgrectDetail </div><div class="line">GROUP BY ProgrectName</div></pre></td></tr></table></figure>
+<p><img src="http://images.cnblogs.com/cnblogs_com/kerrycode/2010072803.gif" alt=""></p>
+<p>用UNPIVOT 实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">SELECT ProgrectName,Supplier,SupplyNum </div><div class="line">FROM  </div><div class="line">( </div><div class="line">    SELECT ProgrectName, OverseaSupply, NativeSupply, </div><div class="line">           SouthSupply, NorthSupply </div><div class="line">     FROM ProgrectDetail </div><div class="line">)T </div><div class="line">UNPIVOT  </div><div class="line">( </div><div class="line">    SupplyNum FOR Supplier IN </div><div class="line">    (OverseaSupply, NativeSupply, SouthSupply, NorthSupply ) </div><div class="line">) P</div></pre></td></tr></table></figure>
+<p>转载 作者：潇湘隐者<br>出处：<a href="http://www.cnblogs.com/kerrycode/" target="_blank" rel="external">http://www.cnblogs.com/kerrycode/</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2016-10-17, 09:35:13</p>
+        <p><span>最后更新:</span>2016-11-13, 11:17:14</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/17/sqlChange/" title="经典SQL——行转列，列转行">http://yoursite.com/2016/10/17/sqlChange/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/17/sqlChange/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/11/11/google_java_style/">
+                    Google的Java编码规范
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/10/08/mysql-search/">
+                    MySQL 慢查询的特征表现及优化方式
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#经典SQL——行转列，列转行"><span class="toc-number">1.</span> <span class="toc-text">经典SQL——行转列，列转行</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"经典SQL——行转列，列转行　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/10/17/sqlChange/" data-title="经典SQL——行转列，列转行" data-url="http://yoursite.com/2016/10/17/sqlChange/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/11/11/google_java_style/" title="上一篇: Google的Java编码规范">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/10/08/mysql-search/" title="下一篇: MySQL 慢查询的特征表现及优化方式">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="1、明确优化目标&amp;#160; &amp;#160; &amp;#160; &amp;#160;在优化工作开始的时候，你还尚未明确优化内容和目的，那么你很容易陷入误区。在一开始，你就应该清楚地了解你要达到的效果，以及其他优化相关的各种问题。这些目标需要明确指出（至少精通技术的项目经理可以理解和表达它），接下来，在整个优化过程中，你需要坚持这些目标。
+
+在实际的项目开发中，经常会存在各种各样的变数。可能一开始时要优化这一方面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java优化代码提点">
+<meta property="og:url" content="http://yoursite.com/2016/04/26/javaXingNeng/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="1、明确优化目标&amp;#160; &amp;#160; &amp;#160; &amp;#160;在优化工作开始的时候，你还尚未明确优化内容和目的，那么你很容易陷入误区。在一开始，你就应该清楚地了解你要达到的效果，以及其他优化相关的各种问题。这些目标需要明确指出（至少精通技术的项目经理可以理解和表达它），接下来，在整个优化过程中，你需要坚持这些目标。
+
+在实际的项目开发中，经常会存在各种各样的变数。可能一开始时要优化这一方面">
+<meta property="og:updated_time" content="2016-04-27T15:03:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java优化代码提点">
+<meta name="twitter:description" content="1、明确优化目标&amp;#160; &amp;#160; &amp;#160; &amp;#160;在优化工作开始的时候，你还尚未明确优化内容和目的，那么你很容易陷入误区。在一开始，你就应该清楚地了解你要达到的效果，以及其他优化相关的各种问题。这些目标需要明确指出（至少精通技术的项目经理可以理解和表达它），接下来，在整个优化过程中，你需要坚持这些目标。
+
+在实际的项目开发中，经常会存在各种各样的变数。可能一开始时要优化这一方面">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>java优化代码提点 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-javaXingNeng" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/26/javaXingNeng/" class="article-date">
+      <time datetime="2016-04-26T14:37:48.000Z" itemprop="datePublished">2016-04-26</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java优化代码提点
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="1、明确优化目标"><a href="#1、明确优化目标" class="headerlink" title="1、明确优化目标"></a>1、明确优化目标</h3><p>&#160; &#160; &#160; &#160;在优化工作开始的时候，你还尚未明确优化内容和目的，那么你很容易陷入误区。在一开始，你就应该清楚地了解你要达到的效果，以及其他优化相关的各种问题。这些目标需要明确指出（至少精通技术的项目经理可以理解和表达它），接下来，在整个优化过程中，你需要坚持这些目标。</p>
+<blockquote>
+<p>在实际的项目开发中，经常会存在各种各样的变数。可能一开始时要优化这一方面，随后你可能会发现需要优化另一方面。这种情况下，你需要清晰地了解这些变化，并确保团队中的每个人都明白目标已经发生了变化。</p>
+<h3 id="2、选择正确的优化指标"><a href="#2、选择正确的优化指标" class="headerlink" title="2、选择正确的优化指标"></a>2、选择正确的优化指标</h3><p>选择正确的指标，是优化的一个重要组成部分，你需要按照这些指标来测量优化工作的进展情况。如果指标选择不恰当，或者完全错误，你所做的努力有可能白费了。即使指标正确，也必须有一些辨别。在某些情况下，将最多的努力投入到运行消耗时间最多的那部分代码中，这是实用的策略。但也要记住，Unix/Linux内核的大部分时间花费在了空循环上。需要注意的是，如果你轻易选择了一个很容易达到的指标，这作用不大，因为没有真正解决问题。你有必要选择一个更复杂的、更接近你的目标的指标。</p>
+<h2 id="优化实践"><a href="#优化实践" class="headerlink" title="优化实践"></a>优化实践</h2><h3 id="1、try-catch-使用"><a href="#1、try-catch-使用" class="headerlink" title="1、try{}catch(){}使用"></a>1、try{}catch(){}使用</h3><p>一般特别重要的数据操作都需要捕获异常，以便程序员及时知道哪里产生了错误，但频繁地try{}catch(){}会降低系统的性能。<br>【情景一】查询中不要使用try{}catch(){}语句<br>   一般查询中不需要使用try{}catch(){}语句的最好将try{}catch(){}去掉。在CRUD(create、read、update、delete)操作中，读取数据（R{read}）是一种很常见的操作方式，不会对数据本身构成任何影响，所以没必要使用try{}catch(){}语句。单个的try{}catch(){}语句使用虽然对程序虽然不会造成什么影响但是最好不要使用，没有什么实际意义。<br>   假设一个查询的时间是3s，程序模拟实现：<br>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> tryCatch()  </div><div class="line"> &#123;  </div><div class="line">     long before = System.currentTimeMillis();  </div><div class="line">     <span class="keyword">try</span>  </div><div class="line">     &#123;  </div><div class="line">         <span class="keyword">new</span> Thread().sleep(<span class="number">3000</span>);  </div><div class="line">     &#125; <span class="keyword">catch</span> (Exception e)  </div><div class="line">     &#123;  </div><div class="line">         e.printStackTrace();  </div><div class="line">     &#125;  </div><div class="line">     long after = System.currentTimeMillis();  </div><div class="line">     System.out.println(<span class="string">"单个try catch 耗时:"</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<a id="more"></a>
+<pre><code>【情景二】循环中不要使用try{}catch(){}语句
+</code></pre><p>   try{}catch(){}语句是一个比较耗时的处理过程，在for循环中循环体的长度越长需要try{}catch(){}的次数也就越多。<br>Java测试代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> tryCatchOperateInLoop(long times)  </div><div class="line">    &#123;  </div><div class="line">        long before = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; times; i++)  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">try</span>  </div><div class="line">            &#123;  </div><div class="line">                <span class="keyword">new</span> Thread();  </div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e)  </div><div class="line">            &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        long after = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"执行try catch 循环耗时:"</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    public <span class="keyword">void</span> noTryCatchOperateInLoop(long times)  </div><div class="line">    &#123;  </div><div class="line">        long before = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; times; i++)  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">new</span> Thread();  </div><div class="line">        &#125;  </div><div class="line">        long after = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"非try catch 循环耗时:"</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="2、减少使用new关键字创建对象"><a href="#2、减少使用new关键字创建对象" class="headerlink" title="2、减少使用new关键字创建对象"></a>2、减少使用new关键字创建对象</h3><p>   在Java程序中，对象的创建和销毁是一个重量级的操作，会增加系统性能开销降低系统性能，而且并不能保证对象在不使用的时候就马上执行GC操作了。此外，初始化一个对象会默认盗用其无参构造函数，大多数情况下我们并不想初始化对象时就调用其构造方法。<br>【情景一】避免在循环中使用new关键字创建对象<br>  下面以一个例子来加以说明：<br>Java测试代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> noTryCatchOperateInLoop(long times)  </div><div class="line">    &#123;  </div><div class="line">        long before = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; times; i++)  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">new</span> <span class="built_in">Object</span>();  </div><div class="line">        &#125;  </div><div class="line">        long after = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"循环耗时:"</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>  *【情景二】有必要创建对象时才进行创建</p>
+<p> 在某些情况下我们根本不需要创建多余的变量或者对象，但是却时常忍不住会或无意中这么做了。<br>Java测试代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public <span class="built_in">String</span> judgeStatus(int flag)  </div><div class="line">    &#123;  </div><div class="line">        <span class="built_in">String</span> s = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"成功"</span>);  </div><div class="line">        <span class="keyword">if</span> (flag == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            s = <span class="string">"失败"</span>;  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> s;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="3、乘除法是否可以使用移位运算"><a href="#3、乘除法是否可以使用移位运算" class="headerlink" title="3、乘除法是否可以使用移位运算"></a>3、乘除法是否可以使用移位运算</h3> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 左移运算 times是2的幂  </span></div><div class="line">public long numberLeftCalculate(long number, int times)  </div><div class="line">&#123;  </div><div class="line">    <span class="keyword">return</span> number &lt;&lt; times;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line"><span class="comment">// 右移运算 times是2的幂  </span></div><div class="line">public long numberRightCalculate(long number, int times)  </div><div class="line">&#123;  </div><div class="line">    <span class="keyword">return</span> number &gt;&gt; times;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4、注意循环的写法"><a href="#4、注意循环的写法" class="headerlink" title="4、注意循环的写法"></a>4、注意循环的写法</h3><p> 【情景一】减少循环次数变量的读取<br>事先要确定一个循环的次数，以后就不再需要计算它的次数了<br>Java测试代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; list.size(); i++)  </div><div class="line">&#123;  </div><div class="line">    <span class="comment">//每次都会去判定i是否到list.size()的边界  </span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>【情景二】循环中嵌套循环将小循环写在外层<br>   大循环嵌套小循环，外层循环次数太多造成循环之间不断的切换，也会增加系统开销。<br>Java测试代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> complexLoop()  </div><div class="line">    &#123;  </div><div class="line">        long before = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; <span class="number">1000000</span>; j++)  </div><div class="line">            &#123;  </div><div class="line">                <span class="keyword">new</span> <span class="built_in">String</span>();  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        long after = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"小嵌大循环耗时:"</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line">  </div><div class="line">        long before2 = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++)  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; <span class="number">10</span>; j++)  </div><div class="line">            &#123;  </div><div class="line">                <span class="keyword">new</span> <span class="built_in">String</span>();  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        long after2 = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"大嵌小循环耗时:"</span> + (after2 - before2) + <span class="string">"ms"</span>);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="5、实现字符串拼接"><a href="#5、实现字符串拼接" class="headerlink" title="5、实现字符串拼接"></a>5、实现字符串拼接</h3><p>【情景一】String<br>     不可变字符数据类的拼接，每次使用“+=”时都相当于引入了一个中间的临时变量，所以这种方式最值得诟病。<br>Java代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> exampleString(int arg1, int arg2, int arg3)  </div><div class="line">    &#123;  </div><div class="line">        <span class="built_in">String</span> sb = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"参数名称: "</span>);  </div><div class="line">        <span class="keyword">if</span> (arg1 == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            sb += <span class="string">"  arg1xxxxx0"</span>;  </div><div class="line">        &#125; <span class="keyword">else</span>  </div><div class="line">        &#123;  </div><div class="line">            sb += <span class="string">"  arg1xxxxx-1"</span>;  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">if</span> (arg2 == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            sb += <span class="string">"  arg2xxxxx0"</span>;  </div><div class="line">        &#125; <span class="keyword">else</span>  </div><div class="line">        &#123;  </div><div class="line">            sb += <span class="string">"  arg2xxxxx-1"</span>;  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">if</span> (arg3 == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            sb += <span class="string">"  arg3xxxxx0"</span>;  </div><div class="line">        &#125; <span class="keyword">else</span>  </div><div class="line">        &#123;  </div><div class="line">            sb += <span class="string">"  arg3xxxxx-1"</span>;  </div><div class="line">        &#125;  </div><div class="line">        System.out.println(sb);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>【情景二】StringBuilder<br>  可变字符串对象，可以确保当前线程只有一个StringBuffer对象在实现字符串长度的修改变化，但此对象却不是线程安全的。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> exampleStringBuilder(int arg1, int arg2, int arg3)  </div><div class="line">    &#123;  </div><div class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(<span class="string">"参数名称: "</span>);  </div><div class="line">        <span class="keyword">if</span> (arg1 == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            sb.append(<span class="string">"  arg1xxxxx0"</span>);  </div><div class="line">        &#125; <span class="keyword">else</span>  </div><div class="line">        &#123;  </div><div class="line">            sb.append(<span class="string">"  arg1xxxxx-1"</span>);  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">if</span> (arg2 == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            sb.append(<span class="string">"  arg2xxxxx0"</span>);  </div><div class="line">        &#125; <span class="keyword">else</span>  </div><div class="line">        &#123;  </div><div class="line">            sb.append(<span class="string">"  arg2xxxxx-1"</span>);  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">if</span> (arg3 == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            sb.append(<span class="string">"  arg3xxxxx0"</span>);  </div><div class="line">        &#125; <span class="keyword">else</span>  </div><div class="line">        &#123;  </div><div class="line">            sb.append(<span class="string">"  arg3xxxxx-1"</span>);  </div><div class="line">        &#125;  </div><div class="line">        System.out.println(sb.toString());  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>【情景四】单个字符相加用’’代替””<br>     前面已经讲述：String字符串相加不是个明智之选，这里谈单个字符的拼接；由于’’作用的是char类型的数据所以比String要适合；显然，StringBuffer在这里使用就是一种浪费了。<br>Java代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 例子：  </span></div><div class="line">    public <span class="keyword">void</span> method(<span class="built_in">String</span> s)  </div><div class="line">    &#123;  </div><div class="line">        <span class="built_in">String</span> string = s + <span class="string">"d"</span>;  </div><div class="line">        string = <span class="string">"abc"</span> + <span class="string">"d"</span>;  </div><div class="line">        System.out.println(string);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">// 更正： 将一个字符的字符串替换成' '  </span></div><div class="line">    public <span class="keyword">void</span> method2(<span class="built_in">String</span> s)  </div><div class="line">    &#123;  </div><div class="line">        <span class="built_in">String</span> string = s + <span class="string">'d'</span>;  </div><div class="line">        string = <span class="string">"abc"</span> + <span class="string">'d'</span>;  </div><div class="line">        System.out.println(string);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="6、提升HashMap遍历效率"><a href="#6、提升HashMap遍历效率" class="headerlink" title="6、提升HashMap遍历效率"></a>6、提升HashMap遍历效率</h3><p>Hashmap实现了Map接口，其底层是用Entry对象来操作key和value的，Map的遍历实就是利用Hash值取出相应的Entry做比较得到结果。<br>Java测试代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> foreachHashMap()  </div><div class="line">    &#123;  </div><div class="line">        <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>[]&gt; paraMap = <span class="keyword">new</span> HashMap&lt;<span class="built_in">String</span>, <span class="built_in">String</span>[]&gt;();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++)  </div><div class="line">        &#123;  </div><div class="line">            paraMap.put(<span class="string">"test"</span> + i, <span class="keyword">new</span> <span class="built_in">String</span>[]  </div><div class="line">            &#123; <span class="string">"s"</span> + i &#125;);  </div><div class="line">        &#125;  </div><div class="line">        <span class="built_in">String</span>[] values;  </div><div class="line">        <span class="comment">// 第一个循环  </span></div><div class="line">        long before = System.currentTimeMillis();  </div><div class="line">        <span class="built_in">Set</span>&lt;<span class="built_in">String</span>&gt; appFieldDefIds = paraMap.keySet();  </div><div class="line">        <span class="keyword">for</span> (<span class="built_in">String</span> appFieldDefId : appFieldDefIds)  </div><div class="line">        &#123;  </div><div class="line">            values = paraMap.get(appFieldDefId);  </div><div class="line">            <span class="comment">// System.out.println(values[0]);  </span></div><div class="line">        &#125;  </div><div class="line">        long after = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"HashMap遍历:"</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line">  </div><div class="line">        <span class="comment">// 第二个循环  </span></div><div class="line">        long before2 = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (Entry&lt;<span class="built_in">String</span>, <span class="built_in">String</span>[]&gt; entry : paraMap.entrySet())  </div><div class="line">        &#123;  </div><div class="line">            values = entry.getValue();  </div><div class="line">            <span class="comment">// System.out.println(values[0]);  </span></div><div class="line">        &#125;  </div><div class="line">        long after2 = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"HashMap遍历:"</span> + (after2 - before2) + <span class="string">"ms"</span>);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>测试结果：HashMap遍历:93ms，HashMap遍历:63ms<br>当循环次数是10000次时，打印：<br>HashMap遍历:15ms<br>HashMap遍历:0ms</p>
+<p>就方法本身而言，使用第一个循环相当于两次进入HashMap的Entry中<br>而第二个循环取得Entry的值之后直接取value，效率比第一个循环高。</p>
+<h3 id="7、-尽量使用局部变量"><a href="#7、-尽量使用局部变量" class="headerlink" title="7、  尽量使用局部变量"></a>7、  尽量使用局部变量</h3><p>尽量使用局部变量，调用方法时传递的参数以及在调用中创建的临时变量都保存在栈（Stack）中，速度较快。其他变量，如静态变量、实例变量等，都在堆（Heap）中创建，速度较慢。<br>Java测试代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">static</span> int increment_no;  </div><div class="line">  </div><div class="line">    public <span class="keyword">void</span> forLoop()  </div><div class="line">    &#123;  </div><div class="line">        long before = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">10000000</span>; i++)  </div><div class="line">        &#123;  </div><div class="line">            increment_no += i;  </div><div class="line">        &#125;  </div><div class="line">        long after = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"变量测试:"</span> + increment_no + <span class="string">" "</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    public <span class="keyword">void</span> forLoop2()  </div><div class="line">    &#123;  </div><div class="line">        int no = <span class="number">0</span>;  </div><div class="line">        long before = System.currentTimeMillis();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">10000000</span>; i++)  </div><div class="line">        &#123;  </div><div class="line">            no += i;  </div><div class="line">        &#125;  </div><div class="line">        long after = System.currentTimeMillis();  </div><div class="line">        System.out.println(<span class="string">"变量测试:"</span> + no + <span class="string">" "</span> + (after - before) + <span class="string">"ms"</span>);  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>测试结果：<br>变量测试:-2014260032 31ms<br>变量测试:-2014260032 0ms</p>
+<h3 id="8、尽量实现对象重用"><a href="#8、尽量实现对象重用" class="headerlink" title="8、尽量实现对象重用"></a>8、尽量实现对象重用</h3><p>  系统要花时间生成对象，以后还需花时间对这些对象进行垃圾回收和处理。因此，生成过多的对象将会给程序的性能带来很大的影响。<br>【情景一】字符串对象重用<br>  字符串对象的重用，就是减少字符串变量的声明，而有些声明是不可见的，需要注意。<br>Java代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// String 是不可变字符，str "+="相当于 String temp=array[0];str=str+temp;  </span></div><div class="line">    public <span class="built_in">String</span> getString(<span class="built_in">String</span> array[])  </div><div class="line">    &#123;  </div><div class="line">        <span class="built_in">String</span> str = <span class="string">""</span>;  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; array.length; i++)  </div><div class="line">        &#123;  </div><div class="line">            str += array[i];  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> str;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">// StringBuffer是可变字符，字符串拼接在一个对象上操作  </span></div><div class="line">    public <span class="built_in">String</span> getString2(<span class="built_in">String</span> array[])  </div><div class="line">    &#123;  </div><div class="line">        StringBuffer sb = <span class="keyword">new</span> StringBuffer();  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; array.length; i++)  </div><div class="line">        &#123;  </div><div class="line">            sb.append(array[i]);  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> sb.toString();  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这里的String类的”+=”操作就是一种中间变量的声明方式实现的，而StringBuffer则相当于一个容器，字符串添加就是在不断地向容器中添加而不需要其他容器来辅助实现。有此可见，字符串对象重用也可以使用StringBuffer 来实现。</p>
+<h3 id="9、ArrayList、Vector、LinkedList的使用"><a href="#9、ArrayList、Vector、LinkedList的使用" class="headerlink" title="9、ArrayList、Vector、LinkedList的使用"></a>9、ArrayList、Vector、LinkedList的使用</h3><p>List接口一共有三个实现类，分别是ArrayList、Vector和LinkedList。List用于存放多个元素，能够维护元素的次序，并且允许元素的重复。<br>【情景一】ArrayList实现随机查找和遍历<br>　　ArrayList是最常用的List实现类，内部是通过数组实现的，它允许对元素进行快速随机访问。数组的缺点是每个元素之间不能有间隔，当数组大小不满足时需要增加存储能力，就要讲已经有数组的数据复制到新的存储空间中。当从ArrayList的中间位置插入或者删除元素时，需要对数组进行复制、移动、代价比较高。因此，它适合随机查找和遍历，不适合插入和删除。<br>Java代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> myArrayList(ArrayList&lt;<span class="built_in">String</span>&gt; list)  </div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>, j = list.size(); i &lt; j; i++)  </div><div class="line">        &#123;  </div><div class="line">            System.out.println(list.get(i));  </div><div class="line">        &#125;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>【情景二】Vector实现数组同步操作<br>　　Vector与ArrayList一样，也是通过数组实现的，不同的是它支持线程的同步，即某一时刻只有一个线程能够写Vector，避免多线程同时写而引起的不一致性，但实现同步需要很高的花费，因此，访问它比访问ArrayList慢。<br>Java代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> myVectorList(Vector&lt;<span class="built_in">String</span>&gt; list, <span class="built_in">String</span> s)  </div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>, j = list.size(); i &lt; j; i++)  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">if</span> (list.get(i).equals(s))  </div><div class="line">            &#123;  </div><div class="line">                <span class="comment">// 修改值  </span></div><div class="line">                list.add(i, i + <span class="string">"update"</span>);  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>【情景三】LinkedList数据的动态插入和删除<br>　　LinkedList是用链表结构存储数据的，很适合数据的动态插入和删除，随机访问和遍历速度比较慢。另外，他还提供了List接口中没有定义的方法，专门用于操作表头和表尾元素，可以当作堆栈、队列和双向队列使用。<br>Java代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> myLinkedList(LinkedList&lt;<span class="built_in">String</span>&gt; list, <span class="built_in">String</span> s)  </div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>, j = list.size() - <span class="number">10</span>; i &lt; j; i++)  </div><div class="line">        &#123;  </div><div class="line">            list.pop();  </div><div class="line">        &#125;  </div><div class="line">  </div><div class="line">        <span class="keyword">if</span> (list.size() == <span class="number">0</span>)  </div><div class="line">        &#123;  </div><div class="line">            list.add(<span class="number">0</span>, <span class="string">"ss"</span>);  </div><div class="line">        &#125; <span class="keyword">else</span>  </div><div class="line">        &#123;  </div><div class="line">            list.removeAll(list);  </div><div class="line">        &#125;  </div><div class="line">  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="10、System-arraycopy-实现数组值的拷贝"><a href="#10、System-arraycopy-实现数组值的拷贝" class="headerlink" title="10、System.arraycopy()实现数组值的拷贝"></a>10、System.arraycopy()实现数组值的拷贝</h3><p>两个数组间的复制建议不要使用循环，Java提供了一个数组拷贝的方法。<br>Java代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">void</span> arrayCopy()  </div><div class="line">&#123;  </div><div class="line">    int[] array1 = <span class="keyword">new</span> int[<span class="number">10</span>];  </div><div class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; array1.length; i++)  </div><div class="line">    &#123;  </div><div class="line">        array1[i] = i;  </div><div class="line">    &#125;  </div><div class="line">    int[] array2 = <span class="keyword">new</span> int[<span class="number">10</span>];  </div><div class="line">    System.arraycopy(array1, <span class="number">0</span>, array2, <span class="number">0</span>, <span class="number">10</span>);  </div><div class="line">  </div><div class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; array2.length; i++)  </div><div class="line">    &#123;  </div><div class="line">        System.out.print(array2[i] + <span class="string">","</span>);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>打印结果：0,1,2,3,4,5,6,7,8,9,<br>注意：虽然List内部是基于数组的实现，但是这里取不能使用System.arraycopy(list1, 0, list2, 0, n);虽然代码编写时通过了编译，但是会有运行时异常抛出。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/04/26/javaXingNeng/">java优化代码提点</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2016-04-26, 22:37:48</p>
+        <p><span>最后更新:</span>2016-04-27, 23:03:54</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/04/26/javaXingNeng/" title="java优化代码提点">http://yoursite.com/2016/04/26/javaXingNeng/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/04/26/javaXingNeng/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/04/27/tenTcjquery/">
+                    十条jQuery代码片段助力Web开发效率提升
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/04/24/javaTcl/">
+                    javaTcl
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、明确优化目标"><span class="toc-number">1.</span> <span class="toc-text">1、明确优化目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、选择正确的优化指标"><span class="toc-number">2.</span> <span class="toc-text">2、选择正确的优化指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化实践"><span class="toc-number"></span> <span class="toc-text">优化实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、try-catch-使用"><span class="toc-number">1.</span> <span class="toc-text">1、try{}catch(){}使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、减少使用new关键字创建对象"><span class="toc-number">2.</span> <span class="toc-text">2、减少使用new关键字创建对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、乘除法是否可以使用移位运算"><span class="toc-number">3.</span> <span class="toc-text">3、乘除法是否可以使用移位运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、注意循环的写法"><span class="toc-number">4.</span> <span class="toc-text">4、注意循环的写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、实现字符串拼接"><span class="toc-number">5.</span> <span class="toc-text">5、实现字符串拼接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、提升HashMap遍历效率"><span class="toc-number">6.</span> <span class="toc-text">6、提升HashMap遍历效率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、-尽量使用局部变量"><span class="toc-number">7.</span> <span class="toc-text">7、  尽量使用局部变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、尽量实现对象重用"><span class="toc-number">8.</span> <span class="toc-text">8、尽量实现对象重用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9、ArrayList、Vector、LinkedList的使用"><span class="toc-number">9.</span> <span class="toc-text">9、ArrayList、Vector、LinkedList的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10、System-arraycopy-实现数组值的拷贝"><span class="toc-number">10.</span> <span class="toc-text">10、System.arraycopy()实现数组值的拷贝</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"java优化代码提点　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/04/26/javaXingNeng/" data-title="java优化代码提点" data-url="http://yoursite.com/2016/04/26/javaXingNeng/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/04/27/tenTcjquery/" title="上一篇: 十条jQuery代码片段助力Web开发效率提升">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/04/24/javaTcl/" title="下一篇: javaTcl">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

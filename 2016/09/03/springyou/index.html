@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="Spring 的优秀工具类盘点
+文件资源操作Spring 定义了一个 org.springframework.core.io.Resource 接口，Resource 接口是为了统一各种类型不同的资源而定义的，Spring 提供了若干 Resource 接口的实现类，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring常用工具类">
+<meta property="og:url" content="http://yoursite.com/2016/09/03/springyou/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="Spring 的优秀工具类盘点
+文件资源操作Spring 定义了一个 org.springframework.core.io.Resource 接口，Resource 接口是为了统一各种类型不同的资源而定义的，Spring 提供了若干 Resource 接口的实现类，">
+<meta property="og:updated_time" content="2016-09-03T03:50:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring常用工具类">
+<meta name="twitter:description" content="Spring 的优秀工具类盘点
+文件资源操作Spring 定义了一个 org.springframework.core.io.Resource 接口，Resource 接口是为了统一各种类型不同的资源而定义的，Spring 提供了若干 Resource 接口的实现类，">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Spring常用工具类 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-springyou" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/03/springyou/" class="article-date">
+      <time datetime="2016-09-03T03:24:36.000Z" itemprop="datePublished">2016-09-03</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring常用工具类
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><strong>Spring 的优秀工具类盘点</strong></p>
+<h3 id="文件资源操作"><a href="#文件资源操作" class="headerlink" title="文件资源操作"></a>文件资源操作</h3><p>Spring 定义了一个 org.springframework.core.io.Resource 接口，Resource 接口是为了统一各种类型不同的资源而定义的，Spring 提供了若干 Resource 接口的实现类，<br><a id="more"></a><br>这些实现类可以轻松地加载不同类型的底层资源，并提供了获取文件名、URL 地址以及资源内容的操作方法</p>
+<p>访问文件资源<br>通过 FileSystemResource 以文件系统绝对路径的方式进行访问；<br>通过 ClassPathResource 以类路径的方式进行访问；<br>通过 ServletContextResource 以相对于 Web 应用根目录的方式进行访问。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">package com.baobaotao.io;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.ClassPathResource;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.FileSystemResource;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">FileSourceExample</span> </span>&#123;</div><div class="line">    public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="built_in">String</span> filePath =</div><div class="line">            <span class="string">"D:/masterSpring/chapter23/webapp/WEB-INF/classes/conf/file1.txt"</span>;</div><div class="line">            <span class="comment">// ① 使用系统文件路径方式加载文件</span></div><div class="line">            Resource res1 = <span class="keyword">new</span> FileSystemResource(filePath);</div><div class="line">            <span class="comment">// ② 使用类路径方式加载文件</span></div><div class="line">            Resource res2 = <span class="keyword">new</span> ClassPathResource(<span class="string">"conf/file1.txt"</span>);</div><div class="line">            InputStream ins1 = res1.getInputStream();</div><div class="line">            InputStream ins2 = res2.getInputStream();</div><div class="line">            System.out.println(<span class="string">"res1:"</span>+res1.getFilename());</div><div class="line">            System.out.println(<span class="string">"res2:"</span>+res2.getFilename());</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">在获取资源后，您就可以通过 Resource 接口定义的多个方法访问文件的数据和其它的信息</div><div class="line">getFileName() 获取文件名，</div><div class="line">getFile() 获取资源对应的 File 对象，</div><div class="line">getInputStream() 直接获取文件的输入流。</div><div class="line">createRelative(<span class="built_in">String</span> relativePath) 在资源相对地址上创建新的资源。</div><div class="line">在 Web 应用中，您还可以通过 ServletContextResource 以相对于 Web 应用根目录的方式访问文件资源</div><div class="line">Spring 提供了一个 ResourceUtils 工具类，它支持“classpath:”和“file:”的地址前缀 ，它能够从指定的地址加载文件资源。</div><div class="line"></div><div class="line"><span class="string">``</span><span class="string">`javascript</span></div><div class="line">File clsFile = ResourceUtils.getFile("classpath:conf/file1.txt");  </div><div class="line">System.out.println(clsFile.isFile());</div><div class="line">String httpFilePath = "file:D:/masterSpring/chapter23/src/conf/file1.txt";</div><div class="line">File httpFile = ResourceUtils.getFile(httpFilePath);</div></pre></td></tr></table></figure>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><p>在使用各种 Resource 接口的实现类加载文件资源后，经常需要对文件资源进行读取、拷贝、转存等不同类型的操作。</p>
+<p>FileCopyUtils</p>
+<p>它提供了许多一步式的静态操作方法，能够将文件内容拷贝到一个目标 byte[]、String 甚至一个输出流或输出文件中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">package com.baobaotao.io;</div><div class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.FileReader;</div><div class="line"><span class="keyword">import</span> java.io.OutputStream;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.ClassPathResource;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</div><div class="line"><span class="keyword">import</span> org.springframework.util.FileCopyUtils;</div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">FileCopyUtilsExample</span> </span>&#123;</div><div class="line">    public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) throws Throwable &#123;</div><div class="line">        Resource res = <span class="keyword">new</span> ClassPathResource(<span class="string">"conf/file1.txt"</span>);</div><div class="line">        <span class="comment">// ① 将文件内容拷贝到一个 byte[] 中</span></div><div class="line">        byte[] fileData = FileCopyUtils.copyToByteArray(res.getFile());</div><div class="line">        <span class="comment">// ② 将文件内容拷贝到一个 String 中</span></div><div class="line">        <span class="built_in">String</span> fileStr = FileCopyUtils.copyToString(<span class="keyword">new</span> FileReader(res.getFile()));</div><div class="line">        <span class="comment">// ③ 将文件内容拷贝到另一个目标文件</span></div><div class="line">        FileCopyUtils.copy(res.getFile(),</div><div class="line">        <span class="keyword">new</span> File(res.getFile().getParent()+ <span class="string">"/file2.txt"</span>));</div><div class="line">        <span class="comment">// ④ 将文件内容拷贝到一个输出流中</span></div><div class="line">        OutputStream os = <span class="keyword">new</span> ByteArrayOutputStream();</div><div class="line">        FileCopyUtils.copy(res.getInputStream(), os);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> copy(byte[] <span class="keyword">in</span>, File out)     将 byte[] 拷贝到一个文件中</div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> copy(byte[] <span class="keyword">in</span>, OutputStream out)     将 byte[] 拷贝到一个输出流中</div><div class="line"><span class="keyword">static</span> int copy(File <span class="keyword">in</span>, File out)     将文件拷贝到另一个文件中</div><div class="line"><span class="keyword">static</span> int copy(InputStream <span class="keyword">in</span>, OutputStream out)     将输入流拷贝到输出流中</div><div class="line"><span class="keyword">static</span> int copy(Reader <span class="keyword">in</span>, Writer out)     将 Reader 读取的内容拷贝到 Writer 指向目标输出中</div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> copy(<span class="built_in">String</span> <span class="keyword">in</span>, Writer out)     将字符串拷贝到一个 Writer 指向的目标中属性文件操作  </div><div class="line">Spring 提供的 PropertiesLoaderUtils 允许您直接通过基于类路径的文件 地址加载属性资源  </div><div class="line">package com.baobaotao.io;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.support.PropertiesLoaderUtils;</div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PropertiesLoaderUtilsExample</span> </span>&#123;</div><div class="line">    public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) throws Throwable &#123;   </div><div class="line">    <span class="comment">// ① jdbc.properties 是位于类路径下的文件</span></div><div class="line">  Properties props = PropertiesLoaderUtils.loadAllProperties(<span class="string">"jdbc.properties"</span>);</div><div class="line">  System.out.println(props.getProperty(<span class="string">"jdbc.driverClassName"</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="特殊编码的资源"><a href="#特殊编码的资源" class="headerlink" title="特殊编码的资源"></a>特殊编码的资源</h3><p>当您使用 Resource 实现类加载文件资源时，它默认采用操作系统的编码格式。<br>如果文件资源采用了特殊的编码格式（如 UTF-8），则在读取资源内容时必须事先通过 EncodedResource 指定编码格式，否则将会产生中文乱码的问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">package com.baobaotao.io;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.ClassPathResource;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.support.EncodedResource;</div><div class="line"><span class="keyword">import</span> org.springframework.util.FileCopyUtils;</div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">EncodedResourceExample</span> </span>&#123;</div><div class="line">        public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) throws Throwable  &#123;</div><div class="line">            Resource res = <span class="keyword">new</span> ClassPathResource(<span class="string">"conf/file1.txt"</span>);</div><div class="line">            <span class="comment">// ① 指定文件资源对应的编码格式（UTF-8）</span></div><div class="line">            EncodedResource encRes = <span class="keyword">new</span> EncodedResource(res,<span class="string">"UTF-8"</span>);</div><div class="line">            <span class="comment">// ② 这样才能正确读取文件的内容，而不会出现乱码</span></div><div class="line">            <span class="built_in">String</span> content  = FileCopyUtils.copyToString(encRes.getReader());</div><div class="line">            System.out.println(content); </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>访问 Spring 容器，获取容器中的 Bean，使用 WebApplicationContextUtils 工具类</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ServletContext servletContext = request.getSession().getServletContext();</div><div class="line">WebApplicationContext wac = WebApplicationContextUtils. getWebApplicationContext(servletContext);</div></pre></td></tr></table></figure>
+<h3 id="Spring-所提供的过滤器和监听器"><a href="#Spring-所提供的过滤器和监听器" class="headerlink" title="Spring 所提供的过滤器和监听器"></a>Spring 所提供的过滤器和监听器</h3><p>延迟加载过滤器</p>
+<p>Hibernate 允许对关联对象、属性进行延迟加载，但是必须保证延迟加载的操作限于同一个 Hibernate Session 范围之内进行。<br>如果 Service 层返回一个启用了延迟加载功能的领域对象给 Web 层，当 Web 层访问到那些需要延迟加载的数据时，由于加载领域对象的 Hibernate Session 已经关闭，这些导致延迟加载数据的访问异常。<br>Spring 为此专门提供了一个 OpenSessionInViewFilter 过滤器，它的主要功能是使每个请求过程绑定一个 Hibernate Session，即使最初的事务已经完成了，也可以在 Web 层进行延迟加载的操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;filter&gt;</div><div class="line">    &lt;filter-name&gt;hibernateFilter&lt;/filter-name&gt;</div><div class="line">    &lt;filter-class&gt;</div><div class="line">    org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</div><div class="line">    &lt;/filter-class&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;hibernateFilter&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;*.html&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
+<h3 id="中文乱码过滤器"><a href="#中文乱码过滤器" class="headerlink" title="中文乱码过滤器"></a>中文乱码过滤器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;filter&gt;</div><div class="line">&lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;</div><div class="line">&lt;filter-class&gt;</div><div class="line">    org.springframework.web.filter.CharacterEncodingFilter ① Spring 编辑过滤器</div><div class="line">&lt;/filter-class&gt;</div><div class="line">&lt;init-param&gt; ② 编码方式</div><div class="line">    &lt;param-name&gt;encoding&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;UTF-8&lt;/param-value&gt;</div><div class="line">&lt;/init-param&gt;</div><div class="line">&lt;init-param&gt; ③ 强制进行编码转换</div><div class="line">    &lt;param-name&gt;forceEncoding&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;true&lt;/param-value&gt;</div><div class="line">&lt;/init-param&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line">&lt;filter-mapping&gt; ② 过滤器的匹配 URL</div><div class="line">    &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;*.html&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
+<p>一般情况下，您必须将 Log4J 日志配置文件以 log4j.properties 为文件名并保存在类路径下。<br>Log4jConfigListener 允许您通过 log4jConfigLocation Servlet 上下文参数显式指定 Log4J 配置文件的地址，如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">① 指定 Log4J 配置文件的地址</div><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;log4jConfigLocation&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;/WEB-INF/log4j.properties&lt;/param-value&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">② 使用该监听器初始化 Log4J 日志引擎</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;</div><div class="line">    org.springframework.web.util.Log4jConfigListener</div><div class="line">    &lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div><div class="line">Introspector 缓存清除监听器,防止内存泄露</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;</div><div class="line">    org.springframework.web.util.IntrospectorCleanupListener</div><div class="line">    &lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
+<p>一些 Web 应用服务器（如 Tomcat）不会为不同的 Web 应用使用独立的系统参数，也就是说，应用服务器上所有的 Web 应用都共享同一个系统参数对象。<br>这时，您必须通过 webAppRootKey 上下文参数为不同 Web 应用指定不同的属性名：如第一个 Web 应用使用 webapp1.root 而第二个 Web 应用使用 webapp2.root 等，<br>这样才不会发生后者覆盖前者的问题。此外，WebAppRootListener 和 Log4jConfigListener 都只能应用在 Web 应用部署后 WAR 文件会解包的 Web 应用服务器上。<br>一些 Web 应用服务器不会将 Web 应用的 WAR 文件解包，整个 Web 应用以一个 WAR 包的方式存在（如 Weblogic），此时因为无法指定对应文件系统的 Web 应用根目录，使用这两个监听器将会发生问题。</p>
+<h3 id="特殊字符转义"><a href="#特殊字符转义" class="headerlink" title="特殊字符转义"></a>特殊字符转义</h3><p>Web 开发者最常面对需要转义的特殊字符类型：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">* HTML 特殊字符；  </div><div class="line">* JavaScript 特殊字符；</div><div class="line">HTML 特殊字符转义</div><div class="line"></div><div class="line">* &amp; ：&amp;amp;  </div><div class="line">* " ：&amp;quot;  </div><div class="line">* &lt; ：&amp;lt;  </div><div class="line">* &gt; ：&amp;gt;</div></pre></td></tr></table></figure>
+<h3 id="JavaScript-特殊字符转义"><a href="#JavaScript-特殊字符转义" class="headerlink" title="JavaScript 特殊字符转义"></a>JavaScript 特殊字符转义</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">* ' ：/' </div><div class="line">* " ：/" </div><div class="line">* / ：//  </div><div class="line">* 走纸换页： /f  </div><div class="line">* 换行：/n  </div><div class="line">* 换栏符：/t  </div><div class="line">* 回车：/r  </div><div class="line">* 回退符：/b</div></pre></td></tr></table></figure>
+<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">JavaScriptUtils.javaScriptEscape(<span class="built_in">String</span> str);</div><div class="line">HtmlUtils.htmlEscape(<span class="built_in">String</span> str);①转换为HTML转义字符表示</div><div class="line">HtmlUtils.htmlEscapeDecimal(<span class="built_in">String</span> str); ②转换为数据转义表示</div><div class="line">HtmlUtils.htmlEscapeHex(<span class="built_in">String</span> str); ③转换为十六进制数据转义表示</div><div class="line">HtmlUtils.htmlUnescape(<span class="built_in">String</span> str);将经过转义内容还原</div></pre></td></tr></table></figure>
+<p>Spring框架下自带了丰富的工具类,在我们开发时可以简化很多工作:</p>
+<p><strong>1.Resource访问文件资源:</strong></p>
+<p>具体有:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ResourceUtils.getFile(url);</div><div class="line">FileSystemResource(); ClassPathResource();</div><div class="line">ServletContextResource(application,url);</div></pre></td></tr></table></figure>
+<p><strong>2.文件操作 FileCopyUtils</strong></p>
+<p>具体有:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FileCopyUtils.copy(Resource.getFile,<span class="keyword">new</span> File(Resource.getFile(),getParent()+<span class="string">'目标文件名'</span>));</div></pre></td></tr></table></figure>
+<p><strong>3.属性文件操作 PropertiesLoaderUtils</strong></p>
+<p>具体有:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PropertiesLoaderUtils.loadAllProperties(<span class="string">"属性文件名"</span>);  --基于类路径</div></pre></td></tr></table></figure>
+<p>4.EncodedResource(Resource对象,”UTF-8″) 编码资源(特殊的);</p>
+<p>5.WebApplicationContextUtils</p>
+<p>6.StringEscapeutils 编码解码</p>
+<p>作者：qincidong<br>出处：<a href="http://qincidong.github.io/blog/2014/11/24/spring-utils.html" target="_blank" rel="external">http://qincidong.github.io/blog/2014/11/24/spring-utils.html</a><br>本文版权归作者所有,欢迎转载,但未经作者同意必须保留此段声明,且在文章页面明显位置给出原文连接。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/03/springyou/">Spring常用工具类</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2016-09-03, 11:24:36</p>
+        <p><span>最后更新:</span>2016-09-03, 11:50:24</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/03/springyou/" title="Spring常用工具类">http://yoursite.com/2016/09/03/springyou/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/03/springyou/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/09/05/java-datetime/">
+                    java计算两个日期之间的天数，并格式化返回天小时分钟
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/08/30/java-jvm-1/">
+                    Tomcat中JVM内存溢出及合理配置
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件资源操作"><span class="toc-number">1.</span> <span class="toc-text">文件资源操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件操作"><span class="toc-number">2.</span> <span class="toc-text">文件操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊编码的资源"><span class="toc-number">3.</span> <span class="toc-text">特殊编码的资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-所提供的过滤器和监听器"><span class="toc-number">4.</span> <span class="toc-text">Spring 所提供的过滤器和监听器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中文乱码过滤器"><span class="toc-number">5.</span> <span class="toc-text">中文乱码过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊字符转义"><span class="toc-number">6.</span> <span class="toc-text">特殊字符转义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-特殊字符转义"><span class="toc-number">7.</span> <span class="toc-text">JavaScript 特殊字符转义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">8.</span> <span class="toc-text">工具类</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Spring常用工具类　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/03/springyou/" data-title="Spring常用工具类" data-url="http://yoursite.com/2016/09/03/springyou/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/09/05/java-datetime/" title="上一篇: java计算两个日期之间的天数，并格式化返回天小时分钟">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/08/30/java-jvm-1/" title="下一篇: Tomcat中JVM内存溢出及合理配置">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

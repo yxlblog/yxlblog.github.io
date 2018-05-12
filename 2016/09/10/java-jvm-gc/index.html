@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="详细讲述Java中如何处理垃圾回收的问题我们知道，许多程序设计语言都允许在程序运行期动态地分配内存空间。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详细讲述Java中如何处理垃圾回收的问题">
+<meta property="og:url" content="http://yoursite.com/2016/09/10/java-jvm-gc/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="详细讲述Java中如何处理垃圾回收的问题我们知道，许多程序设计语言都允许在程序运行期动态地分配内存空间。">
+<meta property="og:updated_time" content="2016-09-10T10:23:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="详细讲述Java中如何处理垃圾回收的问题">
+<meta name="twitter:description" content="详细讲述Java中如何处理垃圾回收的问题我们知道，许多程序设计语言都允许在程序运行期动态地分配内存空间。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>详细讲述Java中如何处理垃圾回收的问题 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-java-jvm-gc" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/10/java-jvm-gc/" class="article-date">
+      <time datetime="2016-09-10T09:44:55.000Z" itemprop="datePublished">2016-09-10</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      详细讲述Java中如何处理垃圾回收的问题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="详细讲述Java中如何处理垃圾回收的问题"><a href="#详细讲述Java中如何处理垃圾回收的问题" class="headerlink" title="详细讲述Java中如何处理垃圾回收的问题"></a>详细讲述Java中如何处理垃圾回收的问题</h3><p><strong>我们知道，许多程序设计语言都允许在程序运行期动态地分配内存空间。</strong><br><a id="more"></a><br>&nbsp;&nbsp;分配内存的方式多种多样，取决于该种语言的语法结构。但不论是哪一种语言的内存分配方式，最后都要返回所分配的内存块的起始地址，即返回一个指针到内存块的首地址。</p>
+<p>&nbsp;&nbsp;当已经分配的内存空间不再需要时，换句话说当指向该内存块的句柄超出了使用范围的时候，该程序或其运行环境就应该回收该内存空间，以节省宝贵的内存资源。</p>
+<p>&nbsp;&nbsp;在C，C++或其他程序设计语言中，无论是对象还是动态配置的资源或内存，都必须由程序员自行声明产生和回收，否则其中的资源将消耗，造成资源的浪费甚至死机。但手工回收内存往往是一项复杂而艰巨的工作。因为要预先确定占用的内存空间是否应该被回收是非常困难的！如果一段程序不能回收内存空间，而且在程序运行时系统中又没有了可以分配的内存空间时，这段程序就只能崩溃。通常，我们把分配出去后，却无法回收的内存空间称为”内存渗漏体（Memory Leaks）”。</p>
+<p>&nbsp;&nbsp;以上这种程序设计的潜在危险性在Java这样以严谨、安全著称的语言中是不允许的。但是Java语言既不能限制程序员编写程序的自由性，又不能把声明对象的部分去除（否则就不是面向对象的程序语言了），那么最好的解决办法就是从Java程序语言本身的特性入手。于是，Java技术提供了一个系统级的线程（Thread），即垃圾收集器线程（Garbage Collection Thread），来跟踪每一块分配出去的内存空间，当Java 虚拟机（Java Virtual Machine）处于空闲循环时，垃圾收集器线程会自动检查每一快分配出去的内存空间，然后自动回收每一快可以回收的无用的内存块。</p>
+<p>&nbsp;&nbsp;垃圾收集器线程是一种低优先级的线程，在一个Java程序的生命周期中，它只有在内存空闲的时候才有机会运行。它有效地防止了内存渗漏体的出现，并极大可能地节省了宝贵的内存资源。但是，通过Java虚拟机来执行垃圾收集器的方案可以是多种多样的。</p>
+<p>下面介绍垃圾收集器的特点和它的执行机制：</p>
+<p>&nbsp;&nbsp;垃圾收集器系统有自己的一套方案来判断哪个内存块是应该被回收的，哪个是不符合要求暂不回收的。垃圾收集器在一个Java程序中的执行是自动的，不能强制执行，即使程序员能明确地判断出有一块内存已经无用了，是应该回收的，程序员也不能强制垃圾收集器回收该内存块。程序员唯一能做的就是通过调用System. gc 方法来”建议”执行垃圾收集器，但其是否可以执行，什么时候执行却都是不可知的。这也是垃圾收集器的最主要的缺点。当然相对于它给程序员带来的巨大方便性而言，这个缺点是瑕不掩瑜的。</p>
+<h3 id="垃圾收集器的主要特点有："><a href="#垃圾收集器的主要特点有：" class="headerlink" title="垃圾收集器的主要特点有："></a>垃圾收集器的主要特点有：</h3><ul>
+<li><p>1．垃圾收集器的工作目标是回收已经无用的对象的内存空间，从而避免内存渗漏体的产生，节省内存资源，避免程序代码的崩溃。</p>
+</li>
+<li><p>2．垃圾收集器判断一个对象的内存空间是否无用的标准是：如果该对象不能再被程序中任何一个”活动的部分”所引用，此时我们就说，该对象的内存空间已经无用。所谓”活动的部分”，是指程序中某部分参与程序的调用，正在执行过程中，尚未执行完毕。</p>
+</li>
+<li><p>3．垃圾收集器线程虽然是作为低优先级的线程运行，但在系统可用内存量过低的时候，它可能会突发地执行来挽救内存资源。当然其执行与否也是不可预知的。</p>
+</li>
+<li><p>4．垃圾收集器不可以被强制执行，但程序员可以通过调用System. gc方法来建议执行垃圾收集器。</p>
+</li>
+<li><p>5．不能保证一个无用的对象一定会被垃圾收集器收集，也不能保证垃圾收集器在一段Java语言代码中一定会执行。因此在程序执行过程中被分配出去的内存空间可能会一直保留到该程序执行完毕，除非该空间被重新分配或被其他方法回收。由此可见，完全彻底地根绝内存渗漏体的产生也是不可能的。但是请不要忘记，Java的垃圾收集器毕竟使程序员从手工回收内存空间的繁重工作中解脱了出来。设想一个程序员要用C或C++来编写一段10万行语句的代码，那么他一定会充分体会到Java的垃圾收集器的优点！</p>
+</li>
+<li><p>6．同样没有办法预知在一组均符合垃圾收集器收集标准的对象中，哪一个会被首先收集。</p>
+</li>
+<li><p>7．循环引用对象不会影响其被垃圾收集器收集。</p>
+</li>
+<li><p>8．可以通过将对象的引用变量（reference variables，即句柄handles）初始化为null值，来暗示垃圾收集器来收集该对象。但此时，如果该对象连接有事件监听器（典型的 AWT组件），那它还是不可以被收集。所以在设一个引用变量为null值之前，应注意该引用变量指向的对象是否被监听，若有，要首先除去监听器，然后才可以赋空值。</p>
+</li>
+<li><p>9．每一个对象都有一个finalize( )方法，这个方法是从Object类继承来的。</p>
+</li>
+<li><p>10．finalize( )方法用来回收内存以外的系统资源，就像是文件处理器和网络连接器。该方法的调用顺序和用来调用该方法的对象的创建顺序是无关的。换句话说，书写程序时该方法的顺序和方法的实际调用顺序是不相干的。请注意这只是finalize( )方法的特点。</p>
+</li>
+<li><p>11．每个对象只能调用finalize( )方法一次。如果在finalize( )方法执行时产生异常（exception），则该对象仍可以被垃圾收集器收集。</p>
+</li>
+<li><p>12．垃圾收集器跟踪每一个对象，收集那些不可到达的对象（即该对象没有被程序的任何”活的部分”所调用），回收其占有的内存空间。但在进行垃圾收集的时候，垃圾收集器会调用finalize( )方法，通过让其他对象知道它的存在，而使不可到达的对象再次”复苏”为可到达的对象。既然每个对象只能调用一次finalize( )方法，所以每个对象也只可能”复苏”一次。</p>
+</li>
+<li><p>13．finalize( )方法可以明确地被调用，但它却不能进行垃圾收集。</p>
+</li>
+<li><p>14．finalize( )方法可以被重载（overload），但只有具备初始的finalize( )方法特点的方法才可以被垃圾收集器调用。</p>
+</li>
+<li><p>15．子类的finalize( )方法可以明确地调用父类的finalize( )方法，作为该子类对象的最后一次适当的操作。但Java编译器却不认为这是一次覆盖操作（overriding），所以也不会对其调用进行检查。</p>
+</li>
+<li><p>16．当finalize( )方法尚未被调用时，System. runFinalization( )方法可以用来调用finalize( )方法，并实现相同的效果，对无用对象进行垃圾收集。</p>
+</li>
+<li><p>17．当一个方法执行完毕，其中的局部变量就会超出使用范围，此时可以被当作垃圾收集，但以后每当该方法再次被调用时，其中的局部变量便会被重新创建。</p>
+</li>
+<li><p>18．Java语言使用了一种”标记交换区的垃圾收集算法”。该算法会遍历程序中每一个对象的句柄，为被引用的对象做标记，然后回收尚未做标记的对象。所谓遍历可以简单地理解为”检查每一个”。</p>
+</li>
+<li><p>19．Java语言允许程序员为任何方法添加finalize( )方法，该方法会在垃圾收集器交换回收对象之前被调用。但不要过分依赖该方法对系统资源进行回收和再利用，因为该方法调用后的执行结果是不可预知的。</p>
+</li>
+</ul>
+<p>通过以上对垃圾收集器特点的了解，你应该可以明确垃圾收集器的作用，和垃圾收集器判断一块内存空间是否无用的标准。简单地说，当你为一个对象赋值为null并且重新定向了该对象的引用者，此时该对象就符合垃圾收集器的收集标准。</p>
+<p>判断一个对象是否符合垃圾收集器的收集标准，这是SUN公司程序员认证考试中垃圾收集器部分的重要考点（可以说，这是唯一的考点）。所以，考生在一段给定的代码中，应该能够判断出哪个对象符合垃圾收集器收集的标准，哪个不符合。下面结合几种认证考试中可能出现的题型来具体讲解：</p>
+<p>Object obj = new Object ( ) ;</p>
+<p>我们知道，obj为Object的一个句柄。当出现new关键字时，就给新建的对象分配内存空间，而obj的值就是新分配的内存空间的首地址，即该对象的值(请特别注意，对象的值和对象的内容是不同含义的两个概念：对象的值就是指其内存块的首地址，即对象的句柄；而对象的内容则是其具体的内存块)。此时如果有 obj = null； 则obj指向的内存块此时就无用了，因为下面再没有调用该变量了。</p>
+<p>请再看以下三种认证考试时可能出现的题型：</p>
+<p>程序段1：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>．fobj = <span class="keyword">new</span> Object ( ) ;</div><div class="line"></div><div class="line"><span class="number">2</span>．fobj. Method ( ) ;</div><div class="line"></div><div class="line"><span class="number">3</span>．fobj = <span class="keyword">new</span> Object ( ) ;</div><div class="line"></div><div class="line"><span class="number">4</span>．fobj. Method ( ) ;</div></pre></td></tr></table></figure></p>
+<p>问：这段代码中，第几行的fobj 符合垃圾收集器的收集标准？</p>
+<p>答：第3行。因为第3行的fobj被赋了新值，产生了一个新的对象，即换了一块新的内存空间，也相当于为第1行中的fobj赋了null值。这种类型的题在认证0考试中是最简单的。</p>
+<p>程序段2：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="number">1</span>．Object sobj = <span class="keyword">new</span> Object ( ) ;</div><div class="line"></div><div class="line"><span class="number">2</span>．Object sobj = <span class="keyword">null</span> ;</div><div class="line"></div><div class="line"><span class="number">3</span>．Object sobj = <span class="keyword">new</span> Object ( ) ;</div><div class="line"></div><div class="line"><span class="number">4</span>．sobj = <span class="keyword">new</span> Object ( ) ;</div></pre></td></tr></table></figure></p>
+<p>问：这段代码中，第几行的内存空间符合垃圾收集器的收集标准？</p>
+<p>答：第1行和第3行。因为第2行为sobj赋值为null，所以在此第1行的sobj符合垃圾收集器的收集标准。而第4行相当于为sobj赋值为null，所以在此第3行的sobj也符合垃圾收集器的收集标准。</p>
+<p>如果有一个对象的句柄a，且你把a作为某个构造器的参数，即 new Constructor ( a )的时候，即使你给a赋值为null，a也不符合垃圾收集器的收集标准。直到由上面构造器构造的新对象被赋空值时，a才可以被垃圾收集器收集。</p>
+<p>程序段3：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>．Object aobj = <span class="keyword">new</span> Object ( ) ;</div><div class="line"></div><div class="line"><span class="number">2</span>．Object bobj = <span class="keyword">new</span> Object ( ) ;</div><div class="line"></div><div class="line"><span class="number">3</span>．Object cobj = <span class="keyword">new</span> Object ( ) ;</div><div class="line"></div><div class="line"><span class="number">4</span>．aobj = bobj;</div><div class="line"></div><div class="line"><span class="number">5</span>．aobj = cobj;</div><div class="line"></div><div class="line"><span class="number">6</span>．cobj = <span class="keyword">null</span>;</div><div class="line"></div><div class="line"><span class="number">7</span>．aobj = <span class="keyword">null</span>;</div></pre></td></tr></table></figure></p>
+<p>问：这段代码中，第几行的内存空间符合垃圾收集器的收集标准？</p>
+<p>答：第7行。注意这类题型是认证考试中可能遇到的最难题型了。</p>
+<p>行1-3分别创建了Object类的三个对象：aobj，bobj，cobj</p>
+<p>行4：此时对象aobj的句柄指向bobj，所以该行的执行不能使aobj符合垃圾收集器的收集标准。</p>
+<p>行5：此时对象aobj的句柄指向cobj，所以该行的执行不能使aobj符合垃圾收集器的收集标准。</p>
+<p>行6：此时仍没有任何一个对象符合垃圾收集器的收集标准。</p>
+<p>行7：对象cobj符合了垃圾收集器的收集标准，因为cobj的句柄指向单一的地址空间。在第6行的时候，cobj已经被赋值为null，但由cobj同时还指向了aobj（第5行），所以此时cobj并不符合垃圾收集器的收集标准。而在第7行，aobj所指向的地址空间也被赋予了空值null，这就说明了，由cobj所指向的地址空间已经被完全地赋予了空值。所以此时cobj最终符合了垃圾收集器的收集标准。 但对于aobj和bobj，仍然无法判断其是否符合收集标准。</p>
+<h3 id="总之，在Java语言中，判断一块内存空间是否符合垃圾收集器收集标准的标准只有两个："><a href="#总之，在Java语言中，判断一块内存空间是否符合垃圾收集器收集标准的标准只有两个：" class="headerlink" title="总之，在Java语言中，判断一块内存空间是否符合垃圾收集器收集标准的标准只有两个："></a>总之，在Java语言中，判断一块内存空间是否符合垃圾收集器收集标准的标准只有两个：</h3><ul>
+<li><p>1．给对象赋予了空值null，以下再没有调用过。</p>
+</li>
+<li><p>2．给对象赋予了新值，既重新分配了内存空间。</p>
+</li>
+</ul>
+<p><strong>当程序运行起来之后，把它在内存中的状态看成是有向图后，可以分为三种：</strong></p>
+<ul>
+<li><p>1）可达状态：在一个对象创建后，有一个以上的引用变量引用它。在有向图中可以从起始顶点导航到该对象，那它就处于可达状态。</p>
+</li>
+<li><p>2）可恢复状态：如果程序中某个对象不再有任何的引用变量引用它，它将先进入可恢复状态，此时从有向图的起始顶点不能再导航到该对象。在这个状态下，系统的垃圾回收机制准备回收该对象的所占用的内存，在回收之前，系统会调用finalize()方法进行资源清理，如果资源整理后重新让一个以上引用变量引用该对象，则这个对象会再次变为可达状态；否则就会进入不可达状态。</p>
+</li>
+<li><p>3）不可达状态：当对象的所有关联都被切断，且系统调用finalize()方法进行资源清理后依旧没有使该对象变为可达状态，则这个对象将永久性失去引用并且变成不可达状态，系统才会真正的去回收该对象所占用的资源。</p>
+</li>
+</ul>
+<p>最后再次提醒一下，一块内存空间符合了垃圾收集器的收集标准，并不意味着这块内存空间就一定会被垃圾收集器收集。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2016-09-10, 17:44:55</p>
+        <p><span>最后更新:</span>2016-09-10, 18:23:20</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/10/java-jvm-gc/" title="详细讲述Java中如何处理垃圾回收的问题">http://yoursite.com/2016/09/10/java-jvm-gc/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/10/java-jvm-gc/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/09/15/alisset/">
+                    阿里云window server 2012 服务器+nginx+tomcat+redis session共享
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/09/06/java-sort/">
+                    java冒泡排序
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#详细讲述Java中如何处理垃圾回收的问题"><span class="toc-number">1.</span> <span class="toc-text">详细讲述Java中如何处理垃圾回收的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾收集器的主要特点有："><span class="toc-number">2.</span> <span class="toc-text">垃圾收集器的主要特点有：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总之，在Java语言中，判断一块内存空间是否符合垃圾收集器收集标准的标准只有两个："><span class="toc-number">3.</span> <span class="toc-text">总之，在Java语言中，判断一块内存空间是否符合垃圾收集器收集标准的标准只有两个：</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"详细讲述Java中如何处理垃圾回收的问题　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/10/java-jvm-gc/" data-title="详细讲述Java中如何处理垃圾回收的问题" data-url="http://yoursite.com/2016/09/10/java-jvm-gc/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/09/15/alisset/" title="上一篇: 阿里云window server 2012 服务器+nginx+tomcat+redis session共享">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/09/06/java-sort/" title="下一篇: java冒泡排序">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

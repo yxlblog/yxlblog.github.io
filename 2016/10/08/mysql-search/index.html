@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="我们将超过指定时间的SQL语句查询称为慢查询
+一、慢查询的体现慢查询主要体现在慢上，通常意义上来讲，只要返回时间大于 &amp;gt;1 sec上的查询都可以称为慢查询。
+慢查询会导致CPU，内存消耗过高。数据库服务器压力陡然过大，那么大部分情况来讲，肯定是由某些慢查询导致的。
+查看/设置“慢查询”的时间定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 慢查询的特征表现及优化方式">
+<meta property="og:url" content="http://yoursite.com/2016/10/08/mysql-search/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="我们将超过指定时间的SQL语句查询称为慢查询
+一、慢查询的体现慢查询主要体现在慢上，通常意义上来讲，只要返回时间大于 &amp;gt;1 sec上的查询都可以称为慢查询。
+慢查询会导致CPU，内存消耗过高。数据库服务器压力陡然过大，那么大部分情况来讲，肯定是由某些慢查询导致的。
+查看/设置“慢查询”的时间定义">
+<meta property="og:updated_time" content="2016-10-12T14:06:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 慢查询的特征表现及优化方式">
+<meta name="twitter:description" content="我们将超过指定时间的SQL语句查询称为慢查询
+一、慢查询的体现慢查询主要体现在慢上，通常意义上来讲，只要返回时间大于 &amp;gt;1 sec上的查询都可以称为慢查询。
+慢查询会导致CPU，内存消耗过高。数据库服务器压力陡然过大，那么大部分情况来讲，肯定是由某些慢查询导致的。
+查看/设置“慢查询”的时间定义">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>MySQL 慢查询的特征表现及优化方式 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-mysql-search" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/08/mysql-search/" class="article-date">
+      <time datetime="2016-10-08T13:49:54.000Z" itemprop="datePublished">2016-10-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL 慢查询的特征表现及优化方式
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/sql/">sql</a><a class="article-category-link" href="/categories/sql/mysql/">mysql</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>我们将超过指定时间的SQL语句查询称为慢查询</p>
+<h3 id="一、慢查询的体现"><a href="#一、慢查询的体现" class="headerlink" title="一、慢查询的体现"></a>一、慢查询的体现</h3><p>慢查询主要体现在慢上，通常意义上来讲，只要返回时间大于 &gt;1 sec上的查询都可以称为慢查询。</p>
+<p>慢查询会导致CPU，内存消耗过高。数据库服务器压力陡然过大，那么大部分情况来讲，肯定是由某些慢查询导致的。</p>
+<p>查看/设置“慢查询”的时间定义<br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show variables like <span class="string">"long%"</span>;</div><div class="line">+-----------------+----------+</div><div class="line">| Variable_name   | Value    |</div><div class="line">+-----------------+----------+</div><div class="line">| long_query_time | <span class="number">0.000100</span> |</div><div class="line">+-----------------+----------+</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure></p>
+<p>如上述语句输出，“慢查询”的时间定义为0.0001秒（方便测试，一般设置为1-10秒）。使用下面语句定义“慢查询”时间<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; set long_query_time=<span class="number">0.0001</span>;</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure></p>
+<p>开启“慢查询”记录功能<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show variables like <span class="string">"slow%"</span>;</div><div class="line">+---------------------+------------------------------------+</div><div class="line">| Variable_name       | Value                              |</div><div class="line">+---------------------+------------------------------------+</div><div class="line">| slow_launch_time    | <span class="number">2</span>                                  |</div><div class="line">| slow_query_log      | OFF                                |</div><div class="line">| slow_query_log_file | <span class="regexp">/opt/my</span>sql/data/localhost-slow.log |</div><div class="line">+---------------------+------------------------------------+</div><div class="line"><span class="number">3</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure></p>
+<p>上述语句查看“慢查询”的配置信息，你可以自定义日志文件的存放，但必须将 slow_query_log 全局变量设置为“ON”状态，执行以下语句<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; set global slow_query_log=ON;</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.01</span> sec)</div></pre></td></tr></table></figure></p>
+<p>结果：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show variables like <span class="string">"slow%"</span>;</div><div class="line">+---------------------+------------------------------------+</div><div class="line">| Variable_name       | Value                              |</div><div class="line">+---------------------+------------------------------------+</div><div class="line">| slow_launch_time    | <span class="number">2</span>                                  |</div><div class="line">| slow_query_log      | ON                                 |</div><div class="line">| slow_query_log_file | <span class="regexp">/opt/my</span>sql/data/localhost-slow.log |</div><div class="line">+---------------------+------------------------------------+</div><div class="line"><span class="number">3</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure></p>
+<p>那么哪些条件可以导致慢查询呢？或者说根据何种条件判断，优化慢查询。仅从SQL语句方面阐述慢查询，MySQL系统级别的设置暂不考虑。</p>
+<h3 id="二、返回列数太多"><a href="#二、返回列数太多" class="headerlink" title="二、返回列数太多"></a>二、返回列数太多</h3><p>返回列数太多</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">EXPLAIN SELECT <span class="string">`happy_ni_nis`</span>.*</div><div class="line">FROM <span class="string">`happy_ni_nis`</span></div><div class="line">ORDER BY n_total DESC LIMIT <span class="number">10</span>\G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happy_ni_nis</div><div class="line">         type: ALL</div><div class="line">possible_keys: NULL</div><div class="line">          key: NULL</div><div class="line">      key_len: NULL</div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">66493186</span>  &lt;- 返回值太多，坏味道</div><div class="line">        Extra: Using filesort &lt;- 避免使用排序</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div></pre></td></tr></table></figure>
+<p>优化建议： 添加 关于 n_total 的索引</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">mysql&gt; alter table happy_ni_nis add index <span class="string">`idx_of_n_total`</span> (<span class="string">`n_total`</span>, <span class="string">`id`</span>);</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">7</span> min <span class="number">48.27</span> sec)</div><div class="line">Records: <span class="number">0</span>  Duplicates: <span class="number">0</span>  Warnings: <span class="number">0</span></div><div class="line"></div><div class="line"></div><div class="line">EXPLAIN SELECT <span class="string">`happy_ni_nis`</span>.*</div><div class="line">FROM <span class="string">`happy_ni_nis`</span></div><div class="line">ORDER BY n_total DESC LIMIT <span class="number">10</span>\G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happy_ni_nis</div><div class="line">         type: index</div><div class="line">possible_keys: NULL</div><div class="line">          key: idx_of_n_total</div><div class="line">      key_len: <span class="number">8</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">10</span></div><div class="line">        Extra: </div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div><div class="line">但是某些情况下，返回列数比较多，也不代表是慢查询。</div><div class="line">SELECT <span class="string">`cd_happys`</span>.*</div><div class="line">FROM <span class="string">`cd_happys`</span></div><div class="line">WHERE <span class="string">`cd_happys`</span>.<span class="string">`p_status`</span> = <span class="number">4</span></div><div class="line">  AND <span class="string">`cd_happys`</span>.<span class="string">`status`</span> IN (<span class="number">0</span>,</div><div class="line">                                     <span class="number">1</span>,</div><div class="line">                                     <span class="number">2</span>,</div><div class="line">                                     <span class="number">3</span>,</div><div class="line">                                     <span class="number">4</span>)</div><div class="line">  AND (c_time &lt;= <span class="string">'2015-05-15 23:30:39'</span></div><div class="line">       AND update_time &lt;= <span class="string">'2015-05-15 23:30:39'</span>)</div><div class="line">ORDER BY <span class="string">`cd_happys`</span>.<span class="string">`id`</span> ASC LIMIT <span class="number">1000</span></div><div class="line"></div><div class="line">+----+-------------+-----------------+-------+---------------------------------------+---------+---------+-----+------+-------------+</div><div class="line">| id | select_type | table           | type  | possible_keys                         | key     | key_len | ref | rows | Extra       |</div><div class="line">+----+-------------+-----------------+-------+---------------------------------------+---------+---------+-----+------+-------------+</div><div class="line">| <span class="number">1</span>  | SIMPLE      | cd_happys | index | idx_uptime_seneditor,idx_c_time | PRIMARY | <span class="number">4</span>       |     | <span class="number">2000</span> | Using where |</div><div class="line">+----+-------------+-----------------+-------+---------------------------------------+---------+---------+-----+------+-------------+</div><div class="line">平均查询时间：<span class="number">6</span> sec</div></pre></td></tr></table></figure>
+<p>添加一个 <code>idx_of_p_status_status_c_time (p_status,status,c_time,id)</code> 索引</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain SELECT SQL_NO_CACHE  <span class="string">`cd_happys`</span>.* FROM <span class="string">`cd_happys`</span>  WHERE <span class="string">`cd_happys`</span>.<span class="string">`p_status`</span> = <span class="number">4</span> AND <span class="string">`cd_happys`</span>.<span class="string">`status`</span> IN (<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>) AND (c_time &lt;= <span class="string">'2015-05-15 23:30:39'</span> and update_time &lt;= <span class="string">'2015-05-15 23:30:39'</span>)  LIMIT <span class="number">1000</span>\G;</div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: cd_happys</div><div class="line">         type: range</div><div class="line">possible_keys: idx_uptime_seneditor,idx_c_time,idx_of_p_status_sanzu_check_status_signup_status,idx_of_p_status_status_c_time</div><div class="line">          key: idx_of_p_status_status_c_time</div><div class="line">      key_len: <span class="number">16</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">3782</span></div><div class="line">        Extra: Using where</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div><div class="line">平均查询时间：<span class="number">0.4</span> sec</div></pre></td></tr></table></figure>
+<h3 id="三、分页条件，过大的offset"><a href="#三、分页条件，过大的offset" class="headerlink" title="三、分页条件，过大的offset"></a>三、分页条件，过大的offset</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">EXPLAIN SELECT <span class="string">`happys`</span>.*</div><div class="line">FROM <span class="string">`happys`</span></div><div class="line">INNER JOIN <span class="string">`happy_infos`</span> ON <span class="string">`happy_infos`</span>.<span class="string">`happy_id`</span> = <span class="string">`happys`</span>.<span class="string">`id`</span></div><div class="line">WHERE</div><div class="line">  (happys.end_time &gt; <span class="string">'2015-08-13 14:08:10'</span>)</div><div class="line">  AND (happys.j_tag_id &gt; <span class="number">0</span>)</div><div class="line">  AND (happy_infos.my_image_url = <span class="string">''</span>)</div><div class="line">ORDER BY happys.updated_at DESC LIMIT <span class="number">100</span></div><div class="line">OFFSET <span class="number">28900</span>\G;</div><div class="line"></div><div class="line"></div><div class="line">+----+-------------+------------+--------+------------------------------------------------------------+---------------+---------+-----------------+--------+-----------------------------+</div><div class="line">| id | select_type | table      | type   | possible_keys                                              | key           | key_len | ref             | rows   | Extra                       |</div><div class="line">+----+-------------+------------+--------+------------------------------------------------------------+---------------+---------+-----------------+--------+-----------------------------+</div><div class="line">| <span class="number">1</span>  | SIMPLE      | happys      | range  | PRIMARY,idx_end_time,idx_bg_tag_pub_beg,idx_bg_tag_pub_end | idx_end_time  | <span class="number">8</span>       |                 | <span class="number">219114</span> | Using where; Using filesort |</div><div class="line">+----+-------------+------------+--------+------------------------------------------------------------+---------------+---------+-----------------+--------+-----------------------------+</div><div class="line">| <span class="number">1</span>  | SIMPLE      | happy_infos | eq_ref | happy_id_index                                              | happy_id_index | <span class="number">4</span>       | tao800.happys.id | <span class="number">1</span>      | Using where                 |</div><div class="line">+----+-------------+------------+--------+------------------------------------------------------------+---------------+---------+-----------------+--------+-----------------------------+</div><div class="line">平均查询时间：</div><div class="line"></div><div class="line">Empty set (<span class="number">9.78</span> sec)</div></pre></td></tr></table></figure>
+<p>优化建议：</p>
+<p>1、MySQL里对LIMIT OFFSET的处理方式是，取出OFFSET+LIMIT的所有数据，然后去掉OFFSET，返回底部的LIMIT<br>使用子查询，使用覆盖索引进行优化。</p>
+<p>2、这种方式在offset很高的情况下，<br>如：limit 100000,20，这样系统会查询100020条，然后把前面的100000条都扔掉，这是开销很大的操作，导致慢查询很慢。</p>
+<p>3、使用覆盖索引(convering index) 查询，然后再跟全行做join操作。这样可以直接使用index 得到数据，而不是去查询表，<br>当找到需要的数据之后，再与全表join获得其他列。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">EXPLAIN SELECT SQL_NO_CACHE <span class="string">`happys`</span>.*</div><div class="line">FROM <span class="string">`happys`</span></div><div class="line">INNER JOIN</div><div class="line">(</div><div class="line">SELECT happys.id</div><div class="line">FROM happys</div><div class="line">INNER JOIN <span class="string">`happy_infos`</span> ON <span class="string">`happy_infos`</span>.<span class="string">`happy_id`</span> = <span class="string">`happys`</span>.<span class="string">`id`</span></div><div class="line">WHERE happys.end_time &gt; <span class="string">'2015-08-13 14:08:10'</span></div><div class="line">      AND happys.j_tag_id &gt; <span class="number">0</span></div><div class="line">      AND happy_infos.my_image_url = <span class="string">''</span></div><div class="line">LIMIT <span class="number">100</span> OFFSET <span class="number">28900</span></div><div class="line">) AS lim ON lim.id = happys.id</div><div class="line">ORDER BY happys.updated_at DESC \G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: PRIMARY</div><div class="line">        table: NULL</div><div class="line">         type: NULL</div><div class="line">possible_keys: NULL</div><div class="line">          key: NULL</div><div class="line">      key_len: NULL</div><div class="line">          ref: NULL</div><div class="line">         rows: NULL</div><div class="line">        Extra: Impossible WHERE noticed after reading <span class="keyword">const</span> tables</div><div class="line">*************************** <span class="number">2.</span> row ***************************</div><div class="line">           id: <span class="number">2</span></div><div class="line">  select_type: DERIVED</div><div class="line">        table: happys</div><div class="line">         type: range</div><div class="line">possible_keys: PRIMARY,idx_end_time,idx_bg_tag_pub_beg,idx_bg_tag_pub_end</div><div class="line">          key: idx_bg_tag_pub_end</div><div class="line">      key_len: <span class="number">4</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">425143</span></div><div class="line">        Extra: Using where; Using index</div><div class="line">*************************** <span class="number">3.</span> row ***************************</div><div class="line">           id: <span class="number">2</span></div><div class="line">  select_type: DERIVED</div><div class="line">        table: happy_infos</div><div class="line">         type: eq_ref</div><div class="line">possible_keys: happy_id_index</div><div class="line">          key: happy_id_index</div><div class="line">      key_len: <span class="number">4</span></div><div class="line">          ref: tao800.happys.id</div><div class="line">         rows: <span class="number">1</span></div><div class="line">        Extra: Using where</div><div class="line"><span class="number">3</span> rows <span class="keyword">in</span> set (<span class="number">0.67</span> sec)</div><div class="line">平均查询时间： <span class="number">0.67</span> sec</div></pre></td></tr></table></figure>
+<h3 id="四、驱动表，临时表，排序"><a href="#四、驱动表，临时表，排序" class="headerlink" title="四、驱动表，临时表，排序"></a>四、驱动表，临时表，排序</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">mysql&gt; EXPLAIN SELECT <span class="string">`happy_d_sales`</span>.<span class="string">`happy_id`</span></div><div class="line">    -&gt; FROM <span class="string">`happy_d_sales`</span></div><div class="line">    -&gt; INNER JOIN happys ON happys.id = happy_d_sales.happy_id</div><div class="line">    -&gt; AND happys.j_tag_id = happy_d_sales.tag_id</div><div class="line">    -&gt; WHERE (status = <span class="number">1</span></div><div class="line">    -&gt;        AND date = <span class="string">'2015-08-12'</span>)</div><div class="line">    -&gt; ORDER BY sales DESC LIMIT <span class="number">300</span>\G;</div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happys</div><div class="line">         type: index</div><div class="line">possible_keys: PRIMARY,idx_bg_tag_pub_beg,idx_bg_tag_pub_end</div><div class="line">          key: idx_bg_tag_pub_beg</div><div class="line">      key_len: <span class="number">20</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">850279</span> &lt;- 返回数据太多，坏味道</div><div class="line">        Extra: Using index; Using temporary; Using filesort</div><div class="line">*************************** <span class="number">2.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happy_d_sales</div><div class="line">         type: eq_ref</div><div class="line">possible_keys: happy_id_date_tag_idx,tag_id_date</div><div class="line">          key: happy_id_date_tag_idx</div><div class="line">      key_len: <span class="number">11</span></div><div class="line">          ref: tao800.happys.id,<span class="keyword">const</span>,tao800.happys.j_tag_id</div><div class="line">         rows: <span class="number">1</span></div><div class="line">        Extra: Using where</div><div class="line"><span class="number">2</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div><div class="line"></div><div class="line">ERROR:</div><div class="line">No query specified</div><div class="line">平均查询时间 Empty set (<span class="number">3.90</span> sec)</div></pre></td></tr></table></figure>
+<p>EXPLAIN 返回的第一列的表，就是驱动表，在驱动表上排序，非常快。但是如果在非驱动表上，排序，就很慢。<br>默认情况下，记录就是按照顺序排列好的，不需要进行排序。但是上述结果，从happys 表中取出一些数据，建立临时表，并且还在临时表上进行排序。<br>所以就会出现 Using temporary; Using filesort 这种情况。</p>
+<p>优化建议：</p>
+<p>1、减少返回值rows</p>
+<p>2、指定正确的驱动表<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">mysql&gt; ALTER table `happy_d_sales` ADD INDEX `idx_of_date_and_status` (`date`, `status`, `sales`, `id`);</div><div class="line">Query OK, 0 rows affected (19.45 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div><div class="line"></div><div class="line">mysql&gt; EXPLAIN SELECT `happy_d_sales`.`happy_id`</div><div class="line">    -&gt; FROM `happy_d_sales`</div><div class="line">    -&gt; STRAIGHT_JOIN happys ON happys.id = happy_d_sales.happy_id</div><div class="line">    -&gt; AND happys.j_tag_id = happy_d_sales.tag_id</div><div class="line">    -&gt; WHERE  date = '2015-08-12' AND status = 1</div><div class="line">    -&gt; ORDER BY `happy_d_sales`.sales DESC LIMIT 300\G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happy_d_sales  &lt;-- 正确的驱动表</div><div class="line">         type: ref</div><div class="line">possible_keys: happy_id_date_tag_idx,tag_id_date,idx_of_date_and_status</div><div class="line">          key: idx_of_date_and_status</div><div class="line">      key_len: 7</div><div class="line">          ref: const,const</div><div class="line">         rows: 1</div><div class="line">        Extra: Using where</div><div class="line">*************************** 2. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happys</div><div class="line">         type: eq_ref</div><div class="line">possible_keys: PRIMARY,idx_bg_tag_pub_beg,idx_bg_tag_pub_end</div><div class="line">          key: PRIMARY</div><div class="line">      key_len: 4</div><div class="line">          ref: tao800.happy_d_sales.happy_id</div><div class="line">         rows: 1</div><div class="line">        Extra: Using where</div><div class="line">2 rows in set (0.01 sec)</div><div class="line"></div><div class="line">ERROR:</div><div class="line">No query specified</div><div class="line">平均查询时间：0.03 sec</div><div class="line">### 五、不合适的group by 分组条件</div><div class="line">大表上的group by</div><div class="line"></div><div class="line">```javascript</div><div class="line">CREATE TABLE `p_acc_logs` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `account_id` int(11) NOT NULL DEFAULT '0' ,</div><div class="line">  `b_amount` int(11) NOT NULL DEFAULT '0' ,</div><div class="line">  `r_amount` int(11) NOT NULL DEFAULT '0' ,</div><div class="line">  `amount` int(11) NOT NULL DEFAULT '0' ,</div><div class="line">  `l_type` int(11) NOT NULL DEFAULT '0',</div><div class="line">  `created_at` datetime NOT NULL,</div><div class="line">  `updated_at` datetime NOT NULL,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_created_at` (`created_at`,`id`),</div><div class="line">  KEY `idx_account_type` (`account_id`,`l_type`,`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=3212639 DEFAULT CHARSET=utf8;</div><div class="line">该表上有百万条的数据，也有 关于 account_id 的索引，但是使用 group by 查询时，确实很慢。</div><div class="line"></div><div class="line">SELECT MAX(id) max_id FROM `p_acc_logs`  WHERE (created_at &lt;= '2015-08-14 00:00:00') GROUP BY account_id</div><div class="line">平均查询时间 10sec</div></pre></td></tr></table></figure></p>
+<h3 id="六、不合适的order-by"><a href="#六、不合适的order-by" class="headerlink" title="六、不合适的order by"></a>六、不合适的order by</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">EXPLAIN SELECT SQL_NO_CACHE id,</div><div class="line">       u_id,</div><div class="line">       amount</div><div class="line">FROM <span class="string">`t_orders`</span></div><div class="line">WHERE (settlement_time &gt;= <span class="string">'2015-07-01 00:00:00'</span></div><div class="line">       AND settlement_time &lt;= <span class="string">'2015-09-30 23:59:59'</span>)</div><div class="line">ORDER BY <span class="string">`t_orders`</span>.<span class="string">`id`</span> ASC LIMIT <span class="number">3000</span>;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: t_orders</div><div class="line">         type: index</div><div class="line">possible_keys: idx_settlement_time</div><div class="line">          key: PRIMARY  &lt;--- 注意这里</div><div class="line">      key_len: <span class="number">4</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">6705</span>   &lt;---- 注意这里</div><div class="line">        Extra: Using where</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.09</span> sec)</div><div class="line"></div><div class="line">ERROR:</div><div class="line">No query specified</div><div class="line">平均查询时间：<span class="number">40</span> sec</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE <span class="string">`t_orders`</span> (</div><div class="line">  <span class="string">`id`</span> int(<span class="number">11</span>) NOT NULL AUTO_INCREMENT,</div><div class="line">  <span class="string">`u_id`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`order_id`</span> varchar(<span class="number">20</span>) NOT NULL DEFAULT <span class="string">''</span> ,</div><div class="line">  <span class="string">`amount`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`settlement_time`</span> datetime NOT NULL DEFAULT <span class="string">'1970-01-01 00:00:00'</span> ,</div><div class="line">  <span class="string">`d_s_time`</span> datetime DEFAULT <span class="string">'1970-01-01 00:00:00'</span> ,</div><div class="line">  <span class="string">`serial_number`</span> bigint(<span class="number">20</span>) unsigned DEFAULT NULL ,</div><div class="line">  <span class="string">`order_type`</span> int(<span class="number">11</span>) DEFAULT NULL ,</div><div class="line">  <span class="string">`created_at`</span> datetime NOT NULL,</div><div class="line">  <span class="string">`updated_at`</span> datetime NOT NULL,</div><div class="line">  PRIMARY KEY (<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`index_t_orders_on_u_id_and_settlement_time_and_id`</span> (<span class="string">`u_id`</span>,<span class="string">`settlement_time`</span>,<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`index_t_orders_on_order_id_and_order_type_and_id`</span> (<span class="string">`order_id`</span>,<span class="string">`order_type`</span>,<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`index_t_orders_on_serial_number_and_order_type_and_id`</span> (<span class="string">`serial_number`</span>,<span class="string">`order_type`</span>,<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`idx_settlement_time`</span> (<span class="string">`settlement_time`</span>,<span class="string">`id`</span>)</div><div class="line">) ENGINE=InnoDB  DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
+<p>优化建议：</p>
+<p>1、去除错误的order by 查询，记录集默认就是按照id升序排列的。</p>
+<p>2、使查询语句能够按照正确的方式查询</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">EXPLAIN SELECT SQL_NO_CACHE id,</div><div class="line">       u_id,</div><div class="line">       amount</div><div class="line">FROM <span class="string">`t_orders`</span></div><div class="line">WHERE (settlement_time &gt;= <span class="string">'2015-07-01 00:00:00'</span></div><div class="line">       AND settlement_time &lt;= <span class="string">'2015-09-30 23:59:59'</span>)</div><div class="line">LIMIT <span class="number">3000</span>;</div><div class="line"></div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: t_orders</div><div class="line">         type: range</div><div class="line">possible_keys: idx_settlement_time</div><div class="line">          key: idx_settlement_time &lt;-- 注意这里</div><div class="line">      key_len: <span class="number">8</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">12784434</span> &lt;-- 注意这里</div><div class="line">        Extra: Using where</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div><div class="line"></div><div class="line">ERROR:</div><div class="line">No query specified</div><div class="line">平均查询时间：<span class="number">0.16</span> sec</div></pre></td></tr></table></figure>
+<h3 id="七、模糊查询"><a href="#七、模糊查询" class="headerlink" title="七、模糊查询"></a>七、模糊查询</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">EXPLAIN SELECT <span class="string">`p_d_logs`</span>.*</div><div class="line">FROM <span class="string">`p_d_logs`</span></div><div class="line">WHERE (details LIKE <span class="string">'%waiting%'</span></div><div class="line">       AND created_at &lt; <span class="string">'2015-08-09 03:40:35'</span>)</div><div class="line">  AND (<span class="string">`p_d_logs`</span>.<span class="string">`id`</span> &gt; <span class="number">297273949</span>)</div><div class="line">ORDER BY <span class="string">`p_d_logs`</span>.<span class="string">`id`</span> ASC LIMIT <span class="number">10000</span>\G</div><div class="line"></div><div class="line">+----+-------------+-------------------+-------+---------------+---------+---------+-----+---------+-------------+</div><div class="line">| id | select_type | table             | type  | possible_keys | key     | key_len | ref | rows    | Extra       |</div><div class="line">+----+-------------+-------------------+-------+---------------+---------+---------+-----+---------+-------------+</div><div class="line">| <span class="number">1</span>  | SIMPLE      | p_d_logs | range | PRIMARY       | PRIMARY | <span class="number">4</span>       |     | <span class="number">3340552</span> | Using where |</div><div class="line">+----+-------------+-------------------+-------+---------------+---------+---------+-----+---------+-------------+</div><div class="line">平均查询时间：<span class="number">7.5889787673950195</span> sec</div><div class="line"></div><div class="line">EXPLAIN SELECT <span class="string">`e_logs`</span>.<span class="string">`loggable_id`</span></div><div class="line">FROM <span class="string">`e_logs`</span></div><div class="line">WHERE (user_name LIKE <span class="string">'%王大傻%'</span></div><div class="line">       AND action_type_id = <span class="number">0</span></div><div class="line">       AND loggable_type = <span class="string">'HappyBase'</span>) \G;</div><div class="line"></div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: e_logs</div><div class="line">         type: ref</div><div class="line">possible_keys: by_loggable_type</div><div class="line">          key: by_loggable_type</div><div class="line">      key_len: <span class="number">92</span></div><div class="line">          ref: <span class="keyword">const</span></div><div class="line">         rows: <span class="number">684252</span></div><div class="line">        Extra: Using where</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">10.61</span> sec)</div><div class="line"></div><div class="line"><span class="number">15738</span> rows <span class="keyword">in</span> set (<span class="number">3</span> min <span class="number">45.75</span> sec)</div><div class="line"></div><div class="line"> CREATE TABLE <span class="string">`e_logs`</span> (</div><div class="line">  <span class="string">`id`</span> int(<span class="number">11</span>) NOT NULL AUTO_INCREMENT,</div><div class="line">  <span class="string">`loggable_type`</span> varchar(<span class="number">30</span>) NOT NULL DEFAULT <span class="string">''</span> ,</div><div class="line">  <span class="string">`loggable_id`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`u_id`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`user_name`</span> varchar(<span class="number">24</span>) NOT NULL DEFAULT <span class="string">''</span> ,</div><div class="line">  <span class="string">`create_time`</span> datetime NOT NULL DEFAULT <span class="string">'1970-01-01 00:00:00'</span> ,</div><div class="line">  <span class="string">`execution_type_id`</span> tinyint(<span class="number">4</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`action_type_id`</span> tinyint(<span class="number">4</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`from_url`</span> varchar(<span class="number">200</span>) NOT NULL DEFAULT <span class="string">''</span> ,</div><div class="line">  <span class="string">`updated_changes`</span> longtext ,</div><div class="line">  <span class="string">`t_s_id`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  PRIMARY KEY (<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`index_e_logs_on_loggable_id_and_loggable_type`</span> (<span class="string">`loggable_id`</span>,<span class="string">`loggable_type`</span>),</div><div class="line">  KEY <span class="string">`idx_user_name`</span> (<span class="string">`user_name`</span>,<span class="string">`action_type_id`</span>,<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`index_e_logs_on_create_time`</span> (<span class="string">`create_time`</span>),</div><div class="line">  KEY <span class="string">`by_t_s_id`</span> (<span class="string">`t_s_id`</span>,<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`by_loggable_type`</span> (<span class="string">`loggable_type`</span>,<span class="string">`id`</span>)</div><div class="line">) ENGINE=InnoDB  DEFAULT CHARSET=utf8</div></pre></td></tr></table></figure>
+<p>优化建议：</p>
+<p>1、调整查询语句顺序</p>
+<p>2、添加合适的索引。删除旧的索引。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">alter table e_logs drop index <span class="string">`by_loggable_type`</span>;</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">3</span> min <span class="number">12.71</span> sec)</div><div class="line"></div><div class="line"></div><div class="line">alter table e_logs add index <span class="string">`idx_of_loggable_type_and_type_id`</span> (<span class="string">`loggable_type`</span>, <span class="string">`action_type_id`</span>, <span class="string">`id`</span>);</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">6</span> min <span class="number">5.70</span> sec)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">EXPLAIN SELECT SQL_NO_CACHE <span class="string">`e_logs`</span>.<span class="string">`loggable_id`</span></div><div class="line">FROM <span class="string">`e_logs`</span></div><div class="line">WHERE (loggable_type = <span class="string">'HappyBase'</span> AND action_type_id = <span class="number">0</span> AND user_name LIKE <span class="string">'王大傻%'</span>) \G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: e_logs</div><div class="line">         type: range</div><div class="line">possible_keys: idx_user_name,idx_of_loggable_type_and_type_id</div><div class="line">          key: idx_user_name</div><div class="line">      key_len: <span class="number">75</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">39546</span></div><div class="line">        Extra: Using where</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div><div class="line">平均查询时间： <span class="number">0.13</span> sec 效率提升 <span class="number">1700</span> 倍</div></pre></td></tr></table></figure></p>
+<h3 id="八、检索条件，没有按照索引列查询"><a href="#八、检索条件，没有按照索引列查询" class="headerlink" title="八、检索条件，没有按照索引列查询"></a>八、检索条件，没有按照索引列查询</h3><p>索引，中范围查询什么的，是否能使用到索引，详细演示一下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">SELECT  happy_id, sum(sales) <span class="keyword">as</span> all_sales</div><div class="line">FROM <span class="string">`happy_d_sales`</span></div><div class="line">WHERE <span class="string">`happy_d_sales`</span>.<span class="string">`status`</span> = <span class="number">1</span></div><div class="line">AND <span class="string">`happy_d_sales`</span>.<span class="string">`tag_id`</span> IN (xxx,)</div><div class="line">GROUP BY happy_id ORDER BY all_sales desc LIMIT <span class="number">100</span> OFFSET <span class="number">0</span></div><div class="line">平均查询时间：<span class="number">20</span>sec</div><div class="line"></div><div class="line">CREATE TABLE <span class="string">`happy_d_sales`</span> (</div><div class="line">  <span class="string">`id`</span> int(<span class="number">11</span>) NOT NULL AUTO_INCREMENT,</div><div class="line">  <span class="string">`happy_id`</span> int(<span class="number">11</span>) NOT NULL ,</div><div class="line">  <span class="string">`tag_id`</span> int(<span class="number">11</span>) NOT NULL ,</div><div class="line">  <span class="string">`sales`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`status`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`date`</span> date NOT NULL ,</div><div class="line">  <span class="string">`created_at`</span> datetime NOT NULL,</div><div class="line">  <span class="string">`updated_at`</span> datetime NOT NULL,</div><div class="line">  <span class="string">`r_count`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`a_t_s_count`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  PRIMARY KEY (<span class="string">`id`</span>),</div><div class="line">  UNIQUE KEY <span class="string">`happy_id_date_tag_idx`</span> (<span class="string">`happy_id`</span>,<span class="string">`date`</span>,<span class="string">`tag_id`</span>),</div><div class="line">  KEY <span class="string">`tag_id_date`</span> (<span class="string">`tag_id`</span>,<span class="string">`date`</span>) ,</div><div class="line">  KEY <span class="string">`idx_of_date_and_status`</span> (<span class="string">`date`</span>,<span class="string">`status`</span>,<span class="string">`sales`</span>,<span class="string">`id`</span>)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;</div><div class="line">调整下SQL语句的顺序，并且添加合适的索引，瞬间减少查询时间。</div><div class="line"></div><div class="line">explain SELECT SQL_NO_CACHE  happy_id, sum(sales) <span class="keyword">as</span> all_sales</div><div class="line">FROM <span class="string">`happy_d_sales`</span></div><div class="line">WHERE <span class="string">`happy_d_sales`</span>.<span class="string">`tag_id`</span> IN (xxxx,xxxx,xxxx)</div><div class="line">AND <span class="string">`happy_d_sales`</span>.<span class="string">`status`</span> = <span class="number">1</span></div><div class="line">GROUP BY happy_id ORDER BY all_sales desc</div><div class="line">LIMIT <span class="number">100</span> OFFSET <span class="number">0</span>\G;</div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happy_d_sales</div><div class="line">         type: range</div><div class="line">possible_keys: tag_id_date,idx_of_tag_id_status_happy_id</div><div class="line">          key: idx_of_tag_id_status_happy_id</div><div class="line">      key_len: <span class="number">8</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">94380</span></div><div class="line">        Extra: Using where; Using temporary; Using filesort</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.06</span> sec)</div><div class="line">平均查询时间： <span class="number">100</span> rows <span class="keyword">in</span> set (<span class="number">0.43</span> sec)</div></pre></td></tr></table></figure></p>
+<h3 id="九、根本没有索引"><a href="#九、根本没有索引" class="headerlink" title="九、根本没有索引"></a>九、根本没有索引</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">explain select t_s_id <span class="keyword">from</span> guang_happy_outs group by t_s_id;</div><div class="line">+----+-------------+-----------------+------+---------------+------+---------+------+----------+---------------------------------+</div><div class="line">| id | select_type | table           | type | possible_keys | key  | key_len | ref  | rows     | Extra                           |</div><div class="line">+----+-------------+-----------------+------+---------------+------+---------+------+----------+---------------------------------+</div><div class="line">|  <span class="number">1</span> | SIMPLE      | guang_happy_outs | ALL  | NULL          | NULL | NULL    | NULL | <span class="number">69008793</span> | Using temporary; Using filesort |</div><div class="line">+----+-------------+-----------------+------+---------------+------+---------+------+----------+---------------------------------+</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div><div class="line"></div><div class="line">平均查询时间：<span class="number">3</span> sec</div><div class="line"></div><div class="line">CREATE TABLE <span class="string">`guang_happy_outs`</span> (</div><div class="line">  <span class="string">`id`</span> int(<span class="number">11</span>) NOT NULL AUTO_INCREMENT ,</div><div class="line">  <span class="string">`t_s_id`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`happy_id`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`count`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`de_id`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`ad_count`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  <span class="string">`st_date`</span> date NOT NULL DEFAULT <span class="string">'1970-01-01'</span> ,</div><div class="line">  <span class="string">`created_at`</span> datetime DEFAULT NULL,</div><div class="line">  <span class="string">`updated_at`</span> datetime DEFAULT NULL,</div><div class="line">  <span class="string">`amount`</span> int(<span class="number">11</span>) NOT NULL DEFAULT <span class="string">'0'</span> ,</div><div class="line">  PRIMARY KEY (<span class="string">`id`</span>),</div><div class="line">  KEY <span class="string">`idx_guang_dlout_dlid`</span> (<span class="string">`happy_id`</span>),</div><div class="line">  KEY <span class="string">`idx_guang_dlout_cat`</span> (<span class="string">`created_at`</span>),</div><div class="line">  KEY <span class="string">`idx_guang_dlout_stdate`</span> (<span class="string">`st_date`</span>)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
+<p>优化建议：</p>
+<p>1、添加必要的索引</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">mysql&gt; alter table guang_happy_outs add index <span class="string">`idx_of_t_s_id`</span> (<span class="string">`t_s_id`</span>, <span class="string">`id`</span>);</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">7</span> min <span class="number">41.47</span> sec)</div><div class="line">Records: <span class="number">0</span>  Duplicates: <span class="number">0</span>  Warnings: <span class="number">0</span></div><div class="line"></div><div class="line">explain select t_s_id <span class="keyword">from</span> guang_happy_outs group by t_s_id\G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: guang_happy_outs</div><div class="line">         type: range</div><div class="line">possible_keys: NULL</div><div class="line">          key: idx_of_t_s_id</div><div class="line">      key_len: <span class="number">4</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">201</span></div><div class="line">        Extra: Using index <span class="keyword">for</span> group-by</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div><div class="line"></div><div class="line">ERROR:</div><div class="line">No query specified</div></pre></td></tr></table></figure>
+<p>平均查询时间：<br>    4818 rows in set (0.03 sec)<br>不过针对大表而言，对于一些常用的查询，可以单独建立小表，在关联的小表上进行查询。</p>
+<h3 id="十、EXPLAIN-返回type-为-ALL，全表扫描"><a href="#十、EXPLAIN-返回type-为-ALL，全表扫描" class="headerlink" title="十、EXPLAIN 返回type 为 ALL，全表扫描"></a>十、EXPLAIN 返回type 为 ALL，全表扫描</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">EXPLAIN SELECT <span class="string">`r_records`</span>.*</div><div class="line">FROM <span class="string">`r_records`</span></div><div class="line">WHERE (create_time &gt;= <span class="string">'2015-08-13'</span></div><div class="line">       AND create_time &lt; <span class="string">'2015-08-14'</span></div><div class="line">       AND device_id !=<span class="string">"0"</span>)\G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: r_records</div><div class="line">         type: ALL  &lt;-- 看这里</div><div class="line">possible_keys: NULL</div><div class="line">          key: NULL</div><div class="line">      key_len: NULL</div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">10753575</span> &lt;- 看这里</div><div class="line">        Extra: Using where</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div><div class="line"></div><div class="line">ERROR:</div><div class="line">No query specified</div></pre></td></tr></table></figure>
+<p>优化建议：</p>
+<p>1、添加关于 create_time 和 device_id 的联合索引。</p>
+<p>2、最好的方式就是单独单独建立统计表，针对每天的日志情况做统计。避免在大表上进行范围查询。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">alter table r_records add index <span class="string">`idx_of_create_time`</span> (<span class="string">`create_time`</span>, <span class="string">`device_id`</span>, <span class="string">`id`</span>);</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">4</span> min <span class="number">14.59</span> sec)</div><div class="line"></div><div class="line"></div><div class="line">EXPLAIN SELECT <span class="string">`r_records`</span>.*</div><div class="line">FROM <span class="string">`r_records`</span></div><div class="line">WHERE (create_time &gt;= <span class="string">'2015-08-13'</span></div><div class="line">       AND create_time &lt; <span class="string">'2015-08-14'</span></div><div class="line">       AND device_id !=<span class="string">"0"</span>)\G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: r_records</div><div class="line">         type: range</div><div class="line">possible_keys: idx_of_create_time &lt;-- 看这里</div><div class="line">          key: idx_of_create_time</div><div class="line">      key_len: <span class="number">777</span>  &lt;-- 看这里</div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">1</span></div><div class="line">        Extra: Using where</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div><div class="line">另一个例子</div><div class="line"></div><div class="line">EXPLAIN SELECT <span class="string">`happy_ni_nis`</span>.*</div><div class="line">FROM <span class="string">`happy_ni_nis`</span></div><div class="line">ORDER BY n_total DESC LIMIT <span class="number">10</span>\G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happy_ni_nis</div><div class="line">         type: ALL</div><div class="line">possible_keys: NULL</div><div class="line">          key: NULL</div><div class="line">      key_len: NULL</div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">66493186</span>  &lt;- 返回值太多，坏味道</div><div class="line">        Extra: Using filesort &lt;- 避免使用排序</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div><div class="line">平均查询时间：<span class="number">13</span> sec</div></pre></td></tr></table></figure></p>
+<p>优化建议：</p>
+<p>1、添加 关于 n_total 的索引</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">mysql&gt; alter table happy_ni_nis add index <span class="string">`idx_of_n_total`</span> (<span class="string">`n_total`</span>, <span class="string">`id`</span>);</div><div class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">7</span> min <span class="number">48.27</span> sec)</div><div class="line">Records: <span class="number">0</span>  Duplicates: <span class="number">0</span>  Warnings: <span class="number">0</span></div><div class="line"></div><div class="line">EXPLAIN SELECT <span class="string">`happy_ni_nis`</span>.*</div><div class="line">FROM <span class="string">`happy_ni_nis`</span></div><div class="line">ORDER BY n_total DESC LIMIT <span class="number">10</span>\G;</div><div class="line"></div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           id: <span class="number">1</span></div><div class="line">  select_type: SIMPLE</div><div class="line">        table: happy_ni_nis</div><div class="line">         type: index</div><div class="line">possible_keys: NULL</div><div class="line">          key: idx_of_n_total</div><div class="line">      key_len: <span class="number">8</span></div><div class="line">          ref: NULL</div><div class="line">         rows: <span class="number">10</span></div><div class="line">        Extra:</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div><div class="line"></div><div class="line">ERROR:</div><div class="line">No query specified</div><div class="line">平均查询时间：<span class="number">0.01</span> sec</div></pre></td></tr></table></figure>
+<h3 id="十一、针对大表的-count-id"><a href="#十一、针对大表的-count-id" class="headerlink" title="十一、针对大表的 count(id)"></a>十一、针对大表的 count(id)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select SQL_NO_CACHE count(id) <span class="keyword">from</span> guang_happy_outs;</div><div class="line">+-----------+</div><div class="line">| count(id) |</div><div class="line">+-----------+</div><div class="line">|  <span class="number">69008543</span> |</div><div class="line">+-----------+</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">31.14</span> sec)</div></pre></td></tr></table></figure>
+<p>千万表上的 count(id) 操作</p>
+<p>无解。</p>
+<p>如有同学知道怎么解决，请回复，3Q</p>
+<p>在 select count (*) from table_name 为什么没有使用主键索引? 有详细的讨论。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select SQL_NO_CACHE count(id) <span class="keyword">from</span> g_d_outs\G;</div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">count(id): <span class="number">69008543</span></div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">10.76</span> sec)</div><div class="line"></div><div class="line">ERROR: </div><div class="line">No query specified</div><div class="line">如果你想得到近似的统计值，使用 下面的这个方式 查找 Rows 值，这种方式是非常快的。</div><div class="line"></div><div class="line">mysql&gt; show table status where name = <span class="string">'g_d_outs'</span>\G;</div><div class="line">*************************** <span class="number">1.</span> row ***************************</div><div class="line">           Name: g_d_outs</div><div class="line">         Engine: InnoDB</div><div class="line">        Version: <span class="number">10</span></div><div class="line">     Row_format: Compact</div><div class="line">           Rows: <span class="number">69008796</span></div><div class="line"> Avg_row_length: <span class="number">71</span></div><div class="line">    Data_length: <span class="number">4965007360</span></div><div class="line">Max_data_length: <span class="number">0</span></div><div class="line">   Index_length: <span class="number">3560964096</span></div><div class="line">      Data_free: <span class="number">5242880</span></div><div class="line"> Auto_increment: <span class="number">138022949</span></div><div class="line">    Create_time: <span class="number">2015</span><span class="number">-08</span><span class="number">-14</span> <span class="number">18</span>:<span class="number">46</span>:<span class="number">13</span></div><div class="line">    Update_time: NULL</div><div class="line">     Check_time: NULL</div><div class="line">      Collation: utf8_general_ci</div><div class="line">       Checksum: NULL</div><div class="line"> Create_options: </div><div class="line">        Comment: ??????????</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.01</span> sec)</div></pre></td></tr></table></figure>
+<p>总结：</p>
+<p>1、索引优化，最傻的办法，给查询语句添加覆盖索引。但不是最好的方式。</p>
+<p>2、将大表拆成小的汇总表。</p>
+<p>3、重在实践，MySQL优化器在很多情况下不能给出，最快的实现方式。</p>
+<p>4、避免在大表上的group by，order by，offset 操作，除非你知道如何优化的前提下。</p>
+<p>5、SQL WHERE查询条件，尽量按照目前添加的索引顺序来。</p>
+<p>文／清水大王（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/76c1ffeb6b76" target="_blank" rel="external">http://www.jianshu.com/p/76c1ffeb6b76</a><br>著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2016-10-08, 21:49:54</p>
+        <p><span>最后更新:</span>2016-10-12, 22:06:12</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/08/mysql-search/" title="MySQL 慢查询的特征表现及优化方式">http://yoursite.com/2016/10/08/mysql-search/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/08/mysql-search/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/10/17/sqlChange/">
+                    经典SQL——行转列，列转行
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/09/25/sql-type/">
+                    各种数据库的分页查询SQL语句总结
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、慢查询的体现"><span class="toc-number">1.</span> <span class="toc-text">一、慢查询的体现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、返回列数太多"><span class="toc-number">2.</span> <span class="toc-text">二、返回列数太多</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、分页条件，过大的offset"><span class="toc-number">3.</span> <span class="toc-text">三、分页条件，过大的offset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、驱动表，临时表，排序"><span class="toc-number">4.</span> <span class="toc-text">四、驱动表，临时表，排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、不合适的order-by"><span class="toc-number">5.</span> <span class="toc-text">六、不合适的order by</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、模糊查询"><span class="toc-number">6.</span> <span class="toc-text">七、模糊查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、检索条件，没有按照索引列查询"><span class="toc-number">7.</span> <span class="toc-text">八、检索条件，没有按照索引列查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九、根本没有索引"><span class="toc-number">8.</span> <span class="toc-text">九、根本没有索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十、EXPLAIN-返回type-为-ALL，全表扫描"><span class="toc-number">9.</span> <span class="toc-text">十、EXPLAIN 返回type 为 ALL，全表扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十一、针对大表的-count-id"><span class="toc-number">10.</span> <span class="toc-text">十一、针对大表的 count(id)</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"MySQL 慢查询的特征表现及优化方式　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/10/08/mysql-search/" data-title="MySQL 慢查询的特征表现及优化方式" data-url="http://yoursite.com/2016/10/08/mysql-search/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/10/17/sqlChange/" title="上一篇: 经典SQL——行转列，列转行">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/09/25/sql-type/" title="下一篇: 各种数据库的分页查询SQL语句总结">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
