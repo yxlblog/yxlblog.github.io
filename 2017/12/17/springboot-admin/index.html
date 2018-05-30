@@ -15,28 +15,40 @@
 <meta name="baidu-site-verification" content="LO7Y8GhIBA" />
 
 
-<meta name="description" content="categories: java
-前言
+<meta name="description" content="前言
 Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。运行环境：maven，spring boot应用， Spring cloud eureka的配置
 1.在 Spring Boot 项目中配置
-首先，先建个基础的spring boot 应用，该应用作为 Spring B">
+首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springboot_admin_server应用监控管理">
 <meta property="og:url" content="http://yoursite.com/2017/12/17/springboot-admin/index.html">
 <meta property="og:site_name" content="远行的样子的博客">
-<meta property="og:description" content="categories: java
-前言
+<meta property="og:description" content="前言
 Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。运行环境：maven，spring boot应用， Spring cloud eureka的配置
 1.在 Spring Boot 项目中配置
-首先，先建个基础的spring boot 应用，该应用作为 Spring B">
-<meta property="og:updated_time" content="2018-05-13T13:40:23.410Z">
+首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.2.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.3.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.4.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.5.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.6.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.7.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.8.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.8.1.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.9.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.10.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.11.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-12.3.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-12.4.png">
+<meta property="og:updated_time" content="2018-05-30T15:00:54.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot_admin_server应用监控管理">
-<meta name="twitter:description" content="categories: java
-前言
+<meta name="twitter:description" content="前言
 Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。运行环境：maven，spring boot应用， Spring cloud eureka的配置
 1.在 Spring Boot 项目中配置
-首先，先建个基础的spring boot 应用，该应用作为 Spring B">
+首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，">
+<meta name="twitter:image" content="http://yoursite.com/pcImg/springboot-admin-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -300,6 +312,10 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
 
         
         <div class="clearfix"></div>
@@ -309,37 +325,35 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>categories: java</p>
-<p>前言</p>
+        <p>前言</p>
 <p>Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。<br>运行环境：maven，spring boot应用， Spring cloud eureka的配置</p>
 <p>1.在 Spring Boot 项目中配置</p>
 <p>首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，其他的spring boot应用作为client，当把client应用注册到 server时，我们就能在server服务管理上可以看到注册的client应用状态信息了。</p>
 <p>1.1 Server 管理端的配置<br><a id="more"></a></p>
 <p>在spring boot应用的pom.xml里添加服务端的依赖配置</p>
-<p>图片</p>
+<p><img src="/pcImg/springboot-admin-1.png" alt=" "></p>
 <p>1.2开启监控</p>
-<p>添加 @EnableAdminServer 注解开启监控</p>
+<p>添加 @EnableAdminServer 注解开启监控<br><img src="/pcImg/springboot-admin-1.2.png" alt=" "></p>
 <p>1.3 Client客户端配置</p>
+<p><img src="/pcImg/springboot-admin-1.3.png" alt=" "></p>
 <p>修改 application.properties</p>
 <p>触发自动配置、指明 Server 注册地址<br>Spring.boot.admin.url= Server端地址:端口号 (例如:<a href="http://localhost:8089" target="_blank" rel="external">http://localhost:8089</a>)</p>
 <p>添加 应用版本信息:  info.version=@project.version@</p>
 <p>1.4 仪表盘与桌面通知</p>
-<p>当启动好 client端应用，在浏览器输入Server端的地址，就可以看到注册进来的client端的应用信息了。</p>
+<p>当启动好 client端应用，在浏览器输入Server端的地址，就可以看到注册进来的client端的应用信息了。<br><img src="/pcImg/springboot-admin-1.4.png" alt=" "></p>
 <p>1.5 Details信息查看</p>
-<p>查看应用程序的健康状况，信息和详细信息。</p>
+<p>查看应用程序的健康状况，信息和详细信息。<br><img src="/pcImg/springboot-admin-1.5.png" alt=" "></p>
 <p>1.6 Metrics性能监控</p>
-<p>可以查看接口调用信息，统计调用次数。</p>
+<p>可以查看接口调用信息，统计调用次数。<br><img src="/pcImg/springboot-admin-1.6.png" alt=" "></p>
 <p>1.7 Environment环境查看与设置</p>
-<p>查看和更改应用环境</p>
-<p>1.8 JMX-bean管理</p>
-<p>如需在管理端显示客户端的JMX信息，则须在客户端配置。JMX-bean 管理需要使用第三方的 jolokia<br>在pom.xml添加依赖</p>
+<p>查看和更改应用环境<br><img src="/pcImg/springboot-admin-1.7.png" alt=" "></p>
+<p>1.8 JMX-bean管理<br><img src="/pcImg/springboot-admin-1.8.png" alt=" "><br>如需在管理端显示客户端的JMX信息，则须在客户端配置。JMX-bean 管理需要使用第三方的 jolokia<br>在pom.xml添加依赖<br><img src="/pcImg/springboot-admin-1.8.1.png" alt=" "></p>
 <p>1.9 Loglevel 管理</p>
 <p>当前日志级别管理仅限 Logback，通过 JMX 实现，所以需要依赖 jolokia 。同时，还需要客户端配置 Logback，创建logback.xml文件 ;添加如下配置:</p>
-<configuration><br>    <include resource="org/springframework/boot/logging/logback/base.xml"><br>    <jmxconfigurator><br></jmxconfigurator></include></configuration>
-
-
-<p>1.10 Thread 查看线程</p>
+<p><configuration><br>    <include resource="org/springframework/boot/logging/logback/base.xml"><br>    <jmxconfigurator><br></jmxconfigurator></include></configuration><br><img src="/pcImg/springboot-admin-1.9.png" alt=" "></p>
+<p>1.10 Thread 查看线程<br><img src="/pcImg/springboot-admin-1.10.png" alt=" "></p>
 <p>1.11 Trace查看http请求跟踪</p>
+<p><img src="/pcImg/springboot-admin-1.11.png" alt=" "></p>
 <p>1.12 Hystrix管理</p>
 <p>1.Server端配置<br>添加pom.xml依赖包:</p>
 <p>修改application.properties文件, 添加内容:</p>
@@ -352,8 +366,9 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
 <p>或者 添加web.xml配置 如下:</p>
 <p>在业务数据上监控设置:<br>编写一个Hystrix Command, 需要继承 HystrixCommand 类, 在 run 方法中完成你的业务逻辑，你可以重写 getFallback 方法来在run方法抛出异常的时候返回备用的结果。</p>
 <p>上面的代码写起来有点繁琐, 好在有 javanica 。这是Hystrix开源社区贡献的一个类库. 使用javanica, 你不需要继承 HystrixCommand , 只要在方法上添加 @HystrixCommand 注解, 你的方法就能够通过Hystrix运行. 例如下面的代码：</p>
-<p>输入被监控应用的地址如(<a href="http://localhost:8085/hystrix.steam),则返回一窜json格式数据,当在" target="_blank" rel="external">http://localhost:8085/hystrix.steam),则返回一窜json格式数据,当在</a> sping boot admin Server端调用 数据展示如下图:</p>
+<p>输入被监控应用的地址如(<a href="http://localhost:8085/hystrix.steam),则返回一窜json格式数据,当在" target="_blank" rel="external">http://localhost:8085/hystrix.steam),则返回一窜json格式数据,当在</a> sping boot admin Server端调用 数据展示如下图:<br><img src="/pcImg/springboot-admin-12.3.png" alt=" "></p>
 <p>Hystrix dashboard仪表盘说明:</p>
+<p><img src="/pcImg/springboot-admin-12.4.png" alt=" "></p>
 <p>上图对应序号说明:</p>
 <ol>
 <li>圆圈颜色和大小代表健康和流通量</li>
@@ -420,7 +435,7 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
         <p><span>本文标题:</span><a href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
         <p><span>发布时间:</span>2017-12-17, 13:25:28</p>
-        <p><span>最后更新:</span>2018-05-13, 21:40:23</p>
+        <p><span>最后更新:</span>2018-05-30, 23:00:54</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/12/17/springboot-admin/" title="springboot_admin_server应用监控管理">http://yoursite.com/2017/12/17/springboot-admin/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/12/17/springboot-admin/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
