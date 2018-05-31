@@ -15,36 +15,19 @@
 <meta name="baidu-site-verification" content="LO7Y8GhIBA" />
 
 
-<meta name="description" content="阿里云window server 2012 服务器+nginx+tomcat+redis 进行session共享设置步骤,基于linux版本的都差不多
-阿里云服务器设置">
+<meta name="description" content="mysql数据库开发常见问题及优化mysql 数据库是被广泛应用的关系型数据库，其体积小、支持多处理器、开源并免费的特性使其在 Internet 中小型网站中的使用率尤其高。在使用 mysql 的过程中不规范的 SQL 编写、非最优的策略选择都可能导致系统性能甚至功能上的缺陷。
+恰巧就在前几天，本人所在公司的云事业部举办了一场关于 mysql 的技术交流会，其中一个 part 正是聚焦于开发过程中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿里云window server 2012 服务器+nginx+tomcat+redis session共享">
-<meta property="og:url" content="http://yoursite.com/2016/09/15/alisset/index.html">
+<meta property="og:title" content="mysql数据库开发常见问题及优化">
+<meta property="og:url" content="http://yoursite.com/2018/01/13/mysql-youhua/index.html">
 <meta property="og:site_name" content="远行的样子的博客">
-<meta property="og:description" content="阿里云window server 2012 服务器+nginx+tomcat+redis 进行session共享设置步骤,基于linux版本的都差不多
-阿里云服务器设置">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/aliyuan.png">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/aliyun02.png">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/aliyun03.png">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/aliyun04.png">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/aliyun05.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/aliyuan06.png">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/tomcat01.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/tomcat02.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/tomcat03.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/nginx.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/ngin_peizhi.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/tomcat-redis.png">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/tomcat05.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/redis-set.PNG">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/sesssId01.png">
-<meta property="og:image" content="http://odisj0y6g.bkt.clouddn.com/sesssId02.png">
-<meta property="og:updated_time" content="2016-09-25T01:58:34.000Z">
+<meta property="og:description" content="mysql数据库开发常见问题及优化mysql 数据库是被广泛应用的关系型数据库，其体积小、支持多处理器、开源并免费的特性使其在 Internet 中小型网站中的使用率尤其高。在使用 mysql 的过程中不规范的 SQL 编写、非最优的策略选择都可能导致系统性能甚至功能上的缺陷。
+恰巧就在前几天，本人所在公司的云事业部举办了一场关于 mysql 的技术交流会，其中一个 part 正是聚焦于开发过程中">
+<meta property="og:updated_time" content="2018-05-31T14:08:18.122Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿里云window server 2012 服务器+nginx+tomcat+redis session共享">
-<meta name="twitter:description" content="阿里云window server 2012 服务器+nginx+tomcat+redis 进行session共享设置步骤,基于linux版本的都差不多
-阿里云服务器设置">
-<meta name="twitter:image" content="http://odisj0y6g.bkt.clouddn.com/aliyuan.png">
+<meta name="twitter:title" content="mysql数据库开发常见问题及优化">
+<meta name="twitter:description" content="mysql数据库开发常见问题及优化mysql 数据库是被广泛应用的关系型数据库，其体积小、支持多处理器、开源并免费的特性使其在 Internet 中小型网站中的使用率尤其高。在使用 mysql 的过程中不规范的 SQL 编写、非最优的策略选择都可能导致系统性能甚至功能上的缺陷。
+恰巧就在前几天，本人所在公司的云事业部举办了一场关于 mysql 的技术交流会，其中一个 part 正是聚焦于开发过程中">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -76,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>阿里云window server 2012 服务器+nginx+tomcat+redis session共享 | 远行的样子的博客</title>
+<title>mysql数据库开发常见问题及优化 | 远行的样子的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -281,11 +264,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-alisset" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-mysql-youhua" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/15/alisset/" class="article-date">
-      <time datetime="2016-09-15T02:07:20.000Z" itemprop="datePublished">2016-09-15</time>
+      <a href="/2018/01/13/mysql-youhua/" class="article-date">
+      <time datetime="2018-01-13T14:00:10.000Z" itemprop="datePublished">2018-01-13</time>
 </a>
 
 
@@ -300,7 +283,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      阿里云window server 2012 服务器+nginx+tomcat+redis session共享
+      mysql数据库开发常见问题及优化
     </h1>
   
 
@@ -309,7 +292,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/nginx/">nginx</a><a class="article-category-link" href="/categories/java/nginx/redis/">redis</a>
+    <a class="article-category-link" href="/categories/mysql/">mysql</a><a class="article-category-link" href="/categories/mysql/java/">java</a>
     </div>
 
 
@@ -321,56 +304,28 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><strong>阿里云window server 2012 服务器+nginx+tomcat+redis 进行session共享设置步骤,基于linux版本的都差不多</strong></p>
-<h3 id="阿里云服务器设置"><a href="#阿里云服务器设置" class="headerlink" title="阿里云服务器设置"></a>阿里云服务器设置</h3><a id="more"></a>
-<p>  先注册购买阿里账号购买云服务器ECS，我这里买的1元免费试用一个月的，配置都比较基础级别， Windows Server 2012 标准版 64位中文版，cpu:2g,带宽1M，内存:4g,系统容量盘一共90g，目前够用了。<br>  购买后，在ECS实例那里可以看到你的服务器信息，如看不到先选好是哪个区的，如下图</p>
-<p> <img src="http://odisj0y6g.bkt.clouddn.com/aliyuan.png" alt=""></p>
-<ul>
-<li><p>点击“管理”进行操作，进入下图，然后进行连接管理终端,如本地是windows系统也可以远程桌面控制操作：</p>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/aliyun02.png" alt=""><br>当你第一次进去设置时，会提示一个连接终端的密码，只显示一次你要牢记下来，后面都不提示了，然后输入终端密码进行下部操作</p>
-</li>
-</ul>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/aliyun03.png" alt=""></p>
-<ul>
-<li>成功连接到实例后，如下图：</li>
-</ul>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/aliyun04.png" alt=""><br>根据提示进行操作</p>
-<ul>
-<li>下一步会弹出window系统的登录界面：<br><img src="http://odisj0y6g.bkt.clouddn.com/aliyun05.PNG" alt=""></li>
-</ul>
-<p>这时你要输入密码，则可以登录进去，如有密码不用设置，没有就要重置密码，这注意：这密码不是连接终端的密码，是另外的分开的，要回到实例详情页面那操作，如图设置重置密码：</p>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/aliyuan06.png" alt=""></p>
-<p>然后 点击右上角的 重启 密码才有效，然后输入密码就可进入操作了</p>
-<ul>
-<li><p>进入到系统时可以 下载安装 jdk,tomcat,mysql,跟我我们平时所有的windows系统操作一样</p>
-</li>
-<li><p>然后我们本地系统的文件怎么上传到window server 2012服务器上呢，那我们就要建设FTP<br>这里我就不多说，请看这博客：<a href="http://blog.csdn.net/geeklei/article/details/36016457" target="_blank" rel="external">http://blog.csdn.net/geeklei/article/details/36016457</a> 有详细说明</p>
-<ul>
-<li>在本地安装两个tomcat,然后配置端口号：如图<br><img src="http://odisj0y6g.bkt.clouddn.com/tomcat01.PNG" alt=""></li>
-</ul>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/tomcat02.PNG" alt=""><br>下图是设置默认端口号 进来 直接访问项目首页的，不加项目名访问：</p>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/tomcat03.PNG" alt=""></p>
-<ul>
-<li><p>下载安装nginx 自行下载安装，用到命令：<br>启动,停止nginx<br><img src="http://odisj0y6g.bkt.clouddn.com/nginx.PNG" alt=""></p>
-</li>
-<li><p>配置nginx配置文件 进行负载均衡，conf/nginx.conf文件的配置修改</p>
-</li>
-</ul>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/ngin_peizhi.PNG" alt=""></p>
-<ul>
-<li>tomcat加载redis-session共享所需的完整jar包<br>百度云盘下载：地址：<a href="http://pan.baidu.com/s/1gfNVapX" target="_blank" rel="external">http://pan.baidu.com/s/1gfNVapX</a><br><img src="http://odisj0y6g.bkt.clouddn.com/tomcat-redis.png" alt=""></li>
-</ul>
-<p>把jar都分别放到两个tomcat目录下lib目录里面，然后修改tomcat目录下conf目录的content.xml文件，如下：<br><img src="http://odisj0y6g.bkt.clouddn.com/tomcat05.PNG" alt=""></p>
-</li>
-<li><p>下载安装redis安装文件,并启动redis</p>
-</li>
-</ul>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/redis-set.PNG" alt=""></p>
-<ul>
-<li>各种服务启动跑起，浏览器请求地址访问：<br>每次访问同个地址：sessionId都是一样的<br><img src="http://odisj0y6g.bkt.clouddn.com/sesssId01.png" alt=""></li>
-</ul>
-<p><img src="http://odisj0y6g.bkt.clouddn.com/sesssId02.png" alt=""></p>
-<p>大概简单说明就这些，希望对您有所帮助，基于linux服务器的下次再说了</p>
+        <h3 id="mysql数据库开发常见问题及优化"><a href="#mysql数据库开发常见问题及优化" class="headerlink" title="mysql数据库开发常见问题及优化"></a>mysql数据库开发常见问题及优化</h3><p>mysql 数据库是被广泛应用的关系型数据库，其体积小、支持多处理器、开源并免费的特性使其在 Internet 中小型网站中的使用率尤其高。在使用 mysql 的过程中不规范的 SQL 编写、非最优的策略选择都可能导致系统性能甚至功能上的缺陷。</p>
+<p>恰巧就在前几天，本人所在公司的云事业部举办了一场关于 mysql 的技术交流会，其中一个 part 正是聚焦于开发过程中 mysql 数据库设计及使用的常见问题，并提出相关优化方案。根据会议内容并查阅相关资料，本人对这个 part 进行了一次小结，结合自己的工作经历及理解形成此文以供分享，希望能有助于各位同行解决工作中的相关问题。<br><a id="more"></a><br>本文将就以下三个问题进行展开：</p>
+<p>库表设计<br>慢 SQL 问题<br>误操作、程序 bug 时怎么办</p>
+<h4 id="一、库表设计"><a href="#一、库表设计" class="headerlink" title="一、库表设计"></a>一、库表设计</h4><h5 id="1-1-引擎选择"><a href="#1-1-引擎选择" class="headerlink" title="1.1 引擎选择"></a>1.1 引擎选择</h5><p>在 mysql 5.1 中，引入了新的插件式存储引擎体系结构，允许将存储引擎加载到正在运新的 mysql 服务器中。使用 mysql 插件式存储引擎体系结构，允许数据库专业人员或者设计库表的软件开发人员为特定的应用需求选择专门的存储引擎，完全不需要管理任何特殊的应用编码要求，也无需考虑所有的底层实施细节。因此，尽管不同的存储引擎具有不同的能力，应用程序是与之分离的。此外，使用者可以在服务器、数据库和表格三个层级中存储引擎，提供了极大的灵活性。</p>
+<p>mysql 常用的存储引擎包括 MYISAM、Innodb 和 Memory，其中各自的特点如下：</p>
+<p>MYISAM : 全表锁，拥有较高的执行速度，一个写请求请阻塞另外相同表格的所有读写请求，并发性能差，占用空间相对较小，mysql 5.5 及以下仅 MYISAM 支持全文索引，不支持事务。<br>Innodb：行级锁（SQL 都走索引查询），并发能力相对强，占用空间是 MYISAM 的 2.5 倍，不支持全文索引（5.6 开始支持），支持事务。<br>Memory : 全表锁，存储在内存当中，速度快，但会占用和数据量成正比的内存空间且数据在 mysql 重启时会丢失。<br>基于以上特性，建议绝大部份都设置为 innodb 引擎，特殊的业务再考虑选用 MYISAM 或 Memory ，如全文索引支持或极高的执行效率等。</p>
+<h5 id="1-2-分表方法"><a href="#1-2-分表方法" class="headerlink" title="1.2 分表方法"></a>1.2 分表方法</h5><p>在数据库表使用过程中，为了减小数据库服务器的负担、缩短查询时间，常常会考虑做分表设计。分表分两种，一种是纵向分表（将本来可以在同一个表的内容，人为划分存储在为多个不同结构的表）和横向分表（把大的表结构，横向切割为同样结构的不同表）。</p>
+<p>其中，纵向分表常见的方式有根据活跃度分表、根据重要性分表等。其主要解决问题如下：</p>
+<p>表与表之间资源争用问题；<br>锁争用机率小；<br>实现核心与非核心的分级存储，如UDB登陆库拆分成一级二级三级库；<br>解决了数据库同步压力问题。<br>横向分表是指根据某些特定的规则来划分大数据量表，如根据时间分表。其主要解决问题如下：</p>
+<p>单表过大造成的性能问题；<br>单表过大造成的单服务器空间问题。</p>
+<h5 id="1-3-索引问题"><a href="#1-3-索引问题" class="headerlink" title="1.3 索引问题"></a>1.3 索引问题</h5><p>索引是对数据库表中一个或多个列的值进行排序的结构，建立索引有助于更快地获取信息。 mysql 有四种不同的索引类型：</p>
+<p>主键索此 ( PRIMARY )<br>唯一索引 ( UNIQUE )<br>普通索引 ( INDEX )<br>全文索引（FULLTEXT , MYISAM 及 mysql 5.6 以上的 Innodb ）<br>建立索引的目的是加快对表中记录的查找或排序，索引也并非越多越好，因为创建索引是要付出代价的：一是增加了数据库的存储空间，二是在插入和修改数据时要花费较多的时间维护索引。</p>
+<p>在设计表或索引时，常出现以下几个问题：</p>
+<p>少建索引或不建索引。这个问题最突出，建议建表时 DBA 可以一起协助把关。<br>索引滥用。滥用索引将导致写请求变慢，拖慢整体数据库的响应速度（5.5 以下的 mysql 只能用到一个索引)。<br>从不考虑联合索引。实际上联合索引的效率往往要比单列索引的效率更高。<br>非最优列选择。低选择性的字段不适合建单列索引，如 status 类型的字段。</p>
+<h4 id="二、慢-SQL-问题"><a href="#二、慢-SQL-问题" class="headerlink" title="二、慢 SQL 问题"></a>二、慢 SQL 问题</h4><h5 id="2-1-导致慢-SQL-的原因"><a href="#2-1-导致慢-SQL-的原因" class="headerlink" title="2.1 导致慢 SQL 的原因"></a>2.1 导致慢 SQL 的原因</h5><p>在遇到慢 SQL 情况时，不能简单的把原因归结为 SQL 编写问题(虽然这是最常见的因素)，实际上导致慢 SQL 有很多因素，甚至包括硬件和 mysql 本身的 bug。根据出现的概率从大到小，罗列如下：</p>
+<p>SQL编写问题<br>锁<br>业务实例相互干绕对 IO/CPU 资源争用<br>服务器硬件<br>MYSQL BUG</p>
+<h5 id="2-2-由-SQL-编写导致的慢-SQL-优化"><a href="#2-2-由-SQL-编写导致的慢-SQL-优化" class="headerlink" title="2.2 由 SQL 编写导致的慢 SQL 优化"></a>2.2 由 SQL 编写导致的慢 SQL 优化</h5><p>针对SQL编写导致的慢 SQL，优化起来还是相对比较方便的。正如上一节提到的正确的使用索引能加快查询速度，那么我们在编写 SQL 时就需要注意与索引相关的规则：</p>
+<p>字段类型转换导致不用索引，如字符串类型的不用引号，数字类型的用引号等，这有可能会用不到索引导致全表扫描；<br>mysql 不支持函数转换，所以字段前面不能加函数，否则这将用不到索引；<br>不要在字段前面加减运算；<br>字符串比较长的可以考虑索引一部份减少索引文件大小，提高写入效率；<br>like % 在前面用不到索引；<br>根据联合索引的第二个及以后的字段单独查询用不到索引；<br>不要使用 select *；<br>排序请尽量使用升序 ;<br>or 的查询尽量用 union 代替 （Innodb）；<br>复合索引高选择性的字段排在前面；<br>order by / group by 字段包括在索引当中减少排序，效率会更高。<br>除了上述索引使用规则外，SQL 编写时还需要特别注意一下几点：</p>
+<p>尽量规避大事务的 SQL，大事务的 SQL 会影响数据库的并发性能及主从同步；<br>分页语句 limit 的问题；<br>删除表所有记录请用 truncate，不要用 delete；<br>不让 mysql 干多余的事情，如计算；<br>输写 SQL 带字段，以防止后面表变更带来的问题，性能也是比较优的 ( 涉及到数据字典解析，请自行查询资料)；<br>在 Innodb上用 select count(*)，因为 Innodb 会存储统计信息；<br>慎用 Oder by rand()。</p>
+<h4 id="三、分析诊断工具"><a href="#三、分析诊断工具" class="headerlink" title="三、分析诊断工具"></a>三、分析诊断工具</h4><p>在日常开发工作中，我们可以做一些工作达到预防慢 SQL 问题，比如在上线前预先用诊断工具对 SQL 进行分析。常用的工具有：</p>
+<p>mysqldumpslow<br>mysql profile<br>mysql explain<br>具体使用及分析方法在此就不赘述，网上有丰富的资源可以参考。</p>
+<h4 id="四、误操作、程序-bug-时怎么办"><a href="#四、误操作、程序-bug-时怎么办" class="headerlink" title="四、误操作、程序 bug 时怎么办"></a>四、误操作、程序 bug 时怎么办</h4><p>提出这个问题显然主要是针对刚开始工作的年轻同行们……实际上误操作和程序 bug 导致数据误删或者混乱的问题并非少见，但是刚入行的开发工作者会比较紧张。一个成熟的企业往往会有完善的数据管理规范和较丰富的数据恢复方案（初创公司除外），会进行数据备份和数据容灾。当你发现误操作或程序 bug 导致线上数据被误删或误改动时，一定不能慌乱，应及时与 DBA 联系，第一时间进行数据恢复（严重时直接停止服务），尽可能减少影响和损失。对于重要数据（如资金）的操作，在开发时一定要反复进行测试，确保没有问题后再上线。</p>
 
       
     </div>
@@ -379,13 +334,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></p>
+        <p><span>本文标题:</span><a href="/2018/01/13/mysql-youhua/">mysql数据库开发常见问题及优化</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
-        <p><span>发布时间:</span>2016-09-15, 10:07:20</p>
-        <p><span>最后更新:</span>2016-09-25, 09:58:34</p>
+        <p><span>发布时间:</span>2018-01-13, 22:00:10</p>
+        <p><span>最后更新:</span>2018-05-31, 22:08:18</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/15/alisset/" title="阿里云window server 2012 服务器+nginx+tomcat+redis session共享">http://yoursite.com/2016/09/15/alisset/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/15/alisset/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/01/13/mysql-youhua/" title="mysql数据库开发常见问题及优化">http://yoursite.com/2018/01/13/mysql-youhua/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/01/13/mysql-youhua/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -398,15 +353,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/09/20/linux-shell/">
-                    Java开发必会的Linux命令
+                <a href="/2018/03/13/activemq/">
+                    activeMQ中文参考手册
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/09/10/java-jvm-gc/">
-                    详细讲述Java中如何处理垃圾回收的问题
+                <a href="/2018/01/08/docker/">
+                    docker 常用命令
                 </a>
             </div>
         
@@ -418,7 +373,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#阿里云服务器设置"><span class="toc-number">1.</span> <span class="toc-text">阿里云服务器设置</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql数据库开发常见问题及优化"><span class="toc-number">1.</span> <span class="toc-text">mysql数据库开发常见问题及优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、库表设计"><span class="toc-number">1.1.</span> <span class="toc-text">一、库表设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-引擎选择"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 引擎选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-分表方法"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 分表方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-索引问题"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 索引问题</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、慢-SQL-问题"><span class="toc-number">1.2.</span> <span class="toc-text">二、慢 SQL 问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-导致慢-SQL-的原因"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 导致慢 SQL 的原因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-由-SQL-编写导致的慢-SQL-优化"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 由 SQL 编写导致的慢 SQL 优化</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、分析诊断工具"><span class="toc-number">1.3.</span> <span class="toc-text">三、分析诊断工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、误操作、程序-bug-时怎么办"><span class="toc-number">1.4.</span> <span class="toc-text">四、误操作、程序 bug 时怎么办</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -454,7 +409,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"阿里云window server 2012 服务器+nginx+tomcat+redis session共享　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"mysql数据库开发常见问题及优化　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -470,7 +425,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/15/alisset/" data-title="阿里云window server 2012 服务器+nginx+tomcat+redis session共享" data-url="http://yoursite.com/2016/09/15/alisset/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2018/01/13/mysql-youhua/" data-title="mysql数据库开发常见问题及优化" data-url="http://yoursite.com/2018/01/13/mysql-youhua/"></div>
     <script>
         var duoshuoQuery = {short_name:"yxlduoshuo"};
         var loadComment = function(){
@@ -493,7 +448,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/09/20/linux-shell/" title="上一篇: Java开发必会的Linux命令">
+            <a href="/2018/03/13/activemq/" title="上一篇: activeMQ中文参考手册">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -501,7 +456,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/09/10/java-jvm-gc/" title="下一篇: 详细讲述Java中如何处理垃圾回收的问题">
+            <a href="/2018/01/08/docker/" title="下一篇: docker 常用命令">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -15,18 +15,16 @@
 <meta name="baidu-site-verification" content="LO7Y8GhIBA" />
 
 
-<meta name="description" content="前言
+<meta name="description" content="springboot_admin_server应用监控管理前言
 Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。运行环境：maven，spring boot应用， Spring cloud eureka的配置
-1.在 Spring Boot 项目中配置
-首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，">
+1.在 Spring Boot 项目中配置首先，先建个基础的spring boot 应用，该应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springboot_admin_server应用监控管理">
 <meta property="og:url" content="http://yoursite.com/2017/12/17/springboot-admin/index.html">
 <meta property="og:site_name" content="远行的样子的博客">
-<meta property="og:description" content="前言
+<meta property="og:description" content="springboot_admin_server应用监控管理前言
 Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。运行环境：maven，spring boot应用， Spring cloud eureka的配置
-1.在 Spring Boot 项目中配置
-首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，">
+1.在 Spring Boot 项目中配置首先，先建个基础的spring boot 应用，该应用">
 <meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.png">
 <meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.2.png">
 <meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.3.png">
@@ -41,13 +39,14 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
 <meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.11.png">
 <meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-12.3.png">
 <meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-12.4.png">
-<meta property="og:updated_time" content="2018-05-30T15:00:54.053Z">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.17.png">
+<meta property="og:image" content="http://yoursite.com/pcImg/springboot-admin-1.16.png">
+<meta property="og:updated_time" content="2018-05-31T14:19:53.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot_admin_server应用监控管理">
-<meta name="twitter:description" content="前言
+<meta name="twitter:description" content="springboot_admin_server应用监控管理前言
 Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。运行环境：maven，spring boot应用， Spring cloud eureka的配置
-1.在 Spring Boot 项目中配置
-首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，">
+1.在 Spring Boot 项目中配置首先，先建个基础的spring boot 应用，该应用">
 <meta name="twitter:image" content="http://yoursite.com/pcImg/springboot-admin-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -325,37 +324,28 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>前言</p>
+        <h3 id="springboot-admin-server应用监控管理"><a href="#springboot-admin-server应用监控管理" class="headerlink" title="springboot_admin_server应用监控管理"></a>springboot_admin_server应用监控管理</h3><p>前言</p>
 <p>Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。<br>运行环境：maven，spring boot应用， Spring cloud eureka的配置</p>
-<p>1.在 Spring Boot 项目中配置</p>
-<p>首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，其他的spring boot应用作为client，当把client应用注册到 server时，我们就能在server服务管理上可以看到注册的client应用状态信息了。</p>
-<p>1.1 Server 管理端的配置<br><a id="more"></a></p>
+<h5 id="1-在-Spring-Boot-项目中配置"><a href="#1-在-Spring-Boot-项目中配置" class="headerlink" title="1.在 Spring Boot 项目中配置"></a>1.在 Spring Boot 项目中配置</h5><p>首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，其他的spring boot应用作为client，当把client应用注册到 server时，我们就能在server服务管理上可以看到注册的client应用状态信息了。</p>
+<h5 id="1-1-Server-管理端的配置"><a href="#1-1-Server-管理端的配置" class="headerlink" title="1.1 Server 管理端的配置"></a>1.1 Server 管理端的配置</h5><a id="more"></a>
 <p>在spring boot应用的pom.xml里添加服务端的依赖配置</p>
 <p><img src="/pcImg/springboot-admin-1.png" alt=" "></p>
-<p>1.2开启监控</p>
-<p>添加 @EnableAdminServer 注解开启监控<br><img src="/pcImg/springboot-admin-1.2.png" alt=" "></p>
-<p>1.3 Client客户端配置</p>
-<p><img src="/pcImg/springboot-admin-1.3.png" alt=" "></p>
+<h5 id="1-2开启监控"><a href="#1-2开启监控" class="headerlink" title="1.2开启监控"></a>1.2开启监控</h5><p>添加 @EnableAdminServer 注解开启监控<br><img src="/pcImg/springboot-admin-1.2.png" alt=" "></p>
+<h5 id="1-3-Client客户端配置"><a href="#1-3-Client客户端配置" class="headerlink" title="1.3 Client客户端配置"></a>1.3 Client客户端配置</h5><p><img src="/pcImg/springboot-admin-1.3.png" alt=" "></p>
 <p>修改 application.properties</p>
 <p>触发自动配置、指明 Server 注册地址<br>Spring.boot.admin.url= Server端地址:端口号 (例如:<a href="http://localhost:8089" target="_blank" rel="external">http://localhost:8089</a>)</p>
 <p>添加 应用版本信息:  info.version=@project.version@</p>
-<p>1.4 仪表盘与桌面通知</p>
-<p>当启动好 client端应用，在浏览器输入Server端的地址，就可以看到注册进来的client端的应用信息了。<br><img src="/pcImg/springboot-admin-1.4.png" alt=" "></p>
-<p>1.5 Details信息查看</p>
-<p>查看应用程序的健康状况，信息和详细信息。<br><img src="/pcImg/springboot-admin-1.5.png" alt=" "></p>
-<p>1.6 Metrics性能监控</p>
-<p>可以查看接口调用信息，统计调用次数。<br><img src="/pcImg/springboot-admin-1.6.png" alt=" "></p>
-<p>1.7 Environment环境查看与设置</p>
-<p>查看和更改应用环境<br><img src="/pcImg/springboot-admin-1.7.png" alt=" "></p>
-<p>1.8 JMX-bean管理<br><img src="/pcImg/springboot-admin-1.8.png" alt=" "><br>如需在管理端显示客户端的JMX信息，则须在客户端配置。JMX-bean 管理需要使用第三方的 jolokia<br>在pom.xml添加依赖<br><img src="/pcImg/springboot-admin-1.8.1.png" alt=" "></p>
-<p>1.9 Loglevel 管理</p>
-<p>当前日志级别管理仅限 Logback，通过 JMX 实现，所以需要依赖 jolokia 。同时，还需要客户端配置 Logback，创建logback.xml文件 ;添加如下配置:</p>
+<h5 id="1-4-仪表盘与桌面通知"><a href="#1-4-仪表盘与桌面通知" class="headerlink" title="1.4 仪表盘与桌面通知"></a>1.4 仪表盘与桌面通知</h5><p>当启动好 client端应用，在浏览器输入Server端的地址，就可以看到注册进来的client端的应用信息了。<br><img src="/pcImg/springboot-admin-1.4.png" alt=" "></p>
+<h5 id="1-5-Details信息查看"><a href="#1-5-Details信息查看" class="headerlink" title="1.5 Details信息查看"></a>1.5 Details信息查看</h5><p>查看应用程序的健康状况，信息和详细信息。<br><img src="/pcImg/springboot-admin-1.5.png" alt=" "></p>
+<h5 id="1-6-Metrics性能监控"><a href="#1-6-Metrics性能监控" class="headerlink" title="1.6 Metrics性能监控"></a>1.6 Metrics性能监控</h5><p>可以查看接口调用信息，统计调用次数。<br><img src="/pcImg/springboot-admin-1.6.png" alt=" "></p>
+<h5 id="1-7-Environment环境查看与设置"><a href="#1-7-Environment环境查看与设置" class="headerlink" title="1.7 Environment环境查看与设置"></a>1.7 Environment环境查看与设置</h5><p>查看和更改应用环境<br><img src="/pcImg/springboot-admin-1.7.png" alt=" "></p>
+<h5 id="1-8-JMX-bean管理"><a href="#1-8-JMX-bean管理" class="headerlink" title="1.8 JMX-bean管理"></a>1.8 JMX-bean管理</h5><p><img src="/pcImg/springboot-admin-1.8.png" alt=" "><br>如需在管理端显示客户端的JMX信息，则须在客户端配置。JMX-bean 管理需要使用第三方的 jolokia<br>在pom.xml添加依赖<br><img src="/pcImg/springboot-admin-1.8.1.png" alt=" "></p>
+<h5 id="1-9-Loglevel-管理"><a href="#1-9-Loglevel-管理" class="headerlink" title="1.9 Loglevel 管理"></a>1.9 Loglevel 管理</h5><p>当前日志级别管理仅限 Logback，通过 JMX 实现，所以需要依赖 jolokia 。同时，还需要客户端配置 Logback，创建logback.xml文件 ;添加如下配置:</p>
 <p><configuration><br>    <include resource="org/springframework/boot/logging/logback/base.xml"><br>    <jmxconfigurator><br></jmxconfigurator></include></configuration><br><img src="/pcImg/springboot-admin-1.9.png" alt=" "></p>
-<p>1.10 Thread 查看线程<br><img src="/pcImg/springboot-admin-1.10.png" alt=" "></p>
+<h5 id="1-10-Thread-查看线程"><a href="#1-10-Thread-查看线程" class="headerlink" title="1.10 Thread 查看线程"></a>1.10 Thread 查看线程</h5><p><img src="/pcImg/springboot-admin-1.10.png" alt=" "></p>
 <p>1.11 Trace查看http请求跟踪</p>
 <p><img src="/pcImg/springboot-admin-1.11.png" alt=" "></p>
-<p>1.12 Hystrix管理</p>
-<p>1.Server端配置<br>添加pom.xml依赖包:</p>
+<h5 id="1-12-Hystrix管理"><a href="#1-12-Hystrix管理" class="headerlink" title="1.12 Hystrix管理"></a>1.12 Hystrix管理</h5><p>1.Server端配置<br>添加pom.xml依赖包:</p>
 <p>修改application.properties文件, 添加内容:</p>
 <p>spring.boot.admin.routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream</p>
 <ol>
@@ -380,12 +370,52 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
 <li>最后一分钟延迟百分位数</li>
 <li>滚动10秒计数器1秒粒度</li>
 </ol>
-<p>1.13 Log日志查看配置</p>
-<p>该配置可以实时查看应用的日志信息和运行状态<br>1.Client端的配置<br>Pom.xml依赖包:</p>
+<h5 id="1-13-Log日志查看配置"><a href="#1-13-Log日志查看配置" class="headerlink" title="1.13 Log日志查看配置"></a>1.13 Log日志查看配置</h5><p>该配置可以实时查看应用的日志信息和运行状态<br>1.Client端的配置<br>Pom.xml依赖包:</p>
 <p>Propertiese配置文件修改:<br>生成日志文件路径, 及日志级别设置</p>
-<p>1.14 下载heapdump</p>
-<p>1.15 Journal</p>
+<h5 id="1-14-下载heapdump"><a href="#1-14-下载heapdump" class="headerlink" title="1.14 下载heapdump"></a>1.14 下载heapdump</h5><p>1.15 Journal</p>
 <p>查看注册申请的历史记录</p>
+<ol>
+<li>在 Spring Cloud 项目的 Eureka 中配置</li>
+</ol>
+<p>2.1 Server配置</p>
+<p>在pom.xml<br>添加 spring-cloud-starter-eureka 依赖</p>
+<p>接着在 在application启动类 添加: @EnableDiscoveryClient 开启发现注册</p>
+<p>修改application.properties文件:<br>指明到eureka注册地址:<br>eureka.client.serviceUrl.defaultZone: <a href="http://10.123.1.71:8760/eureka/" target="_blank" rel="external">http://10.123.1.71:8760/eureka/</a></p>
+<h5 id="2-2-Client配置"><a href="#2-2-Client配置" class="headerlink" title="2.2 Client配置"></a>2.2 Client配置</h5><p>Client 端的配置主要是把自己注册到 Eureka Server 中就可以被 Spring Boot Admin 管理了，免去了手工配置 Spring Boot Admin 服务地址的操作</p>
+<p>Pom.xml依赖添加</p>
+<p>启动类添加:<br>@EnableDiscoveryClient 或 @EnableEurekaClient 注解到启动类上，将自己注册到 Erueka Server。</p>
+<p>Application.properties文件<br>发现注册地址:<br>eureka.client.serviceUrl.defaultZone: <a href="http://10.123.1.71:8760/eureka/" target="_blank" rel="external">http://10.123.1.71:8760/eureka/</a></p>
+<ol>
+<li>结合Security 安全认证<br>在spring-boot-admin（SBA）监控端，为了防止没授权的访问，一般需要做访问控制。<br>在Server端 pom文件添加依赖:</li>
+</ol>
+<p>修改 启动类文件:</p>
+<p>修改配置文件:校验用户名和密码</p>
+<ol>
+<li>关于状态变更通知<br>官方提供了mail, Slack, Hipchat, 通知</li>
+</ol>
+<p>例如: email<br>Pom.xml添加依赖:</p>
+<dependency><br>    <groupid>org.springframework.boot</groupid><br>    <artifactid>spring-boot-starter-mail</artifactid><br></dependency>
+
+<p>修改 application文件:<br>spring.mail.host=smtp.example.com  (邮箱协议)<br>spring.boot.admin.notify.mail.to=admin@example.com (邮箱发送人)</p>
+<ol>
+<li><p>模块自定义信息添加<br>spring-boot-starter-actuator模块自定义,actuator是一种服务——使得使用某个功能的开发者不需要关注各种依赖库的处理，不需要具体的配置信息,，由Spring Boot自动通过classpath路径下的类发现需要的Bean，并织入bean。<br>例如 我们在spring boot admin 里metrics模块信息展示,原来已集成一些,但是我们想自定义的添加管理自己所想要的展示的数据信息，可以如下修改:</p>
+</li>
+<li><p>修改pom.xml添加依赖文件:</p>
+</li>
+</ol>
+<dependency><br>  <groupid>org.springframework.boot</groupid><br>  <artifactid>spring-boot-starter-actuator</artifactid><br></dependency>
+
+<ol>
+<li>实现相应模块的接口</li>
+</ol>
+<ol>
+<li>Health监管:</li>
+</ol>
+<p>1.13 Log日志查看配置<br>该配置可以实时查看应用的日志信息和运行状态<br>1.Client端的配置<br>Pom.xml依赖包:</p>
+<p>Propertiese配置文件修改:<br>生成日志文件路径, 及日志级别设置</p>
+<h5 id="1-14-下载heapdump-1"><a href="#1-14-下载heapdump-1" class="headerlink" title="1.14 下载heapdump"></a>1.14 下载heapdump</h5><p> <img src="/pcImg/springboot-admin-1.17.png" alt=" "></p>
+<h5 id="1-15-Journal"><a href="#1-15-Journal" class="headerlink" title="1.15 Journal"></a>1.15 Journal</h5><p>查看注册申请的历史记录</p>
+<p><img src="/pcImg/springboot-admin-1.16.png" alt=" "></p>
 <ol>
 <li>在 Spring Cloud 项目的 Eureka 中配置</li>
 </ol>
@@ -419,11 +449,15 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
 <dependency><br>  <groupid>org.springframework.boot</groupid><br>  <artifactid>spring-boot-starter-actuator</artifactid><br></dependency>
 
 <ol>
-<li>实现相应模块的接口</li>
+<li><p>实现相应模块的接口</p>
+</li>
+<li><p>Health监管:</p>
+</li>
 </ol>
 <ol>
-<li>Health监管:</li>
+<li>参考地址: </li>
 </ol>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html" target="_blank" rel="external">https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html</a></p>
 
       
     </div>
@@ -435,7 +469,7 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
         <p><span>本文标题:</span><a href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
         <p><span>发布时间:</span>2017-12-17, 13:25:28</p>
-        <p><span>最后更新:</span>2018-05-30, 23:00:54</p>
+        <p><span>最后更新:</span>2018-05-31, 22:19:53</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/12/17/springboot-admin/" title="springboot_admin_server应用监控管理">http://yoursite.com/2017/12/17/springboot-admin/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/12/17/springboot-admin/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -471,7 +505,7 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#springboot-admin-server应用监控管理"><span class="toc-number">1.</span> <span class="toc-text">springboot_admin_server应用监控管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-在-Spring-Boot-项目中配置"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.在 Spring Boot 项目中配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-Server-管理端的配置"><span class="toc-number">1.0.2.</span> <span class="toc-text">1.1 Server 管理端的配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2开启监控"><span class="toc-number">1.0.3.</span> <span class="toc-text">1.2开启监控</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-Client客户端配置"><span class="toc-number">1.0.4.</span> <span class="toc-text">1.3 Client客户端配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-4-仪表盘与桌面通知"><span class="toc-number">1.0.5.</span> <span class="toc-text">1.4 仪表盘与桌面通知</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-5-Details信息查看"><span class="toc-number">1.0.6.</span> <span class="toc-text">1.5 Details信息查看</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-6-Metrics性能监控"><span class="toc-number">1.0.7.</span> <span class="toc-text">1.6 Metrics性能监控</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-7-Environment环境查看与设置"><span class="toc-number">1.0.8.</span> <span class="toc-text">1.7 Environment环境查看与设置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-8-JMX-bean管理"><span class="toc-number">1.0.9.</span> <span class="toc-text">1.8 JMX-bean管理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-9-Loglevel-管理"><span class="toc-number">1.0.10.</span> <span class="toc-text">1.9 Loglevel 管理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-10-Thread-查看线程"><span class="toc-number">1.0.11.</span> <span class="toc-text">1.10 Thread 查看线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-12-Hystrix管理"><span class="toc-number">1.0.12.</span> <span class="toc-text">1.12 Hystrix管理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-13-Log日志查看配置"><span class="toc-number">1.0.13.</span> <span class="toc-text">1.13 Log日志查看配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-14-下载heapdump"><span class="toc-number">1.0.14.</span> <span class="toc-text">1.14 下载heapdump</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-Client配置"><span class="toc-number">1.0.15.</span> <span class="toc-text">2.2 Client配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-14-下载heapdump-1"><span class="toc-number">1.0.16.</span> <span class="toc-text">1.14 下载heapdump</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-15-Journal"><span class="toc-number">1.0.17.</span> <span class="toc-text">1.15 Journal</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -560,7 +594,7 @@ Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息�
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/activemq/">activeMQ中文参考手册</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/activemq/">activeMQ中文参考手册</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/13/mysql-youhua/">mysql数据库开发常见问题及优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
 
 
 

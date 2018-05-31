@@ -267,6 +267,79 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-maven-java" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/02/maven-java/" class="article-date">
+      <time datetime="2016-07-02T01:38:41.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+
+ 
+    <a href="/2016/07/02/maven-java/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2016/07/02/maven-java/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="sSM框架比较全面的maven-pom-xml文件配置"><a href="#sSM框架比较全面的maven-pom-xml文件配置" class="headerlink" title="sSM框架比较全面的maven pom.xml文件配置"></a>sSM框架比较全面的maven pom.xml文件配置</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</div><div class="line">         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">    &lt;groupId&gt;com.eliteams&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;quick4j&lt;/artifactId&gt;</div><div class="line">    &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line">    &lt;version&gt;1.0.0&lt;/version&gt;</div><div class="line">    &lt;name&gt;quick4j App&lt;/name&gt;</div><div class="line">    &lt;url&gt;https://github.com/starzou/quick4j&lt;/url&gt;</div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2016/07/02/maven-java/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-java-jvm" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -541,86 +614,6 @@
       
         <p class="article-more-link">
           <a href="/2016/05/28/git-shiyong/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-eclipse-tisu" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/14/eclipse-tisu/" class="article-date">
-      <time datetime="2016-05-14T14:15:07.000Z" itemprop="datePublished">2016-05-14</time>
-</a>
-
- 
-    <a href="/2016/05/14/eclipse-tisu/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/05/14/eclipse-tisu/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>转载：自戎马一生</p>
-<p>译文：<a href="http://rongmayisheng.com/post/eclipse全面提速">http://rongmayisheng.com/post/eclipse全面提速</a></p>
-<p>英文：<a href="http://mishadoff.com/blog/eclipse-speedup/">http://mishadoff.com/blog/eclipse-speedup/</a></p>
-<p>译者：weager</p>
-<p>你是否经常在等待eclipse的一些操作完成？</p>
-<p>如果你看到这里，说明答案是yes。如果你苦于eclipse中响应很慢的功能，并且想给eclipse提速让开发更舒服些，就请看看下面的内容。</p>
-<p>注意：可能一般人都建议加大内存。如果可以，你可以买个cpu好点的机器。弄个SSD让你的文件操作更快。</p>
-<p>我们假设你买不起这些，你所能做的就是启动eclipse实例，所有ubuntu的设置都是基于eclipse 4.3.0版本，build id:I20121031-2000，当然其他平台的版本的设置都差不多。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2016/05/14/eclipse-tisu/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
