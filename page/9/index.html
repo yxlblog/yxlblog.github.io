@@ -267,6 +267,75 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-java-inputstream" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/30/java-inputstream/" class="article-date">
+      <time datetime="2016-04-30T13:05:52.000Z" itemprop="datePublished">2016-04-30</time>
+</a>
+
+ 
+    <a href="/2016/04/30/java-inputstream/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2016/04/30/java-inputstream/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="java通过InputStream读取和写入文件操作实例代码"><a href="#java通过InputStream读取和写入文件操作实例代码" class="headerlink" title="java通过InputStream读取和写入文件操作实例代码"></a>java通过InputStream读取和写入文件操作实例代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">File file = <span class="keyword">new</span> File(<span class="string">"file.xml"</span>);</div><div class="line"></div><div class="line">InputStream inputStream = <span class="keyword">new</span> FileInputStream(file);</div><div class="line">InputStream to File</div><div class="line">view sourceprint</div><div class="line">InputStream inputStream = <span class="keyword">new</span> FileInputStream(<span class="string">"file.xml"</span>);</div><div class="line"></div><div class="line">OutputStream  outputStream = <span class="keyword">new</span> FileOutputStream(<span class="string">"file-new.xml"</span>);</div><div class="line"> </div><div class="line">int bytesWritten = <span class="number">0</span>;</div><div class="line">int byteCount = <span class="number">0</span>;</div><div class="line"> </div><div class="line">byte[] bytes = <span class="keyword">new</span> byte[<span class="number">1024</span>];</div><div class="line"> </div><div class="line"><span class="keyword">while</span> ((byteCount = inputStream.read(bytes)) != <span class="number">-1</span>)</div><div class="line">&#123;</div><div class="line">          outputStream.write(bytes, bytesWritten, byteCount);</div><div class="line">           bytesWritten += byteCount;</div><div class="line"></div><div class="line">&#125;</div><div class="line">inputStream.close();</div><div class="line">outputStream.close();</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-ruhexuexi-Java" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -564,82 +633,9 @@
 
 
   
-    <article id="post-tenTcjquery" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/27/tenTcjquery/" class="article-date">
-      <time datetime="2016-04-27T14:23:33.000Z" itemprop="datePublished">2016-04-27</time>
-</a>
-
- 
-    <a href="/2016/04/27/tenTcjquery/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/04/27/tenTcjquery/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="JQuery是继prototype之后又一个优秀的Javascript库。它是轻量级的js库-，它兼容CSS3，还兼容各种浏览器（IE-6-0-FF-1-5-Safari-2-0-Opera-9-0-），jQuery2-0及后续版本将不再支持IE6-7-8浏览器。jQuery使用户能更方便地处理HTML（标准通用标记语言下的一个应用）、events、实现动画效果，并且方便地为网站提供AJAX交互。jQuery还有一个比较大的优势是，它的文档说明很全，而且各种应用也说得很详细，同时还有许多成熟的插件可供选择。jQuery能够使用户的html页面保持代码和html内容分离，也就是说，不用再在html里面插入一堆js来调用命令了，只需要定义id即可。以下十项jQuery示例可以帮助大家的Web设计项目顺利实现效率提升。"><a href="#JQuery是继prototype之后又一个优秀的Javascript库。它是轻量级的js库-，它兼容CSS3，还兼容各种浏览器（IE-6-0-FF-1-5-Safari-2-0-Opera-9-0-），jQuery2-0及后续版本将不再支持IE6-7-8浏览器。jQuery使用户能更方便地处理HTML（标准通用标记语言下的一个应用）、events、实现动画效果，并且方便地为网站提供AJAX交互。jQuery还有一个比较大的优势是，它的文档说明很全，而且各种应用也说得很详细，同时还有许多成熟的插件可供选择。jQuery能够使用户的html页面保持代码和html内容分离，也就是说，不用再在html里面插入一堆js来调用命令了，只需要定义id即可。以下十项jQuery示例可以帮助大家的Web设计项目顺利实现效率提升。" class="headerlink" title="JQuery是继prototype之后又一个优秀的Javascript库。它是轻量级的js库 ，它兼容CSS3，还兼容各种浏览器（IE 6.0+, FF 1.5+, Safari 2.0+, Opera 9.0+），jQuery2.0及后续版本将不再支持IE6/7/8浏览器。jQuery使用户能更方便地处理HTML（标准通用标记语言下的一个应用）、events、实现动画效果，并且方便地为网站提供AJAX交互。jQuery还有一个比较大的优势是，它的文档说明很全，而且各种应用也说得很详细，同时还有许多成熟的插件可供选择。jQuery能够使用户的html页面保持代码和html内容分离，也就是说，不用再在html里面插入一堆js来调用命令了，只需要定义id即可。以下十项jQuery示例可以帮助大家的Web设计项目顺利实现效率提升。"></a>JQuery是继prototype之后又一个优秀的Javascript库。它是轻量级的js库 ，它兼容CSS3，还兼容各种浏览器（IE 6.0+, FF 1.5+, Safari 2.0+, Opera 9.0+），jQuery2.0及后续版本将不再支持IE6/7/8浏览器。jQuery使用户能更方便地处理HTML（标准通用标记语言下的一个应用）、events、实现动画效果，并且方便地为网站提供AJAX交互。jQuery还有一个比较大的优势是，它的文档说明很全，而且各种应用也说得很详细，同时还有许多成熟的插件可供选择。jQuery能够使用户的html页面保持代码和html内容分离，也就是说，不用再在html里面插入一堆js来调用命令了，只需要定义id即可。以下十项jQuery示例可以帮助大家的Web设计项目顺利实现效率提升。</h3><h3 id="检测IE浏览器"><a href="#检测IE浏览器" class="headerlink" title="检测IE浏览器"></a>检测IE浏览器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line"> </div><div class="line">      <span class="keyword">if</span> (navigator.userAgent.match(<span class="regexp">/msie/i</span>) )&#123; </div><div class="line"> </div><div class="line">        alert(<span class="string">'I am an old fashioned Internet Explorer'</span>); </div><div class="line"> </div><div class="line">      &#125; </div><div class="line"> </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/jquery/">jquery</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2016/04/27/tenTcjquery/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
     </nav>
   
 </div>
