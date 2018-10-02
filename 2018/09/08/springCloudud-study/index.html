@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="远行的样子" />
+<meta name="baidu-site-verification" content="LO7Y8GhIBA" />
+
+
+<meta name="description" content="SpringCloud 学习,不看会吐血后悔SpringCloud GitHub Demo(看完文章的同学可以自己练手玩玩)：•    https://github.com/ZhongFuCheng3y/msc-Demo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud 学习">
+<meta property="og:url" content="http://yoursite.com/2018/09/08/springCloudud-study/index.html">
+<meta property="og:site_name" content="远行的样子的博客">
+<meta property="og:description" content="SpringCloud 学习,不看会吐血后悔SpringCloud GitHub Demo(看完文章的同学可以自己练手玩玩)：•    https://github.com/ZhongFuCheng3y/msc-Demo">
+<meta property="og:image" content="http://yoursite.com/pcImg/16578cb04.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07d0e_2.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_3.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b072_3.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07d_4.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_5.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_6.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_7.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_8.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_9.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_10.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_11.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_12.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_13.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_14.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_15.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_16.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_17.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_18.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_19.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_20.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_21.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_22.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_23.jpg">
+<meta property="og:image" content="http://yoursite.com/pcImg/1656b07_24.jpg">
+<meta property="og:updated_time" content="2018-10-02T07:30:46.187Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud 学习">
+<meta name="twitter:description" content="SpringCloud 学习,不看会吐血后悔SpringCloud GitHub Demo(看完文章的同学可以自己练手玩玩)：•    https://github.com/ZhongFuCheng3y/msc-Demo">
+<meta name="twitter:image" content="http://yoursite.com/pcImg/16578cb04.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="远行的样子的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>SpringCloud 学习 | 远行的样子的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar2.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">远行的样子</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java永不消逝</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">远行的样子</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar2.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">远行的样子</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="https://mail.163.com/" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-springCloudud-study" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/08/springCloudud-study/" class="article-date">
+      <time datetime="2018-09-08T06:54:39.000Z" itemprop="datePublished">2018-09-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SpringCloud 学习
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="SpringCloud-学习-不看会吐血后悔"><a href="#SpringCloud-学习-不看会吐血后悔" class="headerlink" title="SpringCloud 学习,不看会吐血后悔"></a>SpringCloud 学习,不看会吐血后悔</h3><p>SpringCloud GitHub Demo(看完文章的同学可以自己练手玩玩)：<br>•    <a href="https://github.com/ZhongFuCheng3y/msc-Demo" target="_blank" rel="external">https://github.com/ZhongFuCheng3y/msc-Demo</a><br><a id="more"></a><br>项目结构图：<br><img src="/pcImg/16578cb04.jpg" alt=" "></p>
+<h4 id="二、集群-分布式-微服务-SOA是什么？"><a href="#二、集群-分布式-微服务-SOA是什么？" class="headerlink" title="二、集群/分布式/微服务/SOA是什么？"></a>二、集群/分布式/微服务/SOA是什么？</h4><p>像我这种技术小白，看到这些词(集群/分布式/微服务/SOA)的时候，感觉就是遥不可及的(高大尚的技术！！)。就好像刚学Java面向对象的时候，在论坛上翻阅资料的时候，无意看到”面向切面编程”，也认为这是遥不可及的(高大尚的技术！！)。<br>但真正接触到”面向切面编程”的时候，发现原来就是如此啊，也没什么大不了的。只不过当时被它的名字给唬住了…<br>不知道各位在刚接触这些名字集群/分布式/微服务/SOA的时候，有没有被唬住了呢？？<br>•    下面我就简单说说这些名词的意思<br>2.1、什么是集群<br>以下内容来源维基百科：<br>计算机集群简称集群是一种计算机系统，它通过一组松散集成的计算机软件和/或硬件连接起来高度紧密地协作完成计算工作。在某种意义上，他们可以被看作是一台计算机。集群系统中的单个计算机通常称为节点，通常通过局域网连接，但也有其它的可能连接方式。集群计算机通常用来改进单个计算机的计算速度和/或可靠性。一般情况下集群计算机比单个计算机，比如工作站或超级计算机性能价格比要高得多<br>集群技术特点：<br>•    通过多台计算机完成同一个工作，达到更高的效率。<br>•    两机或多机内容、工作过程等完全一样。如果一台死机，另一台可以起作用。<br>在维基百科上说得也挺明白的了，我来举个例子吧。<br>•    小周在公司写Java程序，但公司业务在发展，一个Java开发者可能忙不过来，小周有的时候也得请个假呀。于是请了3y过去一起做Java开发。平时小周和3y就写Java程序，但3y可能有事要回学校一趟。没事，公司还有小周做Java开发呢，公司开发还能继续运作。<br>•    3y跟小周都是做Java开发。<br>•    3y来了，小周的工作可以分担一些。<br>•    3y请假了，还有小周在呢。<br>我写了一个910便利网发布到服务器去了，现在越来越多的人访问了，访问有点慢，怎么办？？？很简单，(只有充钱才能变强)，加配置吧(加cpu，加内存)。升级完配置之后，访问人数越来越多，于是发现又不禁用啦，在这台机器上加配置已经解决不了了，怎么办？？？很简单，(只有充钱才能变强)，我再买一台服务器，将910便利网也发布到新买的这台服务器上去。<br>特点：<br>•    这两台服务器都是运行同一个系统—&gt;910便利网<br>好处：<br>•    本来只有一台机器处理访问，现在有两台机器处理访问了，分担了压力。<br>•    如果其中一台忘记缴费了，暂时用不了了。没关系，还有另一台可以用呢。<br>集群：同一个业务，部署在多个服务器上(不同的服务器运行同样的代码，干同一件事)<br>2.2、什么是分布式<br>以下内容来源维基百科：<br>分布式系统是一组计算机，通过网络相互连接传递消息与通信后并协调它们的行为而形成的系统。组件之间彼此进行交互以实现一个共同的目标。<br>我也来举个例子来说明一下吧：<br>•    现在公司有小周和3y一起做Java开发，做Java开发一般jQuery，AJAX都能写一点，所以这些活都由我们来干。可是呢，3y对前端不是很熟，有的时候调试半天都调不出来。老板认为3y是真的菜！于是让小周专门来处理前端的事情。这样3y就高兴了，可以专心写自己的Java，前端就专门交由小周负责了。于是，小周和3y就变成了协作开发。<br>    3y对前端不熟(能写出来)，但在调试的时候可能会花费很多时间<br>    小周来专门做前端的事，3y可以专心写自己的Java程序了。<br>    都是为了项目正常运行以及迭代。<br>我的910便利网已经部署到两台服务器去了，但是越来越多的人去访问。现在也逐渐承受不住啦。那现在怎么办啊？？那继续充钱变强？？作为一个理智的我，肯定得想想是哪里有问题。现在910便利网的模块有好几个，全都丢在同一个Tomcat里边。<br>其实有些模块的访问是很低的(比如后台管理)，那我可不可以这样做：将每个模块抽取独立出来，访问量大的模块用好的服务器装着，没啥人访问的模块用差的服务器装着。这样的好处是：一、资源合理利用了(没人访问的模块用性能差的服务器，访问量大的模块单独提升性能就好了)。二、耦合度降低了：每个模块独立出来，各干各的事(专业的人做专业的事)，便于扩展<br>特点：<br>•    将910便利网的功能拆分，模块之间独立，在使用的时候再将这些独立的模块组合起来就是一个系统了。<br>好处：<br>•    模块之间独立，各做各的事，便于扩展，复用性高<br>•    高吞吐量。某个任务需要一个机器运行10个小时，将该任务用10台机器的分布式跑(将这个任务拆分成10个小任务)，可能2个小时就跑完了<br>分布式：一个业务分拆多个子业务，部署在不同的服务器上(不同的服务器，运行不同的代码，为了同一个目的)<br>2.3、集群/分布式<br>集群和分布式并不冲突，可以有分布式集群<br>现在3y的公司规模变大了，有5个小伙子写Java，4个小伙子写前端，2个小伙子做测试，1个小伙子做DBA。<br>•    Java，前端，测试，DBA的关系看作是分布式的<br>•    5个Java看作是集群的(前端，测试同理)…<br>2.4、分布式/微服务/SOA<br>其实我认为分布式/微服务/SOA这三个概念是差不多的，了解了其中的一个，然后将自己的理解往上面套就好了。没必要细分每个的具体概念~~(当然了，我很期待有大佬可以在评论区留言说下自己的看法哈)<br>参考资料：<br>•    分布式与集群的区别是什么？<a href="https://www.zhihu.com/question/20004877" target="_blank" rel="external">https://www.zhihu.com/question/20004877</a><br>•    分布式、集群、微服务、SOA 之间的区别<a href="https://blog.csdn.net/heatdeath/article/details/79038795" target="_blank" rel="external">https://blog.csdn.net/heatdeath/article/details/79038795</a></p>
+<h4 id="三、CAP理论"><a href="#三、CAP理论" class="headerlink" title="三、CAP理论"></a>三、CAP理论</h4><p>从上面所讲的分布式概念我们已经知道，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上<br>•    一般来说，一个子业务我们称为节点。<br>如果你接触过一些分布式的基础概念，那肯定会听过CAP这个理论。就比如说：你学了MySQL的InnoDB存储引擎相关知识，你肯定听过ACID！<br>首先，我们来看一下CAP分别代表的是什么意思：<br>•    C：数据一致性(consistency)<br>    所有节点拥有数据的最新版本<br>•    A：可用性(availability)<br>    数据具备高可用性<br>•    P：分区容错性(partition-tolerance)<br>    容忍网络出现分区，分区之间网络不可达。<br>下面有三个节点(它们是集群的)，此时三个节点都能够相互通信：<br><img src="/pcImg/1656b07d0e_2.jpg" alt=" "></p>
+<p>由于我们的系统是分布式的，节点之间的通信是通过网络来进行的。只要是分布式系统，那很有可能会出现一种情况：因为一些故障，使得有些节点之间不连通了，整个网络就分成了几块区域。<br>•    数据就散布在了这些不连通的区域中，这就叫分区<br><img src="/pcImg/1656b07_3.jpg" alt=" "></p>
+<p>现在出现了网络分区后，此时有一个请求过来了，想要注册一个账户。<br> <img src="/pcImg/1656b072_3.jpg" alt=" "><br>此时我们节点一和节点三是不可通信的，这就有了抉择：<br>•    如果允许当前用户注册一个账户，此时注册的记录数据只会在节点一和节点二或者节点二和节点三同步，因为节点一和节点三的记录不能同步的。<br>    这种情况其实就是选择了可用性(availability)，抛弃了数据一致性(consistency)<br>•    如果不允许当前用户注册一个账户(就是要等到节点一和节点三恢复通信)。节点一和节点三一旦恢复通信，我们就可以保证节点拥有的数据是最新版本。<br>    这种情况其实就是抛弃了可用性(availability)，选择了数据一致性(consistency)<br>3.1、再次梳理一下CAP理论<br>一般我们说的分布式系统，P：分区容错性(partition-tolerance)这个是必需的，这是客观存在的。<br>CAP是无法完全兼顾的，从上面的例子也可以看出，我们可以选AP，也可以选CP。但是，要注意的是：不是说选了AP，C就完全抛弃了。不是说选了CP，A就完全抛弃了！<br>在CAP理论中，C所表示的一致性是强一致性(每个节点的数据都是最新版本)，其实一致性还有其他级别的：<br>•    弱一致性：弱一致性是相对于强一致性而言，它不保证总能得到最新的值；<br>•    最终一致性(eventual consistency)：放宽对时间的要求，在被调完成操作响应后的某个时间点，被调多个节点的数据最终达成一致<br>可用性的值域可以定义成0到100%的连续区间。<br> <img src="/pcImg/1656b07d_4.jpg" alt=" "><br>所以，CAP理论定义的其实是在容忍网络分区的条件下，“强一致性”和“极致可用性”无法同时达到。<br>参考资料：<br>•    CAP理论中的P到底是个什么意思？<a href="https://www.zhihu.com/question/54105974" target="_blank" rel="external">https://www.zhihu.com/question/54105974</a><br>•    浅谈分布式系统的基本问题：可用性与一致性：<a href="https://m.aliyun.com/yunqi/articles/2709" target="_blank" rel="external">https://m.aliyun.com/yunqi/articles/2709</a><br>•    分布式系统的CAP理论：<a href="http://www.hollischuang.com/archives/666" target="_blank" rel="external">http://www.hollischuang.com/archives/666</a><br>•    为什么CAP理论在舍弃P的情况下，可以有完美的CA？<a href="https://www.zhihu.com/question/285878189" target="_blank" rel="external">https://www.zhihu.com/question/285878189</a><br>•    不懂点CAP理论，你好意思说你是做分布式的吗？<a href="http://www.yunweipai.com/archives/8432.html" target="_blank" rel="external">http://www.yunweipai.com/archives/8432.html</a><br>扩展阅读：<br>•    浅谈分布式事务：<a href="https://m.aliyun.com/yunqi/articles/230242" target="_blank" rel="external">https://m.aliyun.com/yunqi/articles/230242</a></p>
+<h4 id="四、SpringCloud就是这么简单"><a href="#四、SpringCloud就是这么简单" class="headerlink" title="四、SpringCloud就是这么简单"></a>四、SpringCloud就是这么简单</h4><p>相信大家读到这里，对分布式/微服务已经有一定的了解了，其实单从概念来说，是非常容易理解的。只是很可能被它的名字给唬住了。<br>下面我就来讲讲SpringCloud最基础的知识~<br>4.1、为什么需要SpringCloud？<br>前面也讲了，从分布式/微服务的角度而言：就是把我们一大的项目，分解成多个小的模块。这些小的模块组合起来，完成功能。<br>举个可能不太恰当的例子(现实可能不会这么拆分，但意思到位就好了)：<br><img src="/pcImg/1656b07_5.jpg" alt=" "></p>
+<p>拆分出多个模块以后，就会出现各种各样的问题，而SpringCloud提供了一整套的解决方案！<br>•    注：这些模块是独立成一个子系统的(不同主机)。<br>SpringCloud的基础功能：<br>•    服务治理： Spring  Cloud Eureka<br>•    客户端负载均衡： Spring Cloud Ribbon<br>•    服务容错保护： Spring  Cloud Hystrix<br>•    声明式服务调用： Spring  Cloud Feign<br>•    API网关服务：Spring Cloud Zuul<br>•    分布式配置中心： Spring Cloud Config<br>SpringCloud的高级功能(本文不讲)：<br>•    消息总线： Spring  Cloud Bus<br>•    消息驱动的微服务： Spring Cloud Stream<br>•    分布式服务跟踪： Spring  Cloud Sleuth</p>
+<h4 id="五、引出Eureka"><a href="#五、引出Eureka" class="headerlink" title="五、引出Eureka"></a>五、引出Eureka</h4><p>那会出现什么问题呢？？首当其冲的就是子系统之间的通讯问题。子系统与子系统之间不是在同一个环境下，那就需要远程调用。远程调用可能就会想到httpClient，WebService等等这些技术来实现。<br>既然是远程调用，就必须知道ip地址，我们可能有以下的场景。<br>•    功能实现一：A服务需要调用B服务<br>    在A服务的代码里面调用B服务，显式通过IP地址调用：<code>http://123.123.123.123:8888/java3y/3</code><br>•    功能实现二：A服务调用B服务，B服务调用C服务，C服务调用D服务<br>    在A服务的代码里面调用B服务，显式通过IP地址调用：<code>http://123.123.123.123:8888/java3y/3</code>，(同样地)B-&gt;C，C-&gt;D<br>•    功能实现三：D服务调用B服务，B服务调用C服务<br>    在D服务的代码里面调用B服务，显式通过IP地址调用：<code>http://123.123.123.123:8888/java3y/3</code>，(同样地)B-&gt;C<br>•    …..等等等等<br>万一，我们B服务的IP地址变了，想想会出现什么问题：A服务,D服务(等等)需要手动更新B服务的地址<br>•    在服务多的情况下，手动来维护这些静态配置就是噩梦！<br>为了解决微服务架构中的服务实例维护问题(ip地址)， 产生了大量的服务治理框架和产品。 这些框架和产品的实现都围绕着服务注册与服务发现机制来完成对微服务应用实例的自动化管理。<br>在SpringCloud中我们的服务治理框架一般使用的就是Eureka。<br>我们的问题：<br>•    现在有A、B、C、D四个服务，它们之间会互相调用(而且IP地址很可能会发生变化)，一旦某个服务的IP地址变了，那服务中的代码要跟着变，手动维护这些静态配置(IP)非常麻烦！<br>Eureka是这样解决上面所说的情况的：<br>•    创建一个E服务，将A、B、C、D四个服务的信息都注册到E服务上，E服务维护这些已经注册进来的信息<br><img src="/pcImg/1656b07_6.jpg" alt=" "></p>
+<p>A、B、C、D四个服务都可以拿到Eureka(服务E)那份注册清单。A、B、C、D四个服务互相调用不再通过具体的IP地址，而是通过服务名来调用！<br>•    拿到注册清单—&gt;注册清单上有服务名—&gt;自然就能够拿到服务具体的位置了(IP)。<br>•    其实简单来说就是：代码中通过服务名找到对应的IP地址(IP地址会变，但服务名一般不会变)<br><img src="/pcImg/1656b07_7.jpg" alt=" "></p>
+<p>5.1、Eureka细节<br>Eureka专门用于给其他服务注册的称为Eureka Server(服务注册中心)，其余注册到Eureka Server的服务称为Eureka Client。<br> <img src="/pcImg/1656b07_8.jpg" alt=" "></p>
+<p>在Eureka Server一般我们会这样配置：<br>    register-with-eureka: false     #false表示不向注册中心注册自己。<br>    fetch-registry: false     #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务<br>Eureka Client分为服务提供者和服务消费者。<br>•    但很可能，某服务既是服务提供者又是服务消费者。<br>如果在网上看到SpringCloud的某个服务配置没有”注册”到Eureka-Server也不用过于惊讶(但是它是可以获取Eureka服务清单的)<br>•    很可能只是作者把该服务认作为单纯的服务消费者，单纯的服务消费者无需对外提供服务，也就无须注册到Eureka中了<br>eureka:<br>  client:<br>    register-with-eureka: false  # 当前微服务不注册到eureka中(消费端)<br>    service-url:<br>      defaultZone: <a href="http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/" target="_blank" rel="external">http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/</a><br>下面是Eureka的治理机制：<br>•    服务提供者<br>    服务注册：启动的时候会通过发送REST请求的方式将自己注册到Eureka Server上，同时带上了自身服务的一些元数据信息。<br>    服务续约：在注册完服务之后，服务提供者会维护一个心跳用来持续告诉Eureka Server:  “我还活着 ” 、<br>    服务下线：当服务实例进行正常的关闭操作时，它会触发一个服务下线的REST请求给Eureka Server, 告诉服务注册中心：“我要下线了 ”。<br>•    服务消费者<br>    获取服务：当我们启动服务消费者的时候，它会发送一个REST请求给服务注册中心，来获取上面注册的服务清单<br>    服务调用：服务消费者在获取服务清单后，通过服务名可以获得具体提供服务的实例名和该实例的元数据信息。在进行服务调用的时候，优先访问同处一个Zone中的服务提供方。<br>•    Eureka Server(服务注册中心)：<br>    失效剔除：默认每隔一段时间（默认为60秒） 将当前清单中超时（默认为90秒）没有续约的服务剔除出去。<br>    自我保护：。EurekaServer 在运行期间，会统计心跳失败的比例在15分钟之内是否低于85%(通常由于网络不稳定导致)。 Eureka Server会将当前的实例注册信息保护起来， 让这些实例不会过期，尽可能保护这些注册信息。<br>最后，我们就有了这张图：<br><img src="/pcImg/1656b07_9.jpg" alt=" "></p>
+<p>举个例子：<br>•    3y跟女朋友去东站的东方宝泰逛街，但不知道东方宝泰有什么好玩的。于是就去物业搜了一下东方宝泰商户清单，发现一楼有优衣库，二楼有星巴克，三楼有麦当劳。<br>•    在优衣库旁边，有新开张的KFC，在墙壁打上了很大的标识“欢迎KFC入驻东方宝泰”。<br>•    商家们需要定时交物业费给物业。<br>•    物业维持东方宝泰的稳定性。如果某个商家不想在东方宝泰运营了，告诉了物业。物业自然就会将其在东方宝泰商户清单去除。<br>优秀博文：<br>•    Spring Cloud Eureka详解：<a href="https://blog.csdn.net/sunhuiliang85/article/details/76222517" target="_blank" rel="external">https://blog.csdn.net/sunhuiliang85/article/details/76222517</a><br>•    《Spring Cloud Netflix》 – 服务注册和服务发现-Eureka 的使用：<a href="https://zhuanlan.zhihu.com/p/26472547" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26472547</a><br>•    微服务架构：Eureka参数配置项详解：<a href="https://www.cnblogs.com/fangfuhai/p/7070325.html" target="_blank" rel="external">https://www.cnblogs.com/fangfuhai/p/7070325.html</a></p>
+<h4 id="六、引出RestTemplate和Ribbon"><a href="#六、引出RestTemplate和Ribbon" class="headerlink" title="六、引出RestTemplate和Ribbon"></a>六、引出RestTemplate和Ribbon</h4><p>通过Eureka服务治理框架，我们可以通过服务名来获取具体的服务实例的位置了(IP)。一般在使用SpringCloud的时候不需要自己手动创建HttpClient来进行远程调用。<br>可以使用Spring封装好的RestTemplate工具类，使用起来很简单：<br>    // 传统的方式，直接显示写死IP是不好的！<br>    //private static final String REST_URL_PREFIX = “<a href="http://localhost:8001" target="_blank" rel="external">http://localhost:8001</a>“;</p>
+<pre><code>// 服务实例名
+private static final String REST_URL_PREFIX = &quot;http://MICROSERVICECLOUD-DEPT&quot;;
+
+/**
+ * 使用 使用restTemplate访问restful接口非常的简单粗暴无脑。 (url, requestMap,
+ * ResponseBean.class)这三个参数分别代表 REST请求地址、请求参数、HTTP响应转换被转换成的对象类型。
+ */
+@Autowired
+private RestTemplate restTemplate;
+
+@RequestMapping(value = &quot;/consumer/dept/add&quot;)
+public boolean add(Dept dept) {
+    return restTemplate.postForObject(REST_URL_PREFIX + &quot;/dept/add&quot;, dept, Boolean.class);
+}
+</code></pre><p>为了实现服务的高可用，我们可以将服务提供者集群。比如说，现在一个秒杀系统设计出来了，准备上线了。在11月11号时为了能够支持高并发，我们开多台机器来支持并发量。</p>
+<p> <img src="/pcImg/1656b07_10.jpg" alt=" "></p>
+<p>现在想要这三个秒杀系统合理摊分用户的请求(专业来说就是负载均衡)，可能你会想到nginx。<br>其实SpringCloud也支持的负载均衡功能，只不过它是客户端的负载均衡，这个功能实现就是Ribbon！<br>负载均衡又区分了两种类型：<br>•    客户端负载均衡(Ribbon)<br>    服务实例的清单在客户端，客户端进行负载均衡算法分配。<br>    (从上面的知识我们已经知道了：客户端可以从Eureka Server中得到一份服务清单，在发送请求时通过负载均衡算法，在多个服务器之间选择一个进行访问)<br>•    服务端负载均衡(Nginx)<br>    服务实例的清单在服务端，服务器进行负载均衡算法分配<br>所以，我们的图可以画成这样：<br><img src="/pcImg/1656b07_11.jpg" alt=" "></p>
+<p>6.1、Ribbon细节<br>Ribbon是支持负载均衡，默认的负载均衡策略是轮询，我们也是可以根据自己实际的需求自定义负载均衡策略的。<br>@Configuration<br>public class MySelfRule<br>{<br>    @Bean<br>    public IRule myRule()<br>    {<br>        //return new RandomRule();// Ribbon默认是轮询，我自定义为随机<br>        //return new RoundRobinRule();// Ribbon默认是轮询，我自定义为随机</p>
+<pre><code>    return new RandomRule_ZY();// 我自定义为每台机器5次
+}
+</code></pre><p>}<br>实现起来也很简单：继承AbstractLoadBalancerRule类，重写public Server choose(ILoadBalancer lb, Object key)即可。<br>SpringCloud 在CAP理论是选择了AP的，在Ribbon中还可以配置重试机制的(有兴趣的同学可以去搜搜)~<br>举个例子：<br>•    3y跟女朋友过了几个月，又去东方宝泰了。由于记性不好，又去物业那弄了一份东方宝泰商户清单。<br>•    这次看到东方宝泰又开了一间麦当劳，一间在二楼，一间在三楼。原来生意太好了，为了能提高用户体验，在二楼多开了一间麦当劳。<br>•    这时，3y问女朋友：“去哪间麦当劳比较好？要不我们抛硬币决定？”3y女朋友说：”你是不是傻，肯定哪间近去哪间啊“<br>优秀博文：<br>•    撸一撸Spring Cloud Ribbon的原理-负载均衡策略：<a href="https://www.cnblogs.com/kongxianghai/p/8477781.html" target="_blank" rel="external">https://www.cnblogs.com/kongxianghai/p/8477781.html</a></p>
+<h4 id="七、引出Hystrix"><a href="#七、引出Hystrix" class="headerlink" title="七、引出Hystrix"></a>七、引出Hystrix</h4><p>到目前为止，我们的服务看起来好像挺好的了：能够根据服务名来远程调用其他的服务，可以实现客户端的负载均衡。<br> <img src="/pcImg/1656b07_12.jpg" alt=" "></p>
+<p>但是，如果我们在调用多个远程服务时，某个服务出现延迟，会怎么样？？<br> <img src="/pcImg/1656b07_13.jpg" alt=" "></p>
+<p>在高并发的情况下，由于单个服务的延迟，可能导致所有的请求都处于延迟状态，甚至在几秒钟就使服务处于负载饱和的状态，资源耗尽，直到不可用，最终导致这个分布式系统都不可用，这就是“雪崩”。<br>  <img src="/pcImg/1656b07_14.jpg" alt=" "></p>
+<p>针对上述问题， Spring Cloud Hystrix实现了断路器、线程隔离等一系列服务保护功能。<br>•    Fallback(失败快速返回)：当某个服务单元发生故障（类似用电器发生短路）之后，通过断路器的故障监控（类似熔断保险丝）， 向调用方返回一个错误响应， 而不是长时间的等待。这样就不会使得线程因调用故障服务被长时间占用不释放，避免了故障在分布式系统中的蔓延。<br>•    资源/依赖隔离(线程池隔离)：它会为每一个依赖服务创建一个独立的线程池，这样就算某个依赖服务出现延迟过高的情况，也只是对该依赖服务的调用产生影响， 而不会拖慢其他的依赖服务。<br>Hystrix提供几个熔断关键参数：滑动窗口大小（20）、 熔断器开关间隔（5s）、错误率（50%）<br>•    每当20个请求中，有50%失败时，熔断器就会打开，此时再调用此服务，将会直接返回失败，不再调远程服务。<br>•    直到5s钟之后，重新检测该触发条件，判断是否把熔断器关闭，或者继续打开。<br>Hystrix还有请求合并、请求缓存这样强大的功能，在此我就不具体说明了，有兴趣的同学可继续深入学习~<br>7.1、Hystrix仪表盘<br>Hystrix仪表盘：它主要用来实时监控Hystrix的各项指标信息。通过Hystrix Dashboard反馈的实时信息，可以帮助我们快速发现系统中存在的问题，从而及时地采取应对措施。<br>启动时的页面：<br> <img src="/pcImg/1656b07_15.jpg" alt=" "></p>
+<p>监控单服务的页面：<br> <img src="/pcImg/1656b07_16.jpg" alt=" "></p>
+<p>我们现在的服务是这样的：<br> <img src="/pcImg/1656b07_17.jpg" alt=" "></p>
+<p>除了可以开启单个实例的监控页面之外，还有一个监控端点 /turbine.stream是对集群使用的。 从端点的命名中，可以引入Turbine, 通过它来汇集监控信息，并将聚合后的信息提供给 HystrixDashboard 来集中展示和监控。<br> <img src="/pcImg/1656b07_18.jpg" alt=" "></p>
+<p>举个例子：<br>•    3y和女朋友决定去万达玩，去到万达的停车场发现在负一层已经大大写上“负一层已停满，请下负二层，负二层空余停车位还有100个！”<br>•    这时，3y就跟女朋友说：“万达停车场是做得挺好的，如果它没有直接告知我负一层已满，可能我就去负一层找位置了，要是一堆人跑去负一层但都找不到车位的话，恐怕就塞死了”。3y接着说：“看停车位的状态也做得不错，在停车位上头有一个感应(监控)，如果是红色就代表已被停了，如果是绿色就说明停车位是空的”。<br>•    3y女朋友不屑的说：“你话是真的多”<br>参考资料：<br>•    Hystrix ，为什么说它是每个系统不可或缺的开源框架？<a href="https://zhuanlan.zhihu.com/p/34304136" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/34304136</a><br>•    深入理解Hystrix之文档翻译：<a href="https://zhuanlan.zhihu.com/p/28523060" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/28523060</a><br>•    谈谈我对服务熔断、服务降级的理解：<a href="https://blog.csdn.net/guwei9111986/article/details/51649240" target="_blank" rel="external">https://blog.csdn.net/guwei9111986/article/details/51649240</a><br>•    Hystrix几篇文章《青芒》：<a href="https://segmentfault.com/u/yedge/articles" target="_blank" rel="external">https://segmentfault.com/u/yedge/articles</a></p>
+<h4 id="八、引出Feign"><a href="#八、引出Feign" class="headerlink" title="八、引出Feign"></a>八、引出Feign</h4><p>上面已经介绍了Ribbon和Hystrix了，可以发现的是：他俩作为基础工具类框架广泛地应用在各个微服务的实现中。我们会发现对这两个框架的使用几乎是同时出现的。<br>为了简化我们的开发，Spring Cloud Feign出现了！它基于 Netflix Feign 实现，整合了 Spring Cloud Ribbon 与 Spring Cloud Hystrix,  除了整合这两者的强大功能之外，它还提<br>供了声明式的服务调用(不再通过RestTemplate)。<br>Feign是一种声明式、模板化的HTTP客户端。在Spring Cloud中使用Feign, 我们可以做到使用HTTP请求远程服务时能与调用本地方法一样的编码体验，开发者完全感知不到这是远程方法，更感知不到这是个HTTP请求。<br>下面就简单看看Feign是怎么优雅地实现远程调用的：<br>服务绑定：<br>// value —&gt;指定调用哪个服务<br>// fallbackFactory—&gt;熔断器的降级提示<br>@FeignClient(value = “MICROSERVICECLOUD-DEPT”, fallbackFactory = DeptClientServiceFallbackFactory.class)<br>public interface DeptClientService {</p>
+<pre><code>// 采用Feign我们可以使用SpringMVC的注解来对服务进行绑定！
+@RequestMapping(value = &quot;/dept/get/{id}&quot;, method = RequestMethod.GET)
+public Dept get(@PathVariable(&quot;id&quot;) long id);
+
+@RequestMapping(value = &quot;/dept/list&quot;, method = RequestMethod.GET)
+public List&lt;Dept&gt; list();
+
+@RequestMapping(value = &quot;/dept/add&quot;, method = RequestMethod.POST)
+public boolean add(Dept dept);
+</code></pre><p>}<br>Feign中使用熔断器：<br>/**</p>
+<ul>
+<li>Feign中使用断路器</li>
+<li><p>这里主要是处理异常出错的情况(降级/熔断时服务不可用，fallback就会找到这里来)<br>*/<br>@Component // 不要忘记添加，不要忘记添加<br>public class DeptClientServiceFallbackFactory implements FallbackFactory<deptclientservice> {<br> @Override<br> public DeptClientService create(Throwable throwable) {</deptclientservice></p>
+<pre><code>return new DeptClientService() {
+    @Override
+    public Dept get(long id) {
+        return new Dept().setDeptno(id).setDname(&quot;该ID：&quot; + id + &quot;没有没有对应的信息,Consumer客户端提供的降级信息,此刻服务Provider已经关闭&quot;)
+                .setDb_source(&quot;no this database in MySQL&quot;);
+    }
+
+    @Override
+    public List&lt;Dept&gt; list() {
+        return null;
+    }
+
+    @Override
+    public boolean add(Dept dept) {
+        return false;
+    }
+};
+</code></pre><p> }<br>}<br>调用：<br><img src="/pcImg/1656b07_19.jpg" alt=" "></p>
+</li>
+</ul>
+<h4 id="九、引出Zuul"><a href="#九、引出Zuul" class="headerlink" title="九、引出Zuul"></a>九、引出Zuul</h4><p>基于上面的学习，我们现在的架构很可能会设计成这样：<br> <img src="/pcImg/1656b07_20.jpg" alt=" "></p>
+<p>这样的架构会有两个比较麻烦的问题：</p>
+<ol>
+<li>路由规则与服务实例的维护间题：外层的负载均衡(nginx)需要维护所有的服务实例清单(图上的OpenService)</li>
+<li><p>签名校验、 登录校验冗余问题：为了保证对外服务的安全性， 我们在服务端实现的微服务接口，往往都会有一定的权限校验机制，但我们的服务是独立的，我们不得不在这些应用中都实现这样一套校验逻辑，这就会造成校验逻辑的冗余。<br>还是画个图来理解一下吧：</p>
+<p><img src="/pcImg/1656b07_21.jpg" alt=" "></p>
+</li>
+</ol>
+<p>每个服务都有自己的IP地址，Nginx想要正确请求转发到服务上，就必须维护着每个服务实例的地址！<br>•    更是灾难的是：这些服务实例的IP地址还有可能会变，服务之间的划分也很可能会变。<br><a href="http://123.123.123.123" target="_blank" rel="external">http://123.123.123.123</a></p>
+<p><a href="http://123.123.123.124" target="_blank" rel="external">http://123.123.123.124</a></p>
+<p><a href="http://123.123.123.125" target="_blank" rel="external">http://123.123.123.125</a></p>
+<p><a href="http://123.123.123.126" target="_blank" rel="external">http://123.123.123.126</a></p>
+<p><a href="http://123.123.123.127" target="_blank" rel="external">http://123.123.123.127</a><br>购物车和订单模块都需要用户登录了才可以正常访问，基于现在的架构，只能在购物车和订单模块都编写校验逻辑，这无疑是冗余的代码。<br>为了解决上面这些常见的架构问题，API网关的概念应运而生。在SpringCloud中了提供了基于Netfl ix Zuul实现的API网关组件Spring Cloud Zuul。<br>Spring Cloud Zuul是这样解决上述两个问题的：<br>•    SpringCloud Zuul通过与SpringCloud Eureka进行整合，将自身注册为Eureka服务治理下的应用，同时从Eureka中获得了所有其他微服务的实例信息。外层调用都必须通过API网关，使得将维护服务实例的工作交给了服务治理框架自动完成。<br>•    在API网关服务上进行统一调用来对微服务接口做前置过滤，以实现对微服务接口的拦截和校验。<br>Zuul天生就拥有线程隔离和断路器的自我保护功能，以及对服务调用的客户端负载均衡功能。也就是说：Zuul也是支持Hystrix和Ribbon。<br>关于Zuul还有很多知识点(由于篇幅问题，这里我就不细说了)：<br>•    路由匹配(动态路由)<br>•    过滤器实现(动态过滤器)<br>•    默认会过滤掉Cookie与敏感的HTTP头信息(额外配置)<br>9.1、可能对Zuul的疑问<br>Zuul支持Ribbon和Hystrix，也能够实现客户端的负载均衡。我们的Feign不也是实现客户端的负载均衡和Hystrix的吗？既然Zuul已经能够实现了，那我们的Feign还有必要吗？</p>
+<p>  <img src="/pcImg/1656b07_22.jpg" alt=" "></p>
+<p>或者可以这样理解：<br>•    zuul是对外暴露的唯一接口相当于路由的是controller的请求，而Ribbonhe和Fegin路由了service的请求<br>•    zuul做最外层请求的负载均衡 ，而Ribbon和Fegin做的是系统内部各个微服务的service的调用的负载均衡<br>有了Zuul，还需要Nginx吗？他俩可以一起使用吗？<br>•    我的理解：Zuul和Nginx是可以一起使用的(毕竟我们的Zuul也是可以搭成集群来实现高可用的)，要不要一起使用得看架构的复杂度了(业务)~~~<br>参考资料：<br>•    微服务与API网关（上）: 为什么需要API网关？：<a href="http://blog.didispace.com/hzf-ms-apigateway-1/" target="_blank" rel="external">http://blog.didispace.com/hzf-ms-apigateway-1/</a><br>•    谈谈 API 网关：<a href="https://www.jianshu.com/p/b52a2773e75f" target="_blank" rel="external">https://www.jianshu.com/p/b52a2773e75f</a><br>•    谈谈微服务中的 API 网关（API Gateway）：<a href="https://www.cnblogs.com/savorboard/p/api-gateway.html" target="_blank" rel="external">https://www.cnblogs.com/savorboard/p/api-gateway.html</a><br>•    API网关性能比较：NGINX vs. ZUUL vs. Spring Cloud Gateway ：<a href="http://www.360doc.com/content/18/0208/05/46368139_728502763.shtml" target="_blank" rel="external">http://www.360doc.com/content/18/0208/05/46368139_728502763.shtml</a><br>•    谈API网关的背景、架构以及落地方案：<a href="http://www.infoq.com/cn/news/2016/07/API-background-architecture-floo" target="_blank" rel="external">http://www.infoq.com/cn/news/2016/07/API-background-architecture-floo</a><br>•    zuul和nginx：<a href="https://zhuanlan.zhihu.com/p/37385481" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/37385481</a></p>
+<h4 id="十、引出SpringCloud-Config"><a href="#十、引出SpringCloud-Config" class="headerlink" title="十、引出SpringCloud Config"></a>十、引出SpringCloud Config</h4><p>随着业务的扩展，我们的服务会越来越多，越来越多。每个服务都有自己的配置文件。<br>既然是配置文件，给我们配置的东西，那难免会有些改动的。<br>比如我们的Demo中，每个服务都写上相同的配置文件。万一我们有一天，配置文件中的密码需要更换了，那就得三个都要重新更改。<br>  <img src="/pcImg/1656b07_23.jpg" alt=" "></p>
+<p>在分布式系统中，某一个基础服务信息变更，都很可能会引起一系列的更新和重启<br>Spring Cloud Config项目是一个解决分布式系统的配置管理方案。它包含了Client和Server两个部分，server提供配置文件的存储、以接口的形式将配置文件的内容提供出去，client通过接口获取数据、并依据此数据初始化自己的应用。<br>•    简单来说，使用Spring Cloud Config就是将配置文件放到统一的位置管理(比如GitHub)，客户端通过接口去获取这些配置文件。<br>•    在GitHub上修改了某个配置文件，应用加载的就是修改后的配置文件。<br>  <img src="/pcImg/1656b07_24.jpg" alt=" "></p>
+<p>SpringCloud Config其他的知识：<br>•    在SpringCloud Config的服务端， 对于配置仓库的默认实现采用了Git，我们也可以配置SVN。<br>•    配置文件内的信息加密和解密<br>•    修改了配置文件，希望不用重启来动态刷新配置，配合Spring  Cloud Bus 使用~<br>使用SpringCloud Config可能的疑问：application.yml和 bootstrap.yml区别</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/09/08/springCloudud-study/">SpringCloud 学习</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
+        <p><span>发布时间:</span>2018-09-08, 14:54:39</p>
+        <p><span>最后更新:</span>2018-10-02, 15:30:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/09/08/springCloudud-study/" title="SpringCloud 学习">http://yoursite.com/2018/09/08/springCloudud-study/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/09/08/springCloudud-study/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/08/22/duoxiancheng/">
+                    Java多线程学习（总结很详细！！！）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringCloud-学习-不看会吐血后悔"><span class="toc-number">1.</span> <span class="toc-text">SpringCloud 学习,不看会吐血后悔</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二、集群-分布式-微服务-SOA是什么？"><span class="toc-number">1.1.</span> <span class="toc-text">二、集群/分布式/微服务/SOA是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、CAP理论"><span class="toc-number">1.2.</span> <span class="toc-text">三、CAP理论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、SpringCloud就是这么简单"><span class="toc-number">1.3.</span> <span class="toc-text">四、SpringCloud就是这么简单</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#五、引出Eureka"><span class="toc-number">1.4.</span> <span class="toc-text">五、引出Eureka</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#六、引出RestTemplate和Ribbon"><span class="toc-number">1.5.</span> <span class="toc-text">六、引出RestTemplate和Ribbon</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#七、引出Hystrix"><span class="toc-number">1.6.</span> <span class="toc-text">七、引出Hystrix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#八、引出Feign"><span class="toc-number">1.7.</span> <span class="toc-text">八、引出Feign</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#九、引出Zuul"><span class="toc-number">1.8.</span> <span class="toc-text">九、引出Zuul</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#十、引出SpringCloud-Config"><span class="toc-number">1.9.</span> <span class="toc-text">十、引出SpringCloud Config</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"SpringCloud 学习　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2018/09/08/springCloudud-study/" data-title="SpringCloud 学习" data-url="http://yoursite.com/2018/09/08/springCloudud-study/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"yxlduoshuo"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/08/22/duoxiancheng/" title="下一篇: Java多线程学习（总结很详细！！！）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/08/springCloudud-study/">SpringCloud 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/22/duoxiancheng/">Java多线程学习（总结很详细！！！）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/lettuce/">高级的 Redis Java 客户端 Lettuce</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/03/javaqianhoufenli/">前后端API交互如何保证数据安全性？</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/activemq/">activeMQ中文参考手册</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/docker/">docker 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/mysql-youhua/">mysql数据库开发常见问题及优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/linux-changyong/">linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/springboot/">springboot微服务设计说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/alibaba-java/">阿里巴巴java开发手册（2017-02最新）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/java-printService/">java后台服务器调用指定共享打印机打印</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/pdf-export/">iTextPdf生成pdf文件 超实用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/spring-mail/">spring mail简洁快速的邮件发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/javascript-array/">Javascript中Array.filter()的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/26/maven-aliyun/">阿里云maven镜像地址</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/java-queue/">Java实现栈和队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/mybatisSqlInsert/">MyBatis一次插入多条数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/google_java_style/">Google的Java编码规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/17/sqlChange/">经典SQL——行转列，列转行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/mysql-search/">MySQL 慢查询的特征表现及优化方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/sql-type/">各种数据库的分页查询SQL语句总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/sql-seo/">在一个千万级的数据库查寻中，如何提高查询效率？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/linux-shell/">Java开发必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/alisset/">阿里云window server 2012 服务器+nginx+tomcat+redis session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/java-jvm-gc/">详细讲述Java中如何处理垃圾回收的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/java-sort/">java冒泡排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/java-datetime/">java计算两个日期之间的天数，并格式化返回天小时分钟</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/springyou/">Spring常用工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/30/java-jvm-1/">Tomcat中JVM内存溢出及合理配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/gaishandaima/">重构-改善既有代码的设计.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/10/redis-session/">nginx+tomcat+redis的集群+session共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-date/">Java 中日期的几种常见操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/maven-java/">SSM框架比较全面的maven pom.xml文件配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/java-jvm/">jvm性能参数调优实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/createJreble/">Jrebel免费激活</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/28/git-shiyong/">git-新手入职必备操作流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/eclipse-tisu/">Eclipse全面提速小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/linuxFile/">自己本地Redis的安装使用(window)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/java-inputstream/">java通过InputStream读取和写入文件操作实例代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/ruhexuexi-Java/">程序员如何编写优雅的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/oraclejishu/">oracle查询优化与改写.pdf</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/javagaoshou/">成为Java顶尖程序员 ，看这11本书就够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/java8/">java 8十大新特性详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/tenTcjquery/">十条jQuery代码片段助力Web开发效率提升</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/javaXingNeng/">java优化代码提点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/javaTcl/">javaTcl</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/08/javarizhi/">Java 并发编程：核心理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/02/07/zhengzhebiaodshi/">知道这20个正则表达式，能让你少写1,000行代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/01/17/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 远行的样子
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

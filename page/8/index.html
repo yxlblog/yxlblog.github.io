@@ -267,6 +267,79 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-yearDate" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/16/yearDate/" class="article-date">
+      <time datetime="2016-06-16T14:27:57.000Z" itemprop="datePublished">2016-06-16</time>
+</a>
+
+ 
+    <a href="/2016/06/16/yearDate/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2016/06/16/yearDate/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/16/yearDate/">jsp标签创建有限的年度时间下拉选择</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;jsp:useBean id=<span class="string">"now"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"java.util.Date"</span> /&gt;</div><div class="line"></div><div class="line">&lt;fmt:formatDate var="nowYear" value="$&#123;now&#125;" type="both" dateStyle="long" pattern="yyyy-MM-dd" /&gt;</div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2016/06/16/yearDate/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-createJreble" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -549,81 +622,6 @@
       
         <p class="article-more-link">
           <a href="/2016/05/12/java-na-xie-shi/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-dashuju" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/07/dashuju/" class="article-date">
-      <time datetime="2016-05-07T11:23:28.000Z" itemprop="datePublished">2016-05-07</time>
-</a>
-
- 
-    <a href="/2016/05/07/dashuju/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/05/07/dashuju/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/07/dashuju/">java开发中遇到的异常报错解决方法总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>以后每遇到报错，解决之后我都会来更新的。供自己和大家一起学习。你们也可以把这些保存到电脑里，方便以后查的时候直接Ctrl+F就能找到了。</p>
-<p>1:java.lang.ClassNotFoundException: com.sun.xml.ws.transport.http.servlet.WSServletContextListener<br>解决方法：缺少了JAX-WS的类库，在您的应用中添加这个类库就可以了。（项目右击——build Path——Configure build Path——Libraries下面的Add Library——MyEclipse Library——添加JAX-WS这个包）。</p>
-<p>这个问题我再补充一下，刚才遇到的。我项目在MyEclipse中启动可以正常启动但是在Tomcat中启动依然会报这个错误，尽管我项目里已将添加了jaxws-rt-2.1.4.jar这个包。然后我搜了好久，终于解决。下载一个这个jar包，放在Tomcat文件下面的lib里。再启动就正常了。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2016/05/07/dashuju/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
