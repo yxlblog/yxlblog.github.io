@@ -267,6 +267,81 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-duoxiancheng" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/10/02/duoxiancheng/" class="article-date">
+      <time datetime="2018-10-02T06:35:11.000Z" itemprop="datePublished">2018-10-02</time>
+</a>
+
+ 
+    <a href="/2018/10/02/duoxiancheng/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2018/10/02/duoxiancheng/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/02/duoxiancheng/">Java多线程学习（总结很详细！！！）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="Java多线程学习（总结很详细！！！）"><a href="#Java多线程学习（总结很详细！！！）" class="headerlink" title="Java多线程学习（总结很详细！！！）"></a>Java多线程学习（总结很详细！！！）</h3><p>此文只能说是java多线程的一个入门，其实Java里头线程完全可以写一本书了，但是如果最基本的你都学掌握好，又怎么能更上一个台阶呢？</p>
+<pre><code>本文主要讲java中多线程的使用方法、线程同步、线程数据传递、线程状态及相应的线程函数用法、概述等。首先让我们来了解下在操作系统中进程和线程的区别：
+</code></pre><p>　　进程：每个进程都有独立的代码和数据空间（进程上下文），进程间的切换会有较大的开销，一个进程包含1–n个线程。（进程是资源分配的最小单位）<br>　　线程：同一类线程共享代码和数据空间，每个线程有独立的运行栈和程序计数器(PC)，线程切换开销小。（线程是cpu调度的最小单位）<br>　　线程和进程一样分为五个阶段：创建、就绪、运行、阻塞、终止。<br>　　多进程是指操作系统能同时运行多个任务（程序）。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2018/10/02/duoxiancheng/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-lettuce" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -549,82 +624,6 @@
       
         <p class="article-more-link">
           <a href="/2018/01/08/docker/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-springboot-admin" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/12/17/springboot-admin/" class="article-date">
-      <time datetime="2017-12-17T05:25:28.000Z" itemprop="datePublished">2017-12-17</time>
-</a>
-
- 
-    <a href="/2017/12/17/springboot-admin/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/12/17/springboot-admin/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/17/springboot-admin/">springboot_admin_server应用监控管理</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="springboot-admin-server应用监控管理"><a href="#springboot-admin-server应用监控管理" class="headerlink" title="springboot_admin_server应用监控管理"></a>springboot_admin_server应用监控管理</h3><p>前言</p>
-<p>Spring Boot Admin 用于监控基于 Spring Boot 的应用，可对应用信息可视化，提供应用监控接口管理，方便用户管理操作。<br>运行环境：maven，spring boot应用， Spring cloud eureka的配置</p>
-<h5 id="1-在-Spring-Boot-项目中配置"><a href="#1-在-Spring-Boot-项目中配置" class="headerlink" title="1.在 Spring Boot 项目中配置"></a>1.在 Spring Boot 项目中配置</h5><p>首先，先建个基础的spring boot 应用，该应用作为 Spring Boot Admin Server，其他的spring boot应用作为client，当把client应用注册到 server时，我们就能在server服务管理上可以看到注册的client应用状态信息了。</p>
-<h5 id="1-1-Server-管理端的配置"><a href="#1-1-Server-管理端的配置" class="headerlink" title="1.1 Server 管理端的配置"></a>1.1 Server 管理端的配置</h5>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2017/12/17/springboot-admin/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
