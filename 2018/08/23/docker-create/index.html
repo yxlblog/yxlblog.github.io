@@ -15,19 +15,25 @@
 <meta name="baidu-site-verification" content="LO7Y8GhIBA" />
 
 
-<meta name="description" content="编程初学者总是把大量的时间用在学习编程语言，语法，技巧和编程工具的使用上。他们认为，如果掌握了这些技术技巧，他们就能成为不错的程序员。然而，计算机编程的目的并不是关于精通这些技术、工具的，它是关于针对特定领域里的特定问题创造出相应的解决方案，程序员通过相互合作来实现这些。所以，很重要的一点，你需要能精确的用代码表达出你的思想，让其他人通过代码能明白你的意图。
-让我们先看看编程大师Robert C.">
+<meta name="description" content="在平时的开发中工作中,环境的搭建其实一直都是一个很麻烦的事情
+特别是现在,系统越来越复杂,所需要连接的一些中间件也越来越多.
+然而要顺利的安装好这些中间件也是一个比较费时费力的工作.
+俗话说”工欲善其事,必先利其器”,这篇文章,就跟大家一起分享一下使用docker在本地环境或者测试环境快速搭建我们常用的一些中间件容器的方法,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="代码里的命名规则：错误的和正确的对比">
-<meta property="og:url" content="http://yoursite.com/2016/05/12/java-na-xie-shi/index.html">
+<meta property="og:title" content="使用docker快速搭建本地环境">
+<meta property="og:url" content="http://yoursite.com/2018/08/23/docker-create/index.html">
 <meta property="og:site_name" content="远行的样子的博客">
-<meta property="og:description" content="编程初学者总是把大量的时间用在学习编程语言，语法，技巧和编程工具的使用上。他们认为，如果掌握了这些技术技巧，他们就能成为不错的程序员。然而，计算机编程的目的并不是关于精通这些技术、工具的，它是关于针对特定领域里的特定问题创造出相应的解决方案，程序员通过相互合作来实现这些。所以，很重要的一点，你需要能精确的用代码表达出你的思想，让其他人通过代码能明白你的意图。
-让我们先看看编程大师Robert C.">
-<meta property="og:updated_time" content="2016-05-12T15:50:06.000Z">
+<meta property="og:description" content="在平时的开发中工作中,环境的搭建其实一直都是一个很麻烦的事情
+特别是现在,系统越来越复杂,所需要连接的一些中间件也越来越多.
+然而要顺利的安装好这些中间件也是一个比较费时费力的工作.
+俗话说”工欲善其事,必先利其器”,这篇文章,就跟大家一起分享一下使用docker在本地环境或者测试环境快速搭建我们常用的一些中间件容器的方法,">
+<meta property="og:updated_time" content="2018-10-03T08:37:37.880Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="代码里的命名规则：错误的和正确的对比">
-<meta name="twitter:description" content="编程初学者总是把大量的时间用在学习编程语言，语法，技巧和编程工具的使用上。他们认为，如果掌握了这些技术技巧，他们就能成为不错的程序员。然而，计算机编程的目的并不是关于精通这些技术、工具的，它是关于针对特定领域里的特定问题创造出相应的解决方案，程序员通过相互合作来实现这些。所以，很重要的一点，你需要能精确的用代码表达出你的思想，让其他人通过代码能明白你的意图。
-让我们先看看编程大师Robert C.">
+<meta name="twitter:title" content="使用docker快速搭建本地环境">
+<meta name="twitter:description" content="在平时的开发中工作中,环境的搭建其实一直都是一个很麻烦的事情
+特别是现在,系统越来越复杂,所需要连接的一些中间件也越来越多.
+然而要顺利的安装好这些中间件也是一个比较费时费力的工作.
+俗话说”工欲善其事,必先利其器”,这篇文章,就跟大家一起分享一下使用docker在本地环境或者测试环境快速搭建我们常用的一些中间件容器的方法,">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +65,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>代码里的命名规则：错误的和正确的对比 | 远行的样子的博客</title>
+<title>使用docker快速搭建本地环境 | 远行的样子的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -264,11 +270,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-java-na-xie-shi" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-docker-create" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/12/java-na-xie-shi/" class="article-date">
-      <time datetime="2016-05-12T15:02:57.000Z" itemprop="datePublished">2016-05-12</time>
+      <a href="/2018/08/23/docker-create/" class="article-date">
+      <time datetime="2018-08-23T08:33:09.000Z" itemprop="datePublished">2018-08-23</time>
 </a>
 
 
@@ -283,7 +289,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      代码里的命名规则：错误的和正确的对比
+      使用docker快速搭建本地环境
     </h1>
   
 
@@ -304,14 +310,76 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>编程初学者总是把大量的时间用在学习编程语言，语法，技巧和编程工具的使用上。他们认为，如果掌握了这些技术技巧，他们就能成为不错的程序员。然而，计算机编程的目的并不是关于精通这些技术、工具的，它是关于针对特定领域里的特定问题创造出相应的解决方案，程序员通过相互合作来实现这些。所以，很重要的一点，你需要能精确的用代码表达出你的思想，让其他人通过代码能明白你的意图。</p>
-<p>让我们先看看编程大师Robert C. Martin的杰作《Clean Code》里的一句话：<br><a id="more"></a><br>“注释的目的是为了弥补代码自身在表达上的不足。”<br>这句话可以简单的理解为如果你的代码需要注释，最有可能是你的代码写的很烂。同样，如果在没有注释的情况下你无法用代码完整的表达你对一个问题或一个算法的思路，那这就是一个失败的信号。最终，这意味着你需要用注释来阐明一部分的思想，而这部分在代码里是看不出来的。好的代码能够让任何人在不需要任何注释的情况下看懂。好的编码风格能将所有有助于理解这个问题的所有信息都蕴含在代码里。<br>在编程理论中，有一个概念叫做“自我描述的源代码”。对于一段代码，一种常见的自我描述机制是遵循某种非严格定义的变量、方法、对象命名规则。这样做的主要作用就是使源代码更易读易懂。所以，也就更容易维护和扩展。</p>
-<h2 id="这篇文章里，我将举出一些例子，说明什么是“不好的代码”，什么是“清楚的代码”"><a href="#这篇文章里，我将举出一些例子，说明什么是“不好的代码”，什么是“清楚的代码”" class="headerlink" title="这篇文章里，我将举出一些例子，说明什么是“不好的代码”，什么是“清楚的代码”"></a>这篇文章里，我将举出一些例子，说明什么是“不好的代码”，什么是“清楚的代码”</h2><p>如何命名，在编程中这永远都是个老大难问题。有些程序员喜欢简化、缩短或加密名称，使得只有他们自己能懂。下面让我们看一些例子：</p>
-<font color="red">不好的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">int d;</div><div class="line"><span class="comment">// 天数</span></div><div class="line">int ds;</div><div class="line">int dsm;</div><div class="line">int faid;</div></pre></td></tr></table></figure><br><br>“d”可以表示任何东西。作者使用注释来表明他的意图，却没有选择用代码来表示。而“faid”很容易导致误解为ID。<br><font color="green">清楚的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int elapsedTimeInDays;</div><div class="line">int daysSinceCreation;</div><div class="line">int daysSinceModification;</div><div class="line">int fileAgeInDays;</div></pre></td></tr></table></figure><br><br>### 命名时避免含义引起误解的信息<br>错误的信息比没有信息更糟糕。有些程序员喜欢“隐藏”一些重要信息，有时候他们也会写出一些让人误解的代码。<br><font color="red">不好的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Customer[] customerList;</div><div class="line">Table theTable;</div></pre></td></tr></table></figure><br><br>变量“customerList”其实不是个list。它是一个普通的array(或客户集合)。除此之外，“theTable”是一个Table类型的对象(你可以用IDE容易的发现它的类型)，“the”这个词是个不必要的干扰。<br><br><font color="green">清楚的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Customer[] customers;</div><div class="line">Table customers;</div></pre></td></tr></table></figure><br><br>### 命名要有合适的长度<br>在高级编程语言中，变量名的长度通常不太限制。变量名几乎可以任何长度。虽然如此，这也可能使代码变得闹心。<br><font color="red">不好的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> theCustomersListWithAllCustomersIncludedWithoutFilter;</div><div class="line"><span class="keyword">var</span> list;</div></pre></td></tr></table></figure><br><br>好的名称应该只含有必要的词汇来表达一个概念。任何不必要的字词都会使名称变长、难于理解。名称越短越好，前提是能在上下文中表达完整的意思(下订单这个场景中，“customersInOrder” 要比 “list” 好)。<br><br><font color="green">清楚的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> allCustomers;</div><div class="line"><span class="keyword">var</span> customersInOrder;</div></pre></td></tr></table></figure><br><br>### 命名时编码规范保持一致，让规范帮助理解代码<br>所有的编程技术(语言)都有自己的“风格”，叫做编码规范。程序员应该在写代码时遵循这些习惯，因为其他的程序员也知道这些，并按这种风格编写。下面我们看一个没有明显规范的不好的代码例子。下面的这段代码没有遵循很好的已知的“编码规范”(比如PascalCase, camelCase, Hungarian规范)。更糟糕的是，这有一个毫无意义的bool变量“change”。这是个动词(用来描述动作)，但这里的bool值是来描述一个状态，所以，这里应该用一个形容词更合适。<br><font color="red">不好的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> int maxcount = <span class="number">1</span></div><div class="line">bool change = <span class="literal">true</span></div><div class="line">public interface Repository</div><div class="line">private string NAME</div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">personaddress</span></span></div><div class="line"><span class="title">void</span> <span class="title">getallorders</span>()</div></pre></td></tr></table></figure><br><br>一段代码，只看它的一部分，你就应该直接明白它是什么类型，只需要看它的命名方法。<br>例如：你看到了“_name”，你就能知道它是个私有变量。你应该在任何地方都利用这种表示方法，没有例外情况。<br><br><font color="green">清楚的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> int MAXCOUNT = <span class="number">1</span></div><div class="line">bool isChanged = <span class="literal">true</span></div><div class="line">public interface IRepository</div><div class="line">private string _name</div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PersonAddress</span></span></div><div class="line"><span class="title">void</span> <span class="title">GetAllOrders</span>()</div></pre></td></tr></table></figure><br><br>### 命名时相同的概念用相同的词表达<br>定义概念很难。在软件开发过程中，很多时间都花在分析业务场景、思考正确的定义里面所有的元素。这些概念永远都是让程序员头痛的事。<br><font color="red">不好的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.</span></div><div class="line"><span class="keyword">void</span> LoadSingleData()</div><div class="line"><span class="keyword">void</span> FetchDataFiltered()</div><div class="line">Void GetAllData()</div><div class="line"><span class="comment">//2.</span></div><div class="line"><span class="keyword">void</span> SetDataToView();</div><div class="line"><span class="keyword">void</span> SetObjectValue(int value)</div></pre></td></tr></table></figure><br><br><em> 首先：<br>代码的作者试图表达“get the data”的概念，他使用了多个词“load”，“fetch”，“get”。一个概念只用一个词表达就行了(在同一个场景中)。
-</em> 第二：<br>“set”这个词用在了2个概念里：第一是“data loading to view”，第二个是“setting a value of object”。这是两个不同的概念，你应该使用不同的词。<br><br><font color="green">清楚的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.</span></div><div class="line"><span class="keyword">void</span> GetSingleData()</div><div class="line"><span class="keyword">void</span> GetDataFiltered()</div><div class="line">Void GetAllData()</div><div class="line"><span class="comment">//2.</span></div><div class="line"><span class="keyword">void</span> LoadDataToView();</div><div class="line"><span class="keyword">void</span> SetObjectValue(int value)</div></pre></td></tr></table></figure><br><br>### 命名时使用跟业务领域相关的词<br>程序员写的所有代码都是跟业务领域场景逻辑相连的。为了让所有关系到这个问题的人都能更好的理解，程序中应该使用在领域环境中有意义的名称。<br><font color="red">不好的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">EntitiesRelation</span></span></div><div class="line">&#123;</div><div class="line">Entity o1;</div><div class="line">Entity o2;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>当在编写针对某个领域的代码时，你应该始终考虑使用领域有联系的名称。在将来，当另外一个人(不仅是程序员，也许是测试人员)接触你的代码时，他能轻松的理解这个业务领域里你的代码是什么意思(不需要业务逻辑知识)。你首先考虑的应该是业务问题，之后才是如何解决。<br><br><font color="green">清楚的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ProductWithCategory</span></span></div><div class="line">&#123;</div><div class="line">Entity product;</div><div class="line">Entity category;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>### 命名时使用在特定环境里有意义的词<br>代码里名称都有自己的上下文。上下文对于理解一个名称非常重要，因为它能提供额外的信息。让我们来看看一个典型的“地址”上下文：<br><br><font color="red">不好的代码：</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">string addressCity;</div><div class="line">string addressHomeNumber;</div><div class="line">string addressPostCode;</div></pre></td></tr></table></figure><br><br>在大多数情况中，“Post Code”通常是地址的一部分，很显然，邮政编码不能单独使用(除非你是在开发一个专门处理邮编的应用)。所以，没有必要在“PostCode”的前面加上“address”。更重要的，所以的这些信息都有一个上下文容环境，一个命名空间，一个类。<br><br>在面向对象编程中，这里应该用一个“Address”类来表达这个地址信息。<br><br><font color="green">清楚的代码：</font>
-
-<p>class Address<br>{<br>string city;<br>string homeNumber;<br>string postCode;<br>}<br>```</p>
-<h3 id="命名方法总结"><a href="#命名方法总结" class="headerlink" title="命名方法总结"></a>命名方法总结</h3><p>概述起来，做为一个程序员，你应该：<br>命名是来表达概念的<br>注意名称长度，名称里只该含有必要的词语<br>编码规范有助于理解代码，你应该使用它<br>名称不要混用<br>名称在业务领域里要有意义，在上下文里有意义</p>
+        <p>在平时的开发中工作中,环境的搭建其实一直都是一个很麻烦的事情</p>
+<p>特别是现在,系统越来越复杂,所需要连接的一些中间件也越来越多.</p>
+<p>然而要顺利的安装好这些中间件也是一个比较费时费力的工作.</p>
+<p>俗话说”工欲善其事,必先利其器”,这篇文章,就跟大家一起分享一下使用docker在本地环境或者测试环境快速搭建我们常用的一些中间件容器的方法,<br><a id="more"></a><br>(这里没有提及生产环境,并不是说生产环境不能使用docker,只是说要在生产环境上使用,请务必根据自身的实际情况,做好充分的评估)</p>
+<p>docker安装<br>docker支持多种操作系统,本文的内容则是基于centos7操作系统的</p>
+<p>docker的文档写的很清晰,大家可以在</p>
+<p><a href="https://docs.docker.com/engine/installation/linux/docker-ce/centos/" target="_blank" rel="external">https://docs.docker.com/engine/installation/linux/docker-ce/centos/</a></p>
+<p>站点中按照文档的步骤一步一步的安装docker , 假如一切正常 , 大家在命令行输入version , 会得到如下结果 :</p>
+<p>$ sudo docker version</p>
+<h1 id="结果输出"><a href="#结果输出" class="headerlink" title="结果输出 :"></a>结果输出 :</h1><p>Client:<br> Version:      17.09.0-ce-rc2<br> API version:  1.32<br> Go version:   go1.8.3<br> Git commit:   363a3e7<br> Built:        Thu Sep 14 01:54:43 2017<br> OS/Arch:      linux/amd64</p>
+<p>Server:<br> Version:      17.09.0-ce-rc2<br> API version:  1.32 (minimum version 1.12)<br> Go version:   go1.8.3<br> Git commit:   363a3e7<br> Built:        Thu Sep 14 01:56:05 2017<br> OS/Arch:      linux/amd64<br> Experimental: false</p>
+<h4 id="常用的docker的基本命令"><a href="#常用的docker的基本命令" class="headerlink" title="常用的docker的基本命令"></a>常用的docker的基本命令</h4><p>docker images : 列出当前docker所有的镜像</p>
+<p>docker ps -a : 列出当前docker正在运行中的容器 , 去掉-a , 则列出所有的容器</p>
+<p>docker rmi {镜像ID} : 删除docker镜像 , 追加-f指令 , 则为强制删除镜像 (删除镜像后,关联此镜像的容器也会被删除)</p>
+<p>docker rm {容器ID/容器名称} : 删除容器 , 追加-f指令 , 则为强制删除容器</p>
+<p>docker run XXXX : 运行容器 , 本文后续会对run命令的相关指令做详细解释</p>
+<p>docker stop {容器ID/容器名称} : 停止容器</p>
+<p>docker start {容器ID/容器名称} : 启动容器</p>
+<p>docker stats : 查看docker所有容器的运行状态</p>
+<p>docker log {容器ID/容器名称} : 查看容器的运行日志</p>
+<p>docker cp {容器ID/容器名称}:{容器路径} {宿主机路径} : 从容器中拷贝文件到宿主机</p>
+<p>docker exec -it {容器ID/容器名称} /bin/bash : 进入指定容器进行操作 , 使用exit退出</p>
+<p>docker的命令还有很多 , 大家可以在 :</p>
+<p><a href="https://docs.docker.com/reference/" target="_blank" rel="external">https://docs.docker.com/reference/</a></p>
+<p>站点中找到其他命令的文档</p>
+<h4 id="docker-run-命令的主要参数"><a href="#docker-run-命令的主要参数" class="headerlink" title="docker run 命令的主要参数"></a>docker run 命令的主要参数</h4><p>一般情况,我们使用run命令来创建一个容器 , 此命令的主要格式如下 :</p>
+<p>docker run {指令/参数} {registry地址}/{组织名称}/{镜像名称}:{版本}</p>
+<p>docker镜像的唯一标识<br>{registry地址}/{组织名称}/{镜像名称}:{版本} 这一串内容组成了一个docker镜像唯一的标识 , 具体值可能是这样的 :</p>
+<p>wjrfy32i.mirror.aliyuncs.com/library/nginx:latest</p>
+<p>以上字符串描述了阿里云的nginx镜像,然后是latest版本 (指的是最新版本)</p>
+<h4 id="docker-run命令的常用指令"><a href="#docker-run命令的常用指令" class="headerlink" title="docker run命令的常用指令"></a>docker run命令的常用指令</h4><p>-d : 容器后台启动</p>
+<p>-it : 容器交互式启动</p>
+<p>-p {宿主机端口}:{容器端口} : 指定宿主机和容器端口的映射关系 , 可以多个</p>
+<p>–name {容器名称} : 指定容器的名字</p>
+<p>-v {宿主机目录}:{容器目录} : 将宿主机文件目录映射到容器的文件目录中 , 可以多个</p>
+<p>–restart=always : 指定容器永远随docker服务启动</p>
+<p>–hostname {容器hostname} : 指定容器的hostname</p>
+<p>–link={容器名称}:{hostname} : 将其他容器加入当前容器的hosts文件中,并且指定其访问的hostname , 可以多个</p>
+<p>**其他指令<br>-e TZ=”Asia/Shanghai” : 指定容器的时区</p>
+<p>-v /etc/localtime:/etc/localtime:ro : 设置容器的时钟与宿主机一致</p>
+<h4 id="创建mysql容器"><a href="#创建mysql容器" class="headerlink" title="创建mysql容器"></a>创建mysql容器</h4><p>准备<br>$ sudo mkdir /var/lib/mysql &amp;&amp; chown -R 200 /var/lib/mysql<br>以上命令创建了一个目录,用于存放mysql数据库文件</p>
+<p>创建<br>$ sudo docker run \<br>                -d \<br>                –restart=always \<br>                -p 3306:3306 \<br>                -e TZ=”Asia/Shanghai” \<br>                -v /etc/localtime:/etc/localtime:ro \<br>                -v /var/lib/mysql:/var/lib/mysql \<br>                –name mysql \<br>                -e MYSQL_ROOT_PASSWORD=XXX \<br>                wjrfy32i.mirror.aliyuncs.com/library/mysql:latest<br>其中-e MYSQL_ROOT_PASSWORD=XXX指定了mysql数据库的root密码</p>
+<p>创建rabbitmq容器<br>准备<br>$ sudo mkdir /var/lib/rabbitmq &amp;&amp; chown -R 200 /var/lib/rabbitmq<br>$ sudo mkdir /var/log/rabbitmq &amp;&amp; chown -R 200 /var/log/rabbitmq<br>以上命令创建了用于存放rabbitmq数据文件和日志文件的路径</p>
+<p>创建<br>$ sudo docker run \<br>                -d \<br>                –restart=always \<br>                –hostname rabbitmq \<br>                –name rabbitmq \<br>                -p 15672:15672 \<br>                -p 5672:5672 \<br>                -e TZ=”Asia/Shanghai” \<br>                -v /etc/localtime:/etc/localtime:ro \<br>                -v /var/lib/rabbitmq:/var/lib/rabbitmq \<br>                -v /var/log/rabbitmq:/var/log/rabbitmq \<br>                -e RABBITMQ_DEFAULT_USER=admin \<br>                -e RABBITMQ_DEFAULT_PASS=xxx \<br>                wjrfy32i.mirror.aliyuncs.com/library/rabbitmq:3.6.10-management-alpine<br>其中-e RABBITMQ_DEFAULT_USER和-e RABBITMQ_DEFAULT_PASS用于指定rabbitmq控制台管理员的账户和密码</p>
+<h4 id="创建redis容器"><a href="#创建redis容器" class="headerlink" title="创建redis容器"></a>创建redis容器</h4><p>准备<br>$ sudo mkdir /var/lib/redis &amp;&amp; chown -R 200 /var/lib/redis<br>$ sudo mkdir /var/lib/redis_conf &amp;&amp; chown -R 200 /var/lib/redis_conf<br>以上命令创建了用于存放redis数据文件和配置文件的目录</p>
+<p>另外,配置文件可以从redis.conf可以从redis官网获取,并且上传至宿主机的/var/lib/redis_conf目录</p>
+<p>创建<br>$ sudo docker run \<br>                -d \<br>                –restart=always \<br>                –hostname redis \<br>                –name redis \<br>                -p 6379:6379 \<br>                -e TZ=”Asia/Shanghai” \<br>                -v /etc/localtime:/etc/localtime:ro \<br>                -v /var/lib/redis:/data \<br>                -v /var/lib/redis_conf/redis.conf:/usr/local/etc/redis/redis.conf \<br>                wjrfy32i.mirror.aliyuncs.com/library/redis:latest \<br>                redis-server /usr/local/etc/redis/redis.conf<br>在将宿主机的/var/lib/redis_conf/redis.conf映射到容器中,并且指定redis-server使用的配置文件</p>
+<h4 id="创建nginx容器"><a href="#创建nginx容器" class="headerlink" title="创建nginx容器"></a>创建nginx容器</h4><p>准备<br>$ sudo mkdir /var/lib/nginx &amp;&amp; chown -R 200 /var/lib/nginx<br>$ sudo mkdir /var/lib/nginx/conf.d &amp;&amp; chown -R 200 /var/lib/nginx/conf.d<br>$ sudo mkdir /var/lib/nginx_conf &amp;&amp; chown -R 200 /var/lib/nginx_conf<br>$ sudo mkdir /var/lib/nginx_content &amp;&amp; chown -R 200 /var/lib/nginx_content<br>$ sudo mkdir /var/log/nginx &amp;&amp; chown -R 200 /var/log/nginx<br>$ sudo mkdir /var/lib/nginx_file &amp;&amp; chown -R 200 /var/lib/nginx_file<br>$ sudo docker run -d –hostname nginx –name nginx -p 80:80 wjrfy32i.mirror.aliyuncs.com/library/nginx:latest<br>$ sudo docker cp nginx:/etc/nginx/nginx.conf /var/lib/nginx/nginx.conf<br>$ sudo docker cp nginx:/etc/nginx/conf.d/default.conf /var/lib/nginx/conf.d/default.conf<br>$ sudo docker cp nginx:/usr/share/nginx/html/50x.html /var/lib/nginx_content/50x.html<br>$ sudo docker cp nginx:/usr/share/nginx/html/index.html /var/lib/nginx_content/index.html<br>$ sudo docker rm -f nginx<br>以上命令创建了一些列目录,用于存放nginx的静态文件以及配置文件,</p>
+<p>并且使用cp命令从nginx中拷贝了原始的配置文件,以及默认的html文件</p>
+<p>最后删除了用于拷贝文件而创建的容器</p>
+<p>创建<br>$ sudo docker run \<br>                -d \<br>                –restart=always \<br>                –hostname nginx \<br>                –name nginx \<br>                –link=rabbitmq:rabbitmq \<br>                -p 81:81 \<br>                -e TZ=”Asia/Shanghai” \<br>                -v /etc/localtime:/etc/localtime:ro \<br>                -v /var/lib/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \<br>                -v /var/lib/nginx/conf.d:/etc/nginx/conf.d:ro \<br>                -v /var/lib/nginx_content:/usr/share/nginx/html:ro \<br>                -v /var/lib/nginx_file:/usr/share/nginx/file:ro \<br>                -v /var/log/nginx:/var/log/nginx \<br>                wjrfy32i.mirror.aliyuncs.com/library/nginx:latest<br>以上命令映射了一系列目录到容器中,主要用于不同场景的静态文件</p>
+<p>将spring boot应用打包成docker镜像<br>在pom中添加插件<br><!-- docker --></p>
+<p><plugin><br>    <groupid>com.spotify</groupid><br>    <artifactid>docker-maven-plugin</artifactid><br>    <version>1.0.0</version><br>    <configuration><br>        <imagename>192.168.1.10:5000/${project.groupId}/${project.artifactId}:latest</imagename><br>        <baseimage>192.168.1.10:5000/org.itkk/java:8</baseimage><br>        <maintainer>wangkangit@163.com</maintainer><br>        <exposes>${server.port}</exposes><br>        <cmd></cmd><br>        <entrypoint>[“java”,”-jar”,”/${project.build.finalName}.jar”]</entrypoint><br>        <resources><br>            <resource><br>                <directory>${project.build.directory}</directory><br>                <include>${project.build.finalName}.jar</include><br>            </resource><br>        </resources><br>    </configuration><br></plugin><br>imageName : 指定镜像的唯一标志,这里使用maven的groupId和artifactId来设定</p>
+<p>baseImage : 指定镜像的父类镜像 , 这里指定的是java8的镜像</p>
+<p>maintainer : 指定镜像的作者</p>
+<p>exposes : 指定镜像所开放的端口好 , 这里跟应用的端口号一致</p>
+<p>entryPoint : 指容器的时候,应该执行的命令,这里通过java -jar命令启动的spring boot应用</p>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>$ sudo mvn clean install package docker:build<br>执行以上命令,在maven构建完成后docker:build会将其构建成docker镜像</p>
+<p>注意<br>自己创建镜像需要有docker registry支持 , 可以使用公共的 , 也可以自建 .</p>
+<p>本文因篇幅原因 , 不讲解docker registry的搭建过程 , 有兴趣的同学可以自行百度 .</p>
+<p>另外 , 由于构建出来的镜像往往会比较大(至少有100M左右) , 所以使用公共docker registry的同学 , 请注意网速问题 .</p>
+<p>结束<br>在以上的内容中 , 我们创建了rabbitmq,mysql,nginx,rabbitmq这4个常用的中间件 ,</p>
+<p>使用docker命令 , 我们可以非常快速的创建这些服务 ,</p>
+<p>相比传统的方式来说 , 确实节省了不少的时间和经历 .</p>
+<p>当然 , 以上内容都是一些基本的玩法 , docker能做到的事情远不只这些 .</p>
+<p>有兴趣的同学可深入了解 .</p>
+<p>关于本文内容 , 欢迎大家的意见跟建议</p>
+<p>代码仓库 (博客配套代码)<br>udf-starter : 基础项目,脚手架,框架（<a href="https://gitee.com/wangkang/udf）" target="_blank" rel="external">https://gitee.com/wangkang/udf）</a></p>
+<p>udf-sample : 集成样例（<a href="https://gitee.com/wangkang/udf-sample）" target="_blank" rel="external">https://gitee.com/wangkang/udf-sample）</a></p>
+<p>转发的</p>
 
       
     </div>
@@ -320,13 +388,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/05/12/java-na-xie-shi/">代码里的命名规则：错误的和正确的对比</a></p>
+        <p><span>本文标题:</span><a href="/2018/08/23/docker-create/">使用docker快速搭建本地环境</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">远行的样子</a></p>
-        <p><span>发布时间:</span>2016-05-12, 23:02:57</p>
-        <p><span>最后更新:</span>2016-05-12, 23:50:06</p>
+        <p><span>发布时间:</span>2018-08-23, 16:33:09</p>
+        <p><span>最后更新:</span>2018-10-03, 16:37:37</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/12/java-na-xie-shi/" title="代码里的命名规则：错误的和正确的对比">http://yoursite.com/2016/05/12/java-na-xie-shi/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/05/12/java-na-xie-shi/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/08/23/docker-create/" title="使用docker快速搭建本地环境">http://yoursite.com/2018/08/23/docker-create/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/08/23/docker-create/　　作者: 远行的样子" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -339,15 +407,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/05/14/eclipse-tisu/">
-                    Eclipse全面提速小技巧
+                <a href="/2018/09/08/springCloudud-study/">
+                    SpringCloud 学习
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/05/07/dashuju/">
-                    java开发中遇到的异常报错解决方法总结
+                <a href="/2018/05/11/lettuce/">
+                    高级的 Redis Java 客户端 Lettuce
                 </a>
             </div>
         
@@ -359,7 +427,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#这篇文章里，我将举出一些例子，说明什么是“不好的代码”，什么是“清楚的代码”"><span class="toc-number">1.</span> <span class="toc-text">这篇文章里，我将举出一些例子，说明什么是“不好的代码”，什么是“清楚的代码”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命名方法总结"><span class="toc-number">1.1.</span> <span class="toc-text">命名方法总结</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#结果输出"><span class="toc-number">1.</span> <span class="toc-text">结果输出 :</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用的docker的基本命令"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">常用的docker的基本命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-run-命令的主要参数"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">docker run 命令的主要参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-run命令的常用指令"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">docker run命令的常用指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建mysql容器"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">创建mysql容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建redis容器"><span class="toc-number">1.0.0.5.</span> <span class="toc-text">创建redis容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建nginx容器"><span class="toc-number">1.0.0.6.</span> <span class="toc-text">创建nginx容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#构建"><span class="toc-number">1.0.0.7.</span> <span class="toc-text">构建</span></a></li></ol></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -395,7 +463,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"代码里的命名规则：错误的和正确的对比　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"使用docker快速搭建本地环境　| 远行的样子的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -411,7 +479,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/12/java-na-xie-shi/" data-title="代码里的命名规则：错误的和正确的对比" data-url="http://yoursite.com/2016/05/12/java-na-xie-shi/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2018/08/23/docker-create/" data-title="使用docker快速搭建本地环境" data-url="http://yoursite.com/2018/08/23/docker-create/"></div>
     <script>
         var duoshuoQuery = {short_name:"yxlduoshuo"};
         var loadComment = function(){
@@ -434,7 +502,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/05/14/eclipse-tisu/" title="上一篇: Eclipse全面提速小技巧">
+            <a href="/2018/09/08/springCloudud-study/" title="上一篇: SpringCloud 学习">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -442,7 +510,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/05/07/dashuju/" title="下一篇: java开发中遇到的异常报错解决方法总结">
+            <a href="/2018/05/11/lettuce/" title="下一篇: 高级的 Redis Java 客户端 Lettuce">
                 <i class="fa fa-angle-right"></i>
             </a>
         
